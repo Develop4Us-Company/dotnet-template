@@ -1,0 +1,44 @@
+<Project>
+
+    <!-- .NET build settings -->
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <!-- StyleCop and analyzer settings -->
+
+    <PropertyGroup>
+		<!--
+		  Make sure any documentation comments which are included in code get checked for syntax during the build, but do
+		  not report warnings for missing comments.
+    
+		  CS1573: Parameter 'parameter' has no matching param tag in the XML comment for 'parameter' (but other parameters do)
+		  CS1591: Missing XML comment for publicly visible type or member 'Type_or_Member'
+		-->
+		<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+		<NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+	</PropertyGroup>
+
+    <PropertyGroup>
+        <!-- Disables the SA1200, SA1413 and SA1633 rules from StyleCop -->
+        <NoWarn>$(NoWarn),SA1200,SA1413,SA1633</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+	    <AdditionalFiles Include="..\Stylecop.json">
+		    <Link>Stylecop.json</Link>
+	    </AdditionalFiles>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,48 @@
+﻿@page "/fetchdata"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject IHttpClientFactory HttpClientFactory
+@inject ISampleClient Http
+
+@inject IAccessTokenProvider TokenProvider
+
+<AuthorizeView>
+    <Authorized>
+        <h3>Dados protegidos:</h3>
+        <p>@_protectedData</p>
+        <button class="btn btn-success" @onclick="GetProtectedData">Buscar dados</button>
+
+        <br>
+
+        <h3>Token:</h3>
+        <p>@tokenDisplay</p>
+        <button class="btn btn-success" @onclick="GetTokenAsync">Exibir token</button>
+    </Authorized>
+    <NotAuthorized>
+        <h3>Você precisa estar logado para ver os dados.</h3>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private string _protectedData;
+    private string tokenDisplay;
+
+    private async Task GetProtectedData()
+    {
+        _protectedData = await Http.GetProtectedMessage();
+    }
+
+    private async Task GetTokenAsync()
+    {
+        var result = await TokenProvider.RequestAccessToken();
+
+        if (result.TryGetToken(out var token))
+        {
+            tokenDisplay = $"Access Token:\n\n{token.Value}";
+        }
+        else
+        {
+            tokenDisplay = "Nenhum token encontrado. Usuário não autenticado?";
+        }
+    }
+}
