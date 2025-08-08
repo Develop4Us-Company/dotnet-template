@@ -183,7 +183,7 @@ public static class Bootstrap
 
         if (string.IsNullOrEmpty(systemAdminUserOptions.Name) || string.IsNullOrEmpty(systemAdminUserOptions.Email))
         {
-            throw new ArgumentException("SystemAdmin user configuration is not set properly.");
+            throw new ArgumentException("SystemAdminUser configuration is not set properly.");
         }
 
         builder.Services.AddSingleton(systemAdminUserOptions);
