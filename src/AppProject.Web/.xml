@@ -16,10 +16,16 @@
         <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.GetProtectedMessage">
+        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.GetProtectedData">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.AppProject#Web#Pages#ISampleClient#GetProtectedMessage">
+        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.GetLogSample">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.AppProject#Web#Pages#ISampleClient#GetProtectedData">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.AppProject#Web#Pages#ISampleClient#GetLogSample">
             <inheritdoc />
         </member>
     </members>

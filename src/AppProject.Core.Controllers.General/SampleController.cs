@@ -46,7 +46,6 @@ namespace AppProject.Core.Controllers.General
             return this.Ok($"This is a protected data!");
         }
 
-        [Authorize]
         [HttpGet]
         public string GetLogSample()
         {
