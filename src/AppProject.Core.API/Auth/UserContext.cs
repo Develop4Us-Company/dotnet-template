@@ -90,6 +90,13 @@ public class UserContext(
             return this.systemAdminUser;
         }
 
+        if (systemAdminUserOptions.Value is null
+            || string.IsNullOrEmpty(systemAdminUserOptions.Value.Name)
+            || string.IsNullOrEmpty(systemAdminUserOptions.Value.Email))
+        {
+            throw new ArgumentException("SystemAdminUser configuration is not set properly.");
+        }
+
         var user = await applicationDbContext.Users.FirstOrDefaultAsync(u => u.IsSystemAdmin);
 
         if (user == null)

@@ -1,5 +1,6 @@
 #if DEBUG
 using System.Security.Claims;
+using AppProject.Core.Contracts;
 using AppProject.Core.Models.General;
 using AppProject.Exceptions;
 using AppProject.Models;
@@ -12,7 +13,9 @@ namespace AppProject.Core.Controllers.General
 {
     [Route("api/general/[controller]/[action]")]
     [ApiController]
-    public class SampleController(ILogger<SampleController> logger)
+    public class SampleController(
+        ILogger<SampleController> logger,
+        IUserContext userContext)
         : ControllerBase
     {
         [HttpGet]
@@ -44,6 +47,15 @@ namespace AppProject.Core.Controllers.General
         public IActionResult GetProtectedData()
         {
             return this.Ok($"This is a protected data!");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetCurrentUserEmail()
+        {
+            var currentUser = await userContext.GetCurrentUserAsync();
+
+            return this.Ok(currentUser.Email);
         }
 
         [HttpGet]
