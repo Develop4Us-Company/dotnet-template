@@ -29,7 +29,8 @@
 
     private async Task GetProtectedData()
     {
-        _protectedData = await Http.GetProtectedMessage();
+        _protectedData = await Http.GetProtectedData();
+        await Http.GetLogSample();
     }
 
     private async Task GetTokenAsync()

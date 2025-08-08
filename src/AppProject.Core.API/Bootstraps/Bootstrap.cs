@@ -90,6 +90,8 @@ public static class Bootstrap
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseMiddleware<SerilogUserEnricherMiddleware>();
+
         app.MapControllers();
 
         return app;
@@ -247,8 +249,8 @@ public static class Bootstrap
     private static void ConfigureLog(WebApplicationBuilder builder)
     {
         Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
             .Enrich.FromLogContext()
-            .WriteTo.Debug()
             .CreateLogger();
 
         builder.Logging.AddSerilog(Log.Logger);

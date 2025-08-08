@@ -5,6 +5,9 @@ namespace AppProject.Web.Pages;
 
 public interface ISampleClient
 {
-    [Get("/api/sample/protected")]
-    Task<string> GetProtectedMessage();
+    [Get("/api/general/sample/GetProtectedData")]
+    Task<string> GetProtectedData();
+
+    [Get("/api/general/sample/GetLogSample")]
+    Task<string> GetLogSample();
 }
