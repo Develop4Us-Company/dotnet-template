@@ -1,0 +1,51 @@
+<Solution>
+  <Folder Name="/0 - Global/">
+    <Project Path="AppProject.Models/AppProject.Models.csproj" />
+    <Project Path="AppProject.Exceptions/AppProject.Exceptions.csproj" />
+    <Project Path="AppProject.Resources/AppProject.Resources.csproj" />
+    <Project Path="AppProject.Utils/AppProject.Utils.csproj" />
+  </Folder>
+  <Folder Name="/1 - Backend/" />
+  <Folder Name="/1 - Backend/1.0 - Models/">
+    <Project Path="AppProject.Core.Models.General/AppProject.Core.Models.General.csproj" />
+    <Project Path="AppProject.Core.Models/AppProject.Core.Models.csproj" />
+  </Folder>
+  <Folder Name="/1 - Backend/1.1 - Contracts/">
+    <Project Path="AppProject.Core.Contracts/AppProject.Core.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/1 - Backend/1.2 - Infra/">
+    <Project Path="AppProject.Core.Infrastructure.AI/AppProject.Core.Infrastructure.AI.csproj" />
+    <Project Path="AppProject.Core.Infrastructure.Database/AppProject.Core.Infrastructure.Database.csproj" />
+    <Project Path="AppProject.Core.Infrastructure.Email/AppProject.Core.Infrastructure.Email.csproj" />
+    <Project Path="AppProject.Core.Infrastructure.Jobs/AppProject.Core.Infrastructure.Jobs.csproj" />
+  </Folder>
+  <Folder Name="/1 - Backend/1.3 - Services/">
+    <Project Path="AppProject.Core.Services.General/AppProject.Core.Services.General.csproj" />
+    <Project Path="AppProject.Core.Services/AppProject.Core.Services.csproj" />
+  </Folder>
+  <Folder Name="/1 - Backend/1.4 - API/">
+    <Project Path="AppProject.Core.API/AppProject.Core.API.csproj" />
+    <Project Path="AppProject.Core.Controllers.General/AppProject.Core.Controllers.General.csproj" />
+  </Folder>
+  <Folder Name="/2 - Frontend/" />
+  <Folder Name="/2 - Frontend/2.0 - Models/">
+    <Project Path="AppProject.Web.Models.General/AppProject.Web.Models.General.csproj" />
+    <Project Path="AppProject.Web.Models/AppProject.Web.Models.csproj" />
+  </Folder>
+  <Folder Name="/2 - Frontend/2.1 - API Client/">
+    <Project Path="AppProject.Web.ApiClient.General/AppProject.Web.ApiClient.General.csproj" />
+    <Project Path="AppProject.Web.ApiClient/AppProject.Web.ApiClient.csproj" />
+  </Folder>
+  <Folder Name="/2 - Frontend/2.2 - Framework/">
+    <Project Path="AppProject.Web.Framework/AppProject.Web.Framework.csproj" />
+  </Folder>
+  <Folder Name="/2 - Frontend/2.3 - Views/">
+    <Project Path="AppProject.Web.General/AppProject.Web.General.csproj" />
+    <Project Path="AppProject.Web.Shared/AppProject.Web.Shared.csproj" />
+    <Project Path="AppProject.Web/AppProject.Web.csproj" />
+  </Folder>
+  <Folder Name="/3 - Tests/">
+    <Project Path="AppProject.Core.Tests/AppProject.Core.Tests.csproj" />
+    <Project Path="AppProject.Web.Tests/AppProject.Web.Tests.csproj" />
+  </Folder>
+</Solution>
