@@ -25,7 +25,6 @@ public static class Bootstrap
 
     public static WebApplicationBuilder AddApiServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddAuthorization();
         builder.Services.AddOpenApi();
         var mvcBuilder = builder.Services.AddControllers();
 
@@ -213,6 +212,8 @@ public static class Bootstrap
 
     private static void ConfigureAuthentication(this WebApplicationBuilder builder)
     {
+        builder.Services.AddAuthorization();
+
         var auth0Options = new Auth0Options();
         builder.Configuration.GetSection("Auth0").Bind(auth0Options);
 
