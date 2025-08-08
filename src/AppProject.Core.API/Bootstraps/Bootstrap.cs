@@ -22,7 +22,6 @@ namespace AppProject.Core.API.Bootstraps;
 public static class Bootstrap
 {
     private const string DefaultCorsPolicyName = "DefaultCorsPolicy";
-    private const string DefaultRatePolicyName = "DefaultRatePolicy";
 
     public static WebApplicationBuilder AddApiServices(this WebApplicationBuilder builder)
     {
