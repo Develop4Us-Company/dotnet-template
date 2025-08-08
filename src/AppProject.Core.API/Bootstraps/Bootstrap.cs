@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Reflection;
 using System.Security.Claims;
+using System.Threading.RateLimiting;
 using AppProject.Core.API.Auth;
 using AppProject.Core.API.Middlewares;
 using AppProject.Core.API.SettingOptions;
@@ -13,6 +14,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -20,6 +22,9 @@ namespace AppProject.Core.API.Bootstraps;
 
 public static class Bootstrap
 {
+    private const string DefaultCorsPolicyName = "DefaultCorsPolicy";
+    private const string DefaultRatePolicyName = "DefaultRatePolicy";
+
     public static WebApplicationBuilder AddApiServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddAuthorization();
@@ -49,6 +54,8 @@ public static class Bootstrap
 
         ConfigureCors(builder);
 
+        ConfigureRateLimiting(builder);
+
         return builder;
     }
 
@@ -60,12 +67,28 @@ public static class Bootstrap
         {
             app.MapOpenApi();
         }
+        else
+        {
+            app.UseHsts();
+        }
+
+        app.Use(async (context, next) =>
+        {
+            context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+            context.Response.Headers["X-Frame-Options"] = "DENY";
+            context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
+            context.Response.Headers["Referrer-Policy"] = "no-referrer";
+            context.Response.Headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()";
+            await next();
+        });
 
         app.UseMiddleware<ExceptionMiddleware>();
 
         app.UseHttpsRedirection();
 
-        app.UseCors("AllowBlazor");
+        app.UseCors(DefaultCorsPolicyName);
+
+        app.UseRateLimiter();
 
         app.UseAuthentication();
         app.UseAuthorization();
@@ -229,15 +252,38 @@ public static class Bootstrap
 
     private static void ConfigureCors(WebApplicationBuilder builder)
     {
+        var corsOptions = new CorsOptions();
+        builder.Configuration.GetSection("Cors").Bind(corsOptions);
+
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("AllowBlazor", policy =>
+            options.AddPolicy(DefaultCorsPolicyName, policy =>
             {
-                policy.WithOrigins("https://localhost:7035") // URL do Blazor WebAssembly
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials(); // necessário se estiver usando cookies ou tokens
+                policy.WithOrigins(corsOptions?.AllowedOrigins ?? Array.Empty<string>())
+                      .AllowAnyHeader()
+                      .AllowAnyMethod()
+                      .AllowCredentials();
             });
+        });
+    }
+
+    private static void ConfigureRateLimiting(WebApplicationBuilder builder)
+    {
+        var rateOptions = new RateLimitingOptions();
+        builder.Configuration.GetSection("RateLimiting").Bind(rateOptions);
+
+        builder.Services.AddRateLimiter(options =>
+        {
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = rateOptions.PermitLimit,
+                        Window = TimeSpan.FromSeconds(rateOptions.WindowSeconds),
+                        QueueLimit = rateOptions.QueueLimit,
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+                    }));
         });
     }
 
@@ -262,5 +308,19 @@ public static class Bootstrap
         public string Domain { get; set; } = string.Empty;
 
         public string Audience { get; set; } = string.Empty;
+    }
+
+    private class CorsOptions
+    {
+        public string[] AllowedOrigins { get; set; } = Array.Empty<string>();
+    }
+
+    private class RateLimitingOptions
+    {
+        public int PermitLimit { get; set; }
+
+        public int WindowSeconds { get; set; }
+
+        public int QueueLimit { get; set; }
     }
 }
