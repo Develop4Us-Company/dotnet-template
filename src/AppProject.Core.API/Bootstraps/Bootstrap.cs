@@ -14,7 +14,6 @@ using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -218,6 +217,11 @@ public static class Bootstrap
         var auth0Options = new Auth0Options();
         builder.Configuration.GetSection("Auth0").Bind(auth0Options);
 
+        if (string.IsNullOrEmpty(auth0Options.Domain) || string.IsNullOrEmpty(auth0Options.Audience))
+        {
+            throw new ArgumentException("Auth0 configuration is not set properly.");
+        }
+
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -255,6 +259,11 @@ public static class Bootstrap
         var corsOptions = new CorsOptions();
         builder.Configuration.GetSection("Cors").Bind(corsOptions);
 
+        if (corsOptions.AllowedOrigins?.Any() == false)
+        {
+            throw new ArgumentException("CORS allowed origins are not configured.");
+        }
+
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(DefaultCorsPolicyName, policy =>
@@ -271,6 +280,11 @@ public static class Bootstrap
     {
         var rateOptions = new RateLimitingOptions();
         builder.Configuration.GetSection("RateLimiting").Bind(rateOptions);
+
+        if (rateOptions.PermitLimit <= 0 || rateOptions.WindowSeconds <= 0 || rateOptions.QueueLimit < 0)
+        {
+            throw new ArgumentException("Rate limiting options are not configured properly.");
+        }
 
         builder.Services.AddRateLimiter(options =>
         {
