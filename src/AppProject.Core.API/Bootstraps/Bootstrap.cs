@@ -8,6 +8,7 @@ using AppProject.Core.API.Middlewares;
 using AppProject.Core.API.SettingOptions;
 using AppProject.Core.Contracts;
 using AppProject.Core.Infrastructure.Database;
+using AppProject.Core.Infrastructure.Database.Entities.Auth;
 using AppProject.Core.Services;
 using AppProject.Exceptions;
 using Mapster;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -128,6 +130,52 @@ public static class Bootstrap
         await applicationDbContext.Database.MigrateAsync();
     }
 
+    public static async Task CreateOrUpdateSystemAdminUserAsync(this WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var systemAdminUserOptions = scope.ServiceProvider.GetRequiredService<IOptions<SystemAdminUserOptions>>();
+
+        if (systemAdminUserOptions.Value is null
+            || string.IsNullOrEmpty(systemAdminUserOptions.Value.Name)
+            || string.IsNullOrEmpty(systemAdminUserOptions.Value.Email))
+        {
+            throw new ArgumentException("SystemAdminUser configuration is not set properly.");
+        }
+
+        var user = await applicationDbContext.Users.FirstOrDefaultAsync(u => u.IsSystemAdmin);
+
+        if (user == null)
+        {
+            var adminUserId = Guid.NewGuid();
+
+            user = new TbUser
+            {
+                Id = adminUserId,
+                Name = systemAdminUserOptions.Value.Name!,
+                Email = systemAdminUserOptions.Value.Email!,
+                IsSystemAdmin = true,
+                CreatedAt = DateTime.UtcNow,
+                CreatedByUserId = adminUserId,
+                CreatedByUserName = systemAdminUserOptions.Value.Name!
+            };
+
+            applicationDbContext.Users.Add(user);
+            await applicationDbContext.SaveChangesAsync();
+        }
+        else if (user.Name != systemAdminUserOptions.Value.Name || user.Email != systemAdminUserOptions.Value.Email)
+        {
+            user.Name = systemAdminUserOptions.Value.Name!;
+            user.Email = systemAdminUserOptions.Value.Email!;
+            user.UpdatedAt = DateTime.UtcNow;
+            user.UpdatedByUserId = user.Id;
+            user.UpdatedByUserName = user.Name;
+
+            applicationDbContext.Users.Update(user);
+            await applicationDbContext.SaveChangesAsync();
+        }
+    }
+
     private static void ConfigureControllers(IMvcBuilder mvcBuilder)
     {
         foreach (var assembly in GetControllerAssemblies())
@@ -196,11 +244,10 @@ public static class Bootstrap
 
     private static void ConfigureUsers(WebApplicationBuilder builder)
     {
+        builder.Services.AddSingleton<ISystemAdminUserContext, SystemAdminUserContext>();
         builder.Services.AddScoped<IUserContext, UserContext>();
 
         builder.Services.AddHttpContextAccessor();
-
-        builder.Services.Configure<SystemAdminUserOptions>(builder.Configuration.GetSection("SystemAdminUser"));
     }
 
     private static void ConfigureMapper(WebApplicationBuilder builder)
@@ -398,6 +445,13 @@ public static class Bootstrap
         public string ClientId { get; set; } = string.Empty;
 
         public string Audience { get; set; } = string.Empty;
+    }
+
+    private class SystemAdminUserOptions
+    {
+        public string? Name { get; set; }
+
+        public string? Email { get; set; }
     }
 
     private class CorsOptions
