@@ -54,8 +54,12 @@ namespace AppProject.Core.Controllers.General
         public async Task<IActionResult> GetCurrentUserEmail()
         {
             var currentUser = await userContext.GetCurrentUserAsync();
+            var systemAdminUser = await userContext.GetSystemAdminUserAsync();
 
-            return this.Ok(currentUser.Email);
+            var message = $"Current user email: {currentUser.Email}. " +
+                          $"System admin user email: {systemAdminUser.Email}";
+
+            return this.Ok(message);
         }
 
         [HttpGet]
