@@ -4,7 +4,9 @@ using AppProject.Core.Contracts;
 using AppProject.Core.Infrastructure.AI;
 using AppProject.Core.Infrastructure.Email;
 using AppProject.Core.Infrastructure.Email.Models;
+using AppProject.Core.Infrastructure.Jobs;
 using AppProject.Core.Models.General;
+using AppProject.Core.Services.General;
 using AppProject.Exceptions;
 using AppProject.Models;
 using AppProject.Resources;
@@ -21,7 +23,8 @@ namespace AppProject.Core.Controllers.General
         ILogger<SampleController> logger,
         IEmailTemplateRenderer emailTemplateRenderer,
         IEmailSender emailSender,
-        IChatClient chatClient)
+        IChatClient chatClient,
+        IJobDispatcher jobDispatcher)
         : ControllerBase
     {
         [HttpGet]
@@ -117,7 +120,7 @@ namespace AppProject.Core.Controllers.General
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendAIConversationAsync([FromBody]string userMessage, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> SendAIConversationAsync([FromBody] string userMessage, CancellationToken cancellationToken = default)
         {
             var systemMessage = "You are a helpful assistant. Reply in the same language as the user.";
             var userMessages = new List<string> { userMessage };
@@ -125,6 +128,13 @@ namespace AppProject.Core.Controllers.General
             var response = await chatClient.SendMessageAsync(systemMessage, userMessages, "openai/gpt-4.1", cancellationToken);
 
             return this.Ok(response);
+        }
+
+        [HttpPost]
+        public IActionResult ExecuteSampleJob()
+        {
+            jobDispatcher.Enqueue<SampleJob>();
+            return this.Ok("Sample job executed successfully.");
         }
     }
 }
