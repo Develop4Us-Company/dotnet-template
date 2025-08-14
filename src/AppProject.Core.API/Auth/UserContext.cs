@@ -4,40 +4,44 @@ using AppProject.Core.Contracts;
 using AppProject.Core.Infrastructure.Database;
 using AppProject.Core.Infrastructure.Database.Entities.Auth;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Hybrid;
 
 namespace AppProject.Core.API.Auth;
 
 public class UserContext(
     IHttpContextAccessor httpContextAccessor,
-    ApplicationDbContext applicationDbContext)
+    ApplicationDbContext applicationDbContext,
+    HybridCache hybridCache)
     : IUserContext
 {
-    private UserInfo? systemAdminUser;
     private UserInfo? currentUser;
 
     public async Task<UserInfo> GetSystemAdminUserAsync(CancellationToken cancellationToken = default)
     {
-        if (this.systemAdminUser is not null)
+        var cachedUser = await hybridCache.GetOrCreateAsync(
+            CacheKeys.SystemAdminUserKey,
+            async token => await GetSystemAdminUserFromDatabaseAsync(token),
+            cancellationToken: cancellationToken);
+
+        return cachedUser;
+
+        async Task<UserInfo> GetSystemAdminUserFromDatabaseAsync(CancellationToken cancellationToken = default)
         {
-            return this.systemAdminUser;
+            var user = await applicationDbContext.Users.FirstOrDefaultAsync(u => u.IsSystemAdmin, cancellationToken);
+
+            if (user is null)
+            {
+                throw new InvalidOperationException("System admin user not found.");
+            }
+
+            return new UserInfo
+            {
+                UserId = user.Id,
+                UserName = user.Name,
+                Email = user.Email,
+                IsSystemAdmin = true
+            };
         }
-
-        var user = await applicationDbContext.Users.FirstOrDefaultAsync(u => u.IsSystemAdmin, cancellationToken);
-
-        if (user is null)
-        {
-            throw new InvalidOperationException("System admin user not found.");
-        }
-
-        this.systemAdminUser = new UserInfo
-        {
-            UserId = user.Id,
-            UserName = user.Name,
-            Email = user.Email,
-            IsSystemAdmin = true
-        };
-
-        return this.systemAdminUser;
     }
 
     public async Task<UserInfo> GetCurrentUserAsync(CancellationToken cancellationToken = default)
