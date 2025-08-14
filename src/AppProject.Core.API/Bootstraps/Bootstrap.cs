@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -49,6 +50,8 @@ public static class Bootstrap
         ConfigureAuthentication(builder);
 
         ConfigureSwagger(builder);
+
+        ConfigureCache(builder);
 
         ConfigureLog(builder);
 
@@ -175,6 +178,9 @@ public static class Bootstrap
             applicationDbContext.Users.Update(user);
             await applicationDbContext.SaveChangesAsync();
         }
+
+        var hybridCache = scope.ServiceProvider.GetRequiredService<HybridCache>();
+        await hybridCache.RemoveAsync(CacheKeys.SystemAdminUserKey);
     }
 
     private static void ConfigureControllers(IMvcBuilder mvcBuilder)
@@ -365,6 +371,13 @@ public static class Bootstrap
         });
     }
 
+    private static void ConfigureCache(WebApplicationBuilder builder)
+    {
+        builder.Services.AddHybridCache();
+
+        // You can configure IDistributedCache here if needed and connect with Redis or other cache providers
+    }
+
     private static void ConfigureLog(WebApplicationBuilder builder)
     {
         Log.Logger = new LoggerConfiguration()
@@ -373,6 +386,8 @@ public static class Bootstrap
             .CreateLogger();
 
         builder.Logging.AddSerilog(Log.Logger);
+
+        // You can configure Application Insights or other logging providers here
     }
 
     private static void ConfigureCors(WebApplicationBuilder builder)
