@@ -9,4 +9,8 @@
     <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
+  </ItemGroup>
+
 </Project>
