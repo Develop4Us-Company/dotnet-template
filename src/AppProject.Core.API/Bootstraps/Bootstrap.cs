@@ -11,8 +11,10 @@ using AppProject.Core.Infrastructure.AI;
 using AppProject.Core.Infrastructure.Database;
 using AppProject.Core.Infrastructure.Database.Entities.Auth;
 using AppProject.Core.Infrastructure.Email;
+using AppProject.Core.Infrastructure.Jobs;
 using AppProject.Core.Services;
 using AppProject.Exceptions;
+using Hangfire;
 using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
@@ -66,6 +68,8 @@ public static class Bootstrap
 
         ConfigureAI(builder);
 
+        ConfigureJobs(builder);
+
         return builder;
     }
 
@@ -97,6 +101,8 @@ public static class Bootstrap
                     { "audience", auth0Options.Audience }
                 });
             });
+
+            app.UseHangfireDashboard("/hangfire");
         }
         else
         {
@@ -125,6 +131,8 @@ public static class Bootstrap
         app.UseAuthorization();
 
         app.UseMiddleware<SerilogUserEnricherMiddleware>();
+
+        JobsBootstrap.RegisterRecurringJobs();
 
         app.MapControllers();
 
@@ -462,6 +470,18 @@ public static class Bootstrap
     {
         builder.Services.Configure<AIOptions>(builder.Configuration.GetSection("AI"));
         builder.Services.AddScoped<IChatClient, ChatClient>();
+    }
+
+    private static void ConfigureJobs(WebApplicationBuilder builder)
+    {
+        builder.Services.AddHangfire(config =>
+        {
+            config.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection"));
+        });
+
+        builder.Services.AddHangfireServer();
+
+        builder.Services.AddScoped<IJobDispatcher, JobDispatcher>();
     }
 
     private static IEnumerable<Assembly> GetControllerAssemblies() =>
