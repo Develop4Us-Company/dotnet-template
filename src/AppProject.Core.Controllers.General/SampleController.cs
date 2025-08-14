@@ -1,6 +1,7 @@
 #if DEBUG
 using System.Security.Claims;
 using AppProject.Core.Contracts;
+using AppProject.Core.Infrastructure.AI;
 using AppProject.Core.Infrastructure.Email;
 using AppProject.Core.Infrastructure.Email.Models;
 using AppProject.Core.Models.General;
@@ -19,7 +20,8 @@ namespace AppProject.Core.Controllers.General
         IUserContext userContext,
         ILogger<SampleController> logger,
         IEmailTemplateRenderer emailTemplateRenderer,
-        IEmailSender emailSender)
+        IEmailSender emailSender,
+        IChatClient chatClient)
         : ControllerBase
     {
         [HttpGet]
@@ -99,7 +101,7 @@ namespace AppProject.Core.Controllers.General
                 to: new List<string> { "juarez.a.s.junior@gmail.com" },
                 cc: null,
                 bcc: null,
-                subject: "Sample Email",
+                subject: "Welcome to our AppProject!",
                 body: body,
                 emailAttachments: emailAttachments,
                 cancellationToken: CancellationToken.None);
@@ -112,6 +114,17 @@ namespace AppProject.Core.Controllers.General
             {
                 return this.StatusCode(500, "Failed to send email.");
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendAIConversationAsync([FromBody]string userMessage, CancellationToken cancellationToken = default)
+        {
+            var systemMessage = "You are a helpful assistant. Reply in the same language as the user.";
+            var userMessages = new List<string> { userMessage };
+
+            var response = await chatClient.SendMessageAsync(systemMessage, userMessages, "openai/gpt-4.1", cancellationToken);
+
+            return this.Ok(response);
         }
     }
 }

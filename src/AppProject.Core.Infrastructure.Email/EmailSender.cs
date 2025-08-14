@@ -8,7 +8,7 @@ namespace AppProject.Core.Infrastructure.Email;
 
 public class EmailSender(
     ISendGridClient sendGridClient,
-    IOptions<SendEmailOptions> sendGridOptions,
+    IOptions<SendEmailOptions> sendEmailOptions,
     ILogger<EmailSender> logger)
     : IEmailSender
 {
@@ -23,8 +23,18 @@ public class EmailSender(
         IEnumerable<EmailAttachment>? emailAttachments = null,
         CancellationToken cancellationToken = default)
     {
-        fromEmailAddress ??= sendGridOptions.Value.FromEmailAddress;
-        fromName ??= sendGridOptions.Value.FromName;
+        fromEmailAddress ??= sendEmailOptions.Value?.FromEmailAddress;
+        fromName ??= sendEmailOptions.Value?.FromName;
+
+        if (string.IsNullOrEmpty(fromEmailAddress))
+        {
+            throw new InvalidOperationException("From email address must be provided.");
+        }
+
+        if (string.IsNullOrEmpty(sendEmailOptions.Value?.ApiKey))
+        {
+            throw new InvalidOperationException("SendEmail API key must be configured.");
+        }
 
         var message = new SendGridMessage
         {
