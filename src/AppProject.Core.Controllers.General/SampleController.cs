@@ -1,6 +1,8 @@
 #if DEBUG
 using System.Security.Claims;
 using AppProject.Core.Contracts;
+using AppProject.Core.Infrastructure.Email;
+using AppProject.Core.Infrastructure.Email.Models;
 using AppProject.Core.Models.General;
 using AppProject.Exceptions;
 using AppProject.Models;
@@ -14,8 +16,10 @@ namespace AppProject.Core.Controllers.General
     [Route("api/general/[controller]/[action]")]
     [ApiController]
     public class SampleController(
+        IUserContext userContext,
         ILogger<SampleController> logger,
-        IUserContext userContext)
+        IEmailTemplateRenderer emailTemplateRenderer,
+        IEmailSender emailSender)
         : ControllerBase
     {
         [HttpGet]
@@ -69,6 +73,45 @@ namespace AppProject.Core.Controllers.General
             logger.LogInformation(logMessage);
 
             return $"Log message: {logMessage}";
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendEmailAsync(CancellationToken cancellationToken = default)
+        {
+            var emailModel = new SampleEmailModel
+            {
+                Name = "John Doe",
+                Date = DateTime.UtcNow,
+            };
+
+            var body = await emailTemplateRenderer.RenderAsync("SampleEmailTemplate", emailModel);
+            var emailAttachments = new List<EmailAttachment>
+            {
+                new EmailAttachment
+                {
+                    FileName = "sample.txt",
+                    Type = "text/plain",
+                    Content = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes("This is a sample attachment."))
+                }
+            };
+
+            var result = await emailSender.SendEmailAsync(
+                to: new List<string> { "juarez.a.s.junior@gmail.com" },
+                cc: null,
+                bcc: null,
+                subject: "Sample Email",
+                body: body,
+                emailAttachments: emailAttachments,
+                cancellationToken: CancellationToken.None);
+
+            if (result)
+            {
+                return this.Ok("Email sent successfully.");
+            }
+            else
+            {
+                return this.StatusCode(500, "Failed to send email.");
+            }
         }
     }
 }

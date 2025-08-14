@@ -19,4 +19,13 @@
   <data name="Sample" xml:space="preserve">
     <value>Sample</value>
   </data>
+  <data name="SampleEmailTemplate_Introduction" xml:space="preserve">
+    <value>Hi, {0}!</value>
+  </data>
+  <data name="SampleEmailTemplate_Message" xml:space="preserve">
+    <value>This is a sample message for you.</value>
+  </data>
+  <data name="SampleEmailTemplate_Date" xml:space="preserve">
+    <value>Sent date: {0}</value>
+  </data>
 </root>

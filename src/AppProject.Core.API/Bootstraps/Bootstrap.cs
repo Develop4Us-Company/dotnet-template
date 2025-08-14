@@ -4,10 +4,12 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Threading.RateLimiting;
 using AppProject.Core.API.Auth;
+using AppProject.Core.API.EmailRenderer;
 using AppProject.Core.API.Middlewares;
 using AppProject.Core.Contracts;
 using AppProject.Core.Infrastructure.Database;
 using AppProject.Core.Infrastructure.Database.Entities.Auth;
+using AppProject.Core.Infrastructure.Email;
 using AppProject.Core.Services;
 using AppProject.Exceptions;
 using Mapster;
@@ -16,8 +18,8 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using SendGrid.Extensions.DependencyInjection;
 using Serilog;
 
 namespace AppProject.Core.API.Bootstraps;
@@ -58,6 +60,8 @@ public static class Bootstrap
         ConfigureCors(builder);
 
         ConfigureRateLimiting(builder);
+
+        ConfigureEmail(builder);
 
         return builder;
     }
@@ -437,6 +441,20 @@ public static class Bootstrap
         });
     }
 
+    private static void ConfigureEmail(WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<SendEmailOptions>(builder.Configuration.GetSection("SendEmail"));
+        builder.Services.AddScoped<IEmailSender, EmailSender>();
+        builder.Services.AddScoped<IEmailTemplateRenderer, EmailTemplateRenderer>();
+        builder.Services.AddSendGrid(options =>
+        {
+            var sendEmailOptions = new SendEmailOptions();
+            builder.Configuration.GetSection("SendEmail").Bind(sendEmailOptions);
+
+            options.ApiKey = sendEmailOptions.ApiKey;
+        });
+    }
+
     private static IEnumerable<Assembly> GetControllerAssemblies() =>
         [
             Assembly.Load("AppProject.Core.Controllers.General"),
@@ -464,9 +482,9 @@ public static class Bootstrap
 
     private class SystemAdminUserOptions
     {
-        public string? Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        public string? Email { get; set; }
+        public string Email { get; set; } = string.Empty;
     }
 
     private class CorsOptions

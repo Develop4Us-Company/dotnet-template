@@ -27,5 +27,20 @@
               Looks up a localized string similar to Sample.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Date">
+            <summary>
+              Looks up a localized string similar to Sent date: {0}.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Introduction">
+            <summary>
+              Looks up a localized string similar to Hi, {0}!.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Message">
+            <summary>
+              Looks up a localized string similar to This is a sample message for you..
+            </summary>
+        </member>
     </members>
 </doc>

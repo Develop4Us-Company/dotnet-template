@@ -2,11 +2,18 @@
 
   <ItemGroup>
     <ProjectReference Include="../AppProject.Core.Contracts/AppProject.Core.Contracts.csproj" />
-    <ProjectReference Include="../AppProject.Core.Models.General/AppProject.Core.Models.General.csproj" />
-    <ProjectReference Include="../AppProject.Core.Models/AppProject.Core.Models.csproj" />
     <ProjectReference Include="../AppProject.Exceptions/AppProject.Exceptions.csproj" />
     <ProjectReference Include="../AppProject.Resources/AppProject.Resources.csproj" />
     <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RazorLight" Version="2.3.1" />
+    <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\*.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -35,4 +35,8 @@
     <Folder Include="logs/" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+  </PropertyGroup>
+
 </Project>
