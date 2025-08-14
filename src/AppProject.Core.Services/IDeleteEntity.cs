@@ -7,5 +7,5 @@ public interface IDeleteEntity<TRequest, TResponse>
     where TRequest : class, IRequest
     where TResponse : class, IResponse
 {
-    Task<TResponse> DeleteEntityAsync(TRequest request);
+    Task<TResponse> DeleteEntityAsync(TRequest request, CancellationToken cancellationToken = default);
 }

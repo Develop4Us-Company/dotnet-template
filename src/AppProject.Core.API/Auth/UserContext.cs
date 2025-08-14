@@ -15,14 +15,14 @@ public class UserContext(
     private UserInfo? systemAdminUser;
     private UserInfo? currentUser;
 
-    public async Task<UserInfo> GetSystemAdminUserAsync()
+    public async Task<UserInfo> GetSystemAdminUserAsync(CancellationToken cancellationToken = default)
     {
         if (this.systemAdminUser is not null)
         {
             return this.systemAdminUser;
         }
 
-        var user = await applicationDbContext.Users.FirstOrDefaultAsync(u => u.IsSystemAdmin);
+        var user = await applicationDbContext.Users.FirstOrDefaultAsync(u => u.IsSystemAdmin, cancellationToken);
 
         if (user is null)
         {
@@ -40,14 +40,14 @@ public class UserContext(
         return this.systemAdminUser;
     }
 
-    public async Task<UserInfo> GetCurrentUserAsync()
+    public async Task<UserInfo> GetCurrentUserAsync(CancellationToken cancellationToken = default)
     {
         if (this.currentUser != null)
         {
             return this.currentUser;
         }
 
-        var systemAdminUser = await this.GetSystemAdminUserAsync();
+        var systemAdminUser = await this.GetSystemAdminUserAsync(cancellationToken);
 
         var claimsPrincipal = httpContextAccessor.HttpContext?.User;
         if (claimsPrincipal?.Identity?.IsAuthenticated == true)
@@ -71,7 +71,7 @@ public class UserContext(
                 name = email;
             }
 
-            var user = await applicationDbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await applicationDbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 
             if (user == null)
             {

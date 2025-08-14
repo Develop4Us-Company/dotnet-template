@@ -12,21 +12,21 @@ public class DatabaseRepository(
     IUserContext userContext)
     : IDatabaseRepository
 {
-    public async Task InsertAsync<TEntity>(TEntity entity, CancellationToken cancellationToken)
+    public async Task InsertAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
     where TEntity : BaseEntity
     {
         await this.SetAuditFieldsAsync(entity, isInsert: true);
         await applicationDbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
     }
 
-    public async Task UpdateAsync<TEntity>(TEntity entity)
+    public async Task UpdateAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
     {
-        await this.SetAuditFieldsAsync(entity, isInsert: false);
+        await this.SetAuditFieldsAsync(entity, isInsert: false, cancellationToken);
         applicationDbContext.Set<TEntity>().Update(entity);
     }
 
-    public Task DeleteAsync<TEntity>(TEntity entity)
+    public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
     {
         applicationDbContext.Set<TEntity>().Remove(entity);
@@ -34,7 +34,7 @@ public class DatabaseRepository(
         return Task.CompletedTask;
     }
 
-    public async Task SaveAsync(CancellationToken cancellationToken)
+    public async Task SaveAsync(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -46,36 +46,36 @@ public class DatabaseRepository(
         }
     }
 
-    public async Task<IList<TDestination>> GetAllAsync<TEntity, TDestination>(CancellationToken cancellationToken)
+    public async Task<IList<TDestination>> GetAllAsync<TEntity, TDestination>(CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
         where TDestination : class
     {
         return await applicationDbContext.Set<TEntity>().AsQueryable().ProjectToType<TDestination>().ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TEntity>> GetAllAsync<TEntity>(CancellationToken cancellationToken)
+    public async Task<IList<TEntity>> GetAllAsync<TEntity>(CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
     {
         return await applicationDbContext.Set<TEntity>().AsQueryable().ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TDestination>> GetByConditionAsync<TEntity, TDestination>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken)
+    public async Task<IList<TDestination>> GetByConditionAsync<TEntity, TDestination>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
         where TDestination : class
     {
         return await queryable(applicationDbContext.Set<TEntity>().AsQueryable()).ProjectToType<TDestination>().ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TEntity>> GetByConditionAsync<TEntity>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken)
+    public async Task<IList<TEntity>> GetByConditionAsync<TEntity>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
     {
         return await queryable(applicationDbContext.Set<TEntity>().AsQueryable()).ToListAsync(cancellationToken);
     }
 
-    private async Task SetAuditFieldsAsync<TEntity>(TEntity entity, bool isInsert)
+    private async Task SetAuditFieldsAsync<TEntity>(TEntity entity, bool isInsert, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
     {
-        var currentUser = await userContext.GetCurrentUserAsync();
+        var currentUser = await userContext.GetCurrentUserAsync(cancellationToken);
 
         var now = DateTime.UtcNow;
 

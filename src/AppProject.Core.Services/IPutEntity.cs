@@ -7,5 +7,5 @@ public interface IPutEntity<TRequest, TResponse>
     where TRequest : class, IRequest
     where TResponse : class, IResponse
 {
-    Task<TResponse> PutEntityAsync(TRequest request);
+    Task<TResponse> PutEntityAsync(TRequest request, CancellationToken cancellationToken = default);
 }
