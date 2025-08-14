@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Threading.RateLimiting;
 using AppProject.Core.API.Auth;
 using AppProject.Core.API.Middlewares;
-using AppProject.Core.API.SettingOptions;
 using AppProject.Core.Contracts;
 using AppProject.Core.Infrastructure.Database;
 using AppProject.Core.Infrastructure.Database.Entities.Auth;
@@ -134,11 +133,13 @@ public static class Bootstrap
     {
         using var scope = app.Services.CreateScope();
         var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        var systemAdminUserOptions = scope.ServiceProvider.GetRequiredService<IOptions<SystemAdminUserOptions>>();
 
-        if (systemAdminUserOptions.Value is null
-            || string.IsNullOrEmpty(systemAdminUserOptions.Value.Name)
-            || string.IsNullOrEmpty(systemAdminUserOptions.Value.Email))
+        var systemAdminUserOptions = new SystemAdminUserOptions();
+        app.Configuration.GetSection("SystemAdminUser").Bind(systemAdminUserOptions);
+
+        if (systemAdminUserOptions is null
+            || string.IsNullOrEmpty(systemAdminUserOptions.Name)
+            || string.IsNullOrEmpty(systemAdminUserOptions.Email))
         {
             throw new ArgumentException("SystemAdminUser configuration is not set properly.");
         }
@@ -152,21 +153,21 @@ public static class Bootstrap
             user = new TbUser
             {
                 Id = adminUserId,
-                Name = systemAdminUserOptions.Value.Name!,
-                Email = systemAdminUserOptions.Value.Email!,
+                Name = systemAdminUserOptions.Name!,
+                Email = systemAdminUserOptions.Email!,
                 IsSystemAdmin = true,
                 CreatedAt = DateTime.UtcNow,
                 CreatedByUserId = adminUserId,
-                CreatedByUserName = systemAdminUserOptions.Value.Name!
+                CreatedByUserName = systemAdminUserOptions.Name!
             };
 
             applicationDbContext.Users.Add(user);
             await applicationDbContext.SaveChangesAsync();
         }
-        else if (user.Name != systemAdminUserOptions.Value.Name || user.Email != systemAdminUserOptions.Value.Email)
+        else if (user.Name != systemAdminUserOptions.Name || user.Email != systemAdminUserOptions.Email)
         {
-            user.Name = systemAdminUserOptions.Value.Name!;
-            user.Email = systemAdminUserOptions.Value.Email!;
+            user.Name = systemAdminUserOptions.Name!;
+            user.Email = systemAdminUserOptions.Email!;
             user.UpdatedAt = DateTime.UtcNow;
             user.UpdatedByUserId = user.Id;
             user.UpdatedByUserName = user.Name;
@@ -244,7 +245,6 @@ public static class Bootstrap
 
     private static void ConfigureUsers(WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<ISystemAdminUserContext, SystemAdminUserContext>();
         builder.Services.AddScoped<IUserContext, UserContext>();
 
         builder.Services.AddHttpContextAccessor();
