@@ -1,5 +1,4 @@
 #if DEBUG
-using System.Security.Claims;
 using AppProject.Core.Contracts;
 using AppProject.Core.Infrastructure.AI;
 using AppProject.Core.Infrastructure.Email;
