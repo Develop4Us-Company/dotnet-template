@@ -51,10 +51,10 @@ namespace AppProject.Core.Controllers.General
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetCurrentUserEmail()
+        public async Task<IActionResult> GetCurrentUserEmailAsync(CancellationToken cancellationToken = default)
         {
-            var currentUser = await userContext.GetCurrentUserAsync();
-            var systemAdminUser = await userContext.GetSystemAdminUserAsync();
+            var currentUser = await userContext.GetCurrentUserAsync(cancellationToken);
+            var systemAdminUser = await userContext.GetSystemAdminUserAsync(cancellationToken);
 
             var message = $"Current user email: {currentUser.Email}. " +
                           $"System admin user email: {systemAdminUser.Email}";
