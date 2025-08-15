@@ -1,15 +1,15 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using AppProject.Models;
 
 namespace AppProject.Core.Models.General;
 
-public class SampleDto : IEntity
+public class StateSummary : ISummary
 {
     public Guid Id { get; set; }
 
-    [Required]
     public string Name { get; set; } = string.Empty;
 
-    public byte[]? RowVersion { get; set; }
+    public string CountryName { get; set; } = string.Empty;
+
+    public Guid CountryId { get; set; }
 }

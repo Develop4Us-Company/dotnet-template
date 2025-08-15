@@ -13,7 +13,7 @@ public abstract class BaseEntity
 
     [MaxLength(255)]
     [Required]
-    public string CreatedByUserName { get; set; } = default!;
+    public string CreatedByUserName { get; set; } = string.Empty;
 
     public DateTimeOffset? UpdatedAt { get; set; }
 
@@ -24,5 +24,5 @@ public abstract class BaseEntity
 
     [Timestamp]
     [Required]
-    public byte[] RowVersion { get; set; } = default!;
+    public byte[] RowVersion { get; set; } = [];
 }
