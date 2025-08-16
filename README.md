@@ -307,7 +307,7 @@ As classes de serviço ficam nos projetos abaixo:
 * AppProject.Core.Services.General (para serviços do módulo General);
 * AppProject.Core.Services.ModuleName (para serviços de outros módulos, deve-se ter um projeto específico onde ModuleName é o nome do módulo).
 
-As classes e interfaces de serviços tem normalmente a estrutura a seguir.
+As interfaces e classes de serviços tem normalmente a estrutura a seguir.
 
 ### Interface da classe de serviço
 Uma interface de uma classe de serviço implementa uma outra interface que diz como que ela será registrada no DI. Essas são as opções:
@@ -315,10 +315,101 @@ Uma interface de uma classe de serviço implementa uma outra interface que diz c
 * ITransientService (será registrada como transient);
 * ISingletonService (será registrada como singleton).
 
+Automaticamente, todas as classes e interfaces de serviços são colocadas na DI automaticamente.
+
+O nome de toda interface começa com a letra I, de interface.
+
 Sendo o objetivo da classe de serviço fazer um CRUD no banco de dados, a interface poderá fazer também as seguintes implementações:
 * IGetEntity<GetByIdRequest<Guid>, EntityResponse<Country>>: Isso fará com que tenha um método para trazer uma entidade. O parâmetro do método será uma request que contém como propriedade um Id do tipo informado (que nesse exemplo é Guid). A resposta será uma classe que contém o DTO da entidade informada, que nesse caso será Country;
-* IGetEntities<GetByParentIdRequest<Guid>, EntitiesResponse<CountryLanguage>>: Esse método não tem em todas as circunstâncias. Ele serve normalmente para lidar com entidades que estão agregadas. Por exemplo, diríamos que tenhamos uma entidade chamada CountryLanguage. Essa entidade permite adicionar vários idiomas à uma entidade Country. Eu quero que tenha um método que retorne todos os idiomas de acordo com o Id do país. Então, eu posso usar esse IGetEntities para ter um método que retorne essas entidades. O parâmetro será uma request que contém o ParentId (que é o Id do pai, sendo nesse caso o Id do Country). Também informamos o tipo desse ParentId (que nesse caso é um Guid). O retorno será uma classe que tenha como propriedade uma coleção (IReadOnlyCollection) da entidade (que nesse caso será a CountryLanguage);
+* IGetEntities<GetByParentIdRequest<Guid>, EntitiesResponse<CountryLanguage>>: Esse método não tem em todas as circunstâncias de CRUD. Ele serve normalmente para lidar com entidades que estão agregadas. Por exemplo, diríamos que tenhamos uma entidade chamada CountryLanguage. Essa entidade permite adicionar vários idiomas à uma entidade Country. Eu quero que tenha um método que retorne todos os idiomas de acordo com o Id do país. Então, eu posso usar esse IGetEntities para ter um método que retorne essas entidades. O parâmetro será uma request que contém o ParentId (que é o Id do pai, sendo nesse caso o Id do Country). Também informamos o tipo desse ParentId (que nesse caso é um Guid). O retorno será uma classe que tenha como propriedade uma coleção (IReadOnlyCollection) da entidade (que nesse caso será a CountryLanguage);
 * IPostEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>: Isso fará com que tenha um método para inserir um novo registro de entidade. O parâmetro será uma request que contém como propriedade uma instância do DTO da entidade que será inserido (que nesse caso é Country). A resposta será uma classe que contém o Id do tipo informado (que nesse caso é Guid) com o valor do Id do registro que foi inserido no banco de dados.
 * IPutEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>: Isso fará com que tenha um método para atualizar um registro já existente. O parâmetro será uma request que contém como propriedade uma instância do DTO da entidade que será inserido (que nesse caso é Country). A resposta será uma classe que contém o Id do tipo informado (que nesse caso é Guid) com o valor do Id do registro que foi alterado no banco de dados.
 * IDeleteEntity<DeleteRequest<Guid>, EmptyResponse>: Isso fará cm que tenha um método para deletar um registro do banco de dados. O parâmetro será uma request contendo como propriedade o Id do tipo especificado (que nesse caso é Guid). Esse é o Id que será utilizado para deletar o registro. A resposta será uma classe EmptyResponse, que não tem nenhuma propriedade dentro.
+
+Veja nos exemplos a seguir, duas interfaces de CRUD, uma para a entidade Country e outra para State.
+
+[`ICountryService.cs`](./src/AppProject.Core.Services.General/ICountryService.cs):
+
+```csharp
+using System;
+using AppProject.Core.Models.General;
+using AppProject.Models;
+
+namespace AppProject.Core.Services.General;
+
+public interface ICountryService
+    : ITransientService,
+    IGetEntity<GetByIdRequest<Guid>, EntityResponse<Country>>,
+    IPostEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>,
+    IPutEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>,
+    IDeleteEntity<DeleteRequest<Guid>, EmptyResponse>
+{
+}
+```
+
+[`IStateService.cs`](./src/AppProject.Core.Services.General/IStateService.cs):
+
+```csharp
+using System;
+using AppProject.Core.Models.General;
+using AppProject.Models;
+
+namespace AppProject.Core.Services.General;
+
+public interface IStateService
+    : ITransientService,
+    IGetEntity<GetByIdRequest<Guid>, EntityResponse<State>>,
+    IPostEntity<CreateOrUpdateRequest<State>, KeyResponse<Guid>>,
+    IPutEntity<CreateOrUpdateRequest<State>, KeyResponse<Guid>>,
+    IDeleteEntity<DeleteRequest<Guid>, EmptyResponse>
+{
+}
+```
+
+No caso das interfaces de serviços para retornar summaries, nós fazemos a implementação conforme abaixo:
+* IGetSummaries<SearchRequest, SummariesResponse<CountrySummary>>: Isso fará com que tenha um método para trazer uma coleção de summaries. O parâmetro do método será uma SearchRequest que contém algumas propriedades básicas de uma pesquisa: Take e SearchText. A propriedade Take contém quantos registros deseja que sejam trazidos na consulta. Se o valor de Take for nulo, todos os registros serão trazidos. No caso do SearchText, temos o valor de algo que o usuário digitou na pesquisa. Poderemos usar essa propriedade para filtrar um ou mais campos da tabela para encontrar os registros. Caso essa propriedade seja nula, também serão trazidos todos os registros do banco. Embora estejamos usando uma classe SearchRequest, poderá também ser criado outras classes que herdem de SearchRequest para serem usadas aqui. Por exemplo, imagine que na página, seja possível também filtrar por datas ou outros campos da tabela. Nesses casos, poderá ser criado uma nova classe herdando da SearchRequest e tendo esses campos de pesquisa como propriedades. Nesse IGetSummaries, temos como resposta uma classe que contém uma coleção (IReadOnlyCollection) de DTOs do summary especificado (que nesse caso será CountrySummary);
+* IGetSummary<GetByIdRequest<Guid>, SummaryResponse<CountrySummary>>: Com essa implementação, teremos um método que retorna apenas um summary, encontrado através do Id. Assim, o parâmetro desse método será um GetByIdRequest do tipo do Id (que nesse caso é Guid). O retorno será uma classe SummaryResponse que contém o summary encontrado, que nesse caso será CountrySummary. O objetivo dessa implementação é proporcionar consultas que retornem apenas um registro.
+
+A seguir, veja as interfaces ICountrySummaryService e IStateSummaryService.
+
+[`ICountrySummaryService.cs`](./src/AppProject.Core.Services.General/ICountrySummaryService.cs):
+
+```csharp
+using System;
+using AppProject.Core.Models.General;
+using AppProject.Models;
+
+namespace AppProject.Core.Services.General;
+
+public interface ICountrySummaryService
+    : ITransientService,
+    IGetSummaries<SearchRequest, SummariesResponse<CountrySummary>>,
+    IGetSummary<GetByIdRequest<Guid>, SummaryResponse<CountrySummary>>
+{
+}
+```
+
+[`IStateSummaryService.cs`](./src/AppProject.Core.Services.General/IStateSummaryService.cs):
+
+```csharp
+using System;
+using AppProject.Core.Models.General;
+using AppProject.Models;
+
+namespace AppProject.Core.Services.General;
+
+public interface IStateSummaryService
+    : ITransientService,
+    IGetSummaries<SearchRequest, SummariesResponse<StateSummary>>,
+    IGetSummary<GetByIdRequest<Guid>, SummaryResponse<StateSummary>>
+{
+}
+```
+
+### Classes de serviço
+As classes de serviços herdam da classe base chamada BaseService e implementam a interface que leva o seu nome. A herança da BaseService é útil caso, em algum momento, precise implementar algum código que se aplique a todos os serviços. 
+
+Dentro das classes de serviços, nós vamos ter as implementações dos métodos que foram colocados na interface. Elas podem ter quaisquer métodos que sejam úteis em validações de regras de negócios, envio de e-mails, consultas a outros mecanismos (como IA), execuções de Jobs ou acesso ao banco de dados para fazer CRUDs.
+
+Veja a seguir, como fica a classe SummaryService e StateService, que fazem um CRUD no banco de dados.
 
