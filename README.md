@@ -300,3 +300,25 @@ Esse comando fará com que, na pasta Migrations do projeto AppProject.Core.Infra
 Importante: não precisa aplicar o migration, pois ele já é aplicado automaticamente quando a API sobe.
 
 ## Criando as interfaces e classes de serviço
+As classes de serviço servem para implementarmos as regras de negócio e manipularmos o banco de dados. Toda classe de serviço tem uma interface associada a ela.
+
+As classes de serviço ficam nos projetos abaixo:
+* AppProject.Core.Services (para serviços que são compartilhados entre os módulos [nesse caso, não esqueça de criar uma pasta, caso não exista, com o nome do módulo, para que o arquivo fique dentro dela (exemplo: pasta General no projeto AppProject.Core.Services significa que o conteúdo dentro dela pertence ao módulo General, porém está no projeto compartilhado entre todos os módulos)]);
+* AppProject.Core.Services.General (para serviços do módulo General);
+* AppProject.Core.Services.ModuleName (para serviços de outros módulos, deve-se ter um projeto específico onde ModuleName é o nome do módulo).
+
+As classes e interfaces de serviços tem normalmente a estrutura a seguir.
+
+### Interface da classe de serviço
+Uma interface de uma classe de serviço implementa uma outra interface que diz como que ela será registrada no DI. Essas são as opções:
+* IScopedService (será registrada como scoped);
+* ITransientService (será registrada como transient);
+* ISingletonService (será registrada como singleton).
+
+Sendo o objetivo da classe de serviço fazer um CRUD no banco de dados, a interface poderá fazer também as seguintes implementações:
+* IGetEntity<GetByIdRequest<Guid>, EntityResponse<Country>>: Isso fará com que tenha um método para trazer uma entidade. O parâmetro do método será uma request que contém como propriedade um Id do tipo informado (que nesse exemplo é Guid). A resposta será uma classe que contém o DTO da entidade informada, que nesse caso será Country;
+* IGetEntities<GetByParentIdRequest<Guid>, EntitiesResponse<CountryLanguage>>: Esse método não tem em todas as circunstâncias. Ele serve normalmente para lidar com entidades que estão agregadas. Por exemplo, diríamos que tenhamos uma entidade chamada CountryLanguage. Essa entidade permite adicionar vários idiomas à uma entidade Country. Eu quero que tenha um método que retorne todos os idiomas de acordo com o Id do país. Então, eu posso usar esse IGetEntities para ter um método que retorne essas entidades. O parâmetro será uma request que contém o ParentId (que é o Id do pai, sendo nesse caso o Id do Country). Também informamos o tipo desse ParentId (que nesse caso é um Guid). O retorno será uma classe que tenha como propriedade uma coleção (IReadOnlyCollection) da entidade (que nesse caso será a CountryLanguage);
+* IPostEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>: Isso fará com que tenha um método para inserir um novo registro de entidade. O parâmetro será uma request que contém como propriedade uma instância do DTO da entidade que será inserido (que nesse caso é Country). A resposta será uma classe que contém o Id do tipo informado (que nesse caso é Guid) com o valor do Id do registro que foi inserido no banco de dados.
+* IPutEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>: Isso fará com que tenha um método para atualizar um registro já existente. O parâmetro será uma request que contém como propriedade uma instância do DTO da entidade que será inserido (que nesse caso é Country). A resposta será uma classe que contém o Id do tipo informado (que nesse caso é Guid) com o valor do Id do registro que foi alterado no banco de dados.
+* IDeleteEntity<DeleteRequest<Guid>, EmptyResponse>: Isso fará cm que tenha um método para deletar um registro do banco de dados. O parâmetro será uma request contendo como propriedade o Id do tipo especificado (que nesse caso é Guid). Esse é o Id que será utilizado para deletar o registro. A resposta será uma classe EmptyResponse, que não tem nenhuma propriedade dentro.
+
