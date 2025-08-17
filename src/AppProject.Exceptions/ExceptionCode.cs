@@ -2,8 +2,12 @@
 
 public enum ExceptionCode
 {
-    Generic = 0,
-    SecurityValidation = 1,
-    RequestValidation = 2,
-    Concurrency = 3,
+    Generic,
+    SecurityValidation,
+    RequestValidation,
+    Concurrency,
+    EntityNotFound,
+
+    // Pattern: ModuleName_EntityName_ValidationName
+    General_Country_DuplicateName,
 }
