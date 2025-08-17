@@ -1,5 +1,6 @@
 using System;
 using AppProject.Core.Contracts;
+using AppProject.Exceptions;
 using AppProject.Models.Auth;
 
 namespace AppProject.Core.Services.Auth;
@@ -7,6 +8,14 @@ namespace AppProject.Core.Services.Auth;
 public class PermissionService(IUserContext userContext)
     : BaseService, IPermissionService
 {
+    public async Task ValidateCurrentUserPermissionAsync(PermissionType permissionType, PermissionContext? context = null, CancellationToken cancellationToken = default)
+    {
+        if (!await this.HasCurrentUserPermissionAsync(permissionType, context, cancellationToken))
+        {
+            throw new AppException(ExceptionCode.SecurityValidation);
+        }
+    }
+
     public async Task<bool> HasCurrentUserPermissionAsync(PermissionType permissionType, PermissionContext? context = null, CancellationToken cancellationToken = default)
     {
         var currentUser = await userContext.GetCurrentUserAsync(cancellationToken);
