@@ -10,6 +10,7 @@ using AppProject.Core.Contracts;
 using AppProject.Core.Infrastructure.AI;
 using AppProject.Core.Infrastructure.Database;
 using AppProject.Core.Infrastructure.Database.Entities.Auth;
+using AppProject.Core.Infrastructure.Database.Mapper;
 using AppProject.Core.Infrastructure.Email;
 using AppProject.Core.Infrastructure.Jobs;
 using AppProject.Core.Services;
@@ -274,6 +275,24 @@ public static class Bootstrap
     private static void ConfigureMapper(WebApplicationBuilder builder)
     {
         builder.Services.AddMapster();
+
+        builder.Services.Scan(scan => scan
+            .FromAssemblyOf<IRegisterMapsterConfig>()
+            .AddClasses(classes => classes.AssignableTo<IRegisterMapsterConfig>())
+            .As<IRegisterMapsterConfig>()
+            .WithSingletonLifetime());
+
+        var provider = builder.Services.BuildServiceProvider();
+        var configs = provider.GetServices<IRegisterMapsterConfig>();
+
+        var config = TypeAdapterConfig.GlobalSettings;
+
+        foreach (var mapConfig in configs)
+        {
+            mapConfig.Register(config);
+        }
+
+        builder.Services.AddSingleton(config);
     }
 
     private static void ConfigureDatabase(WebApplicationBuilder builder)

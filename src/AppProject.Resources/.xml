@@ -22,6 +22,16 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.General_Country_DuplicateName">
+            <summary>
+              Looks up a localized string similar to This country name already exists..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_State_DuplicateName">
+            <summary>
+              Looks up a localized string similar to This state name already exists for the same country..
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.Sample">
             <summary>
               Looks up a localized string similar to Sample.

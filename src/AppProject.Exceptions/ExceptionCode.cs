@@ -10,4 +10,5 @@ public enum ExceptionCode
 
     // Pattern: ModuleName_EntityName_ValidationName
     General_Country_DuplicateName,
+    General_State_DuplicateName,
 }
