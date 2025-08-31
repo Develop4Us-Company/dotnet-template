@@ -200,7 +200,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AppProject.Core.Infrastructure.Database.Entities.General;
 
 [Table("States")]
-public class TbState
+public class TbState : BaseEntity
 {
     [Key]
     public Guid Id { get; set; }
