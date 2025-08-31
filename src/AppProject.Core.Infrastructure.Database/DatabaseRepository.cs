@@ -10,7 +10,8 @@ namespace AppProject.Core.Infrastructure.Database;
 
 public class DatabaseRepository(
     ApplicationDbContext applicationDbContext,
-    IUserContext userContext)
+    IUserContext userContext,
+    TypeAdapterConfig typeAdapterConfig)
     : IDatabaseRepository
 {
     public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
@@ -77,7 +78,7 @@ public class DatabaseRepository(
         where TEntity : BaseEntity
         where TDestination : class
     {
-        return await applicationDbContext.Set<TEntity>().AsQueryable().ProjectToType<TDestination>().ToListAsync(cancellationToken);
+        return await applicationDbContext.Set<TEntity>().AsQueryable().ProjectToType<TDestination>(typeAdapterConfig).ToListAsync(cancellationToken);
     }
 
     public async Task<IList<TEntity>> GetAllAsync<TEntity>(CancellationToken cancellationToken = default)
@@ -90,7 +91,7 @@ public class DatabaseRepository(
         where TEntity : BaseEntity
         where TDestination : class
     {
-        return await queryable(applicationDbContext.Set<TEntity>().AsQueryable()).ProjectToType<TDestination>().ToListAsync(cancellationToken);
+        return await queryable(applicationDbContext.Set<TEntity>().AsQueryable()).ProjectToType<TDestination>(typeAdapterConfig).ToListAsync(cancellationToken);
     }
 
     public async Task<IList<TEntity>> GetByConditionAsync<TEntity>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)

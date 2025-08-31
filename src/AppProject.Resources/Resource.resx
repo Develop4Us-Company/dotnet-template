@@ -28,4 +28,11 @@
   <data name="SampleEmailTemplate_Date" xml:space="preserve">
     <value>Sent date: {0}</value>
   </data>
+  
+  <data name="General_Country_DuplicateName" xml:space="preserve">
+    <value>This country name already exists.</value>
+  </data>
+  <data name="General_State_DuplicateName" xml:space="preserve">
+    <value>This state name already exists for the same country.</value>
+  </data>
 </root>

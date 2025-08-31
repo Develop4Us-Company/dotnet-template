@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AppProject.Core.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class Countries : Migration
+    public partial class CountriesStatesCities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +38,14 @@ namespace AppProject.Core.Infrastructure.Database.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Code = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedByUserName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,7 +65,14 @@ namespace AppProject.Core.Infrastructure.Database.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Code = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    StateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    StateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedByUserName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedByUserName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {

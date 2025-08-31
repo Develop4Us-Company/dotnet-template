@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AppProject.Core.Infrastructure.Database.Entities.General;
 
 [Table("Cities")]
-public class TbCity
+public class TbCity : BaseEntity
 {
     [Key]
     public Guid Id { get; set; }
