@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppProject.Core.Infrastructure.Database.Entities.General;
 
-[Table("Cities")]
-public class TbCity : BaseEntity
+[Table("Neighborhoods")]
+public class TbNeighborhood : BaseEntity
 {
     [Key]
     public Guid Id { get; set; }
@@ -18,10 +18,8 @@ public class TbCity : BaseEntity
     public string? Code { get; set; }
 
     [Required]
-    public Guid StateId { get; set; }
+    public Guid CityId { get; set; }
 
-    [ForeignKey(nameof(StateId))]
-    public TbState State { get; set; } = default!;
-
-    public ICollection<TbNeighborhood> Neighborhoods { get; set; } = new List<TbNeighborhood>();
+    [ForeignKey(nameof(CityId))]
+    public TbCity City { get; set; } = default!;
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppProject.Core.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250831140111_CountriesStatesCities")]
+    [Migration("20250904115028_CountriesStatesCities")]
     partial class CountriesStatesCities
     {
         /// <inheritdoc />
@@ -180,6 +180,58 @@ namespace AppProject.Core.Infrastructure.Database.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("AppProject.Core.Infrastructure.Database.Entities.General.TbNeighborhood", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByUserName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("UpdatedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedByUserName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Neighborhoods");
+                });
+
             modelBuilder.Entity("AppProject.Core.Infrastructure.Database.Entities.General.TbState", b =>
                 {
                     b.Property<Guid>("Id")
@@ -245,6 +297,17 @@ namespace AppProject.Core.Infrastructure.Database.Migrations
                     b.Navigation("State");
                 });
 
+            modelBuilder.Entity("AppProject.Core.Infrastructure.Database.Entities.General.TbNeighborhood", b =>
+                {
+                    b.HasOne("AppProject.Core.Infrastructure.Database.Entities.General.TbCity", "City")
+                        .WithMany("Neighborhoods")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("AppProject.Core.Infrastructure.Database.Entities.General.TbState", b =>
                 {
                     b.HasOne("AppProject.Core.Infrastructure.Database.Entities.General.TbCountry", "Country")
@@ -254,6 +317,11 @@ namespace AppProject.Core.Infrastructure.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("AppProject.Core.Infrastructure.Database.Entities.General.TbCity", b =>
+                {
+                    b.Navigation("Neighborhoods");
                 });
 
             modelBuilder.Entity("AppProject.Core.Infrastructure.Database.Entities.General.TbCountry", b =>
