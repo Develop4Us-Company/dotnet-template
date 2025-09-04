@@ -21,6 +21,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<TbCity> Cities { get; set; }
 
+    public DbSet<TbNeighborhood> Neighborhoods { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
