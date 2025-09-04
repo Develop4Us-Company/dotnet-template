@@ -28,18 +28,18 @@ public interface IDatabaseRepository
 
     public Task SaveAsync(CancellationToken cancellationToken = default);
 
-    public Task<IList<TDestination>> GetAllAsync<TEntity, TDestination>(CancellationToken cancellationToken = default)
+    public Task<IReadOnlyCollection<TDestination>> GetAllAsync<TEntity, TDestination>(CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
         where TDestination : class;
 
-    public Task<IList<TEntity>> GetAllAsync<TEntity>(CancellationToken cancellationToken = default)
+    public Task<IReadOnlyCollection<TEntity>> GetAllAsync<TEntity>(CancellationToken cancellationToken = default)
         where TEntity : BaseEntity;
 
-    public Task<IList<TDestination>> GetByConditionAsync<TEntity, TDestination>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyCollection<TDestination>> GetByConditionAsync<TEntity, TDestination>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
         where TDestination : class;
 
-    public Task<IList<TEntity>> GetByConditionAsync<TEntity>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyCollection<TEntity>> GetByConditionAsync<TEntity>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity;
 
     public Task<TDestination?> GetFirstOrDefaultAsync<TEntity, TDestination>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)

@@ -1,23 +1,58 @@
 using System;
 using AppProject.Core.Infrastructure.Database;
+using AppProject.Core.Infrastructure.Database.Entities.General;
 using AppProject.Core.Models.General;
-using AppProject.Core.Services.Auth;
+using AppProject.Exceptions;
 using AppProject.Models;
 
 namespace AppProject.Core.Services.General;
 
 public class CountrySummaryService(
-    IDatabaseRepository databaseRepository,
-    IPermissionService permissionService)
+    IDatabaseRepository databaseRepository)
     : BaseService, ICountrySummaryService
 {
-    public Task<SummariesResponse<CountrySummary>> GetSummariesAsync(SearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<SummariesResponse<CountrySummary>> GetSummariesAsync(SearchRequest request, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var searchText = request.SearchText?.Trim();
+
+        var countrySummaries = await databaseRepository.GetByConditionAsync<TbCountry, CountrySummary>(
+            query =>
+            {
+                if (request.Take.HasValue)
+                {
+                    query = query.Take(request.Take.Value);
+                }
+
+                if (!string.IsNullOrWhiteSpace(searchText))
+                {
+                    query = query.Where(x =>
+                        x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                }
+
+                return query;
+            },
+            cancellationToken);
+
+        return new SummariesResponse<CountrySummary>
+        {
+            Summaries = countrySummaries
+        };
     }
 
-    public Task<SummaryResponse<CountrySummary>> GetSummaryAsync(GetByIdRequest<Guid> request, CancellationToken cancellationToken = default)
+    public async Task<SummaryResponse<CountrySummary>> GetSummaryAsync(GetByIdRequest<Guid> request, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var countrySummary = await databaseRepository.GetFirstOrDefaultAsync<TbCountry, CountrySummary>(
+            query => query.Where(x => x.Id == request.Id),
+            cancellationToken);
+
+        if (countrySummary == null)
+        {
+            throw new AppException(ExceptionCode.EntityNotFound);
+        }
+
+        return new SummaryResponse<CountrySummary>
+        {
+            Summary = countrySummary
+        };
     }
 }

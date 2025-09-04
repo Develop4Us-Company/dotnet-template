@@ -74,27 +74,27 @@ public class DatabaseRepository(
         }
     }
 
-    public async Task<IList<TDestination>> GetAllAsync<TEntity, TDestination>(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<TDestination>> GetAllAsync<TEntity, TDestination>(CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
         where TDestination : class
     {
         return await applicationDbContext.Set<TEntity>().AsQueryable().ProjectToType<TDestination>(typeAdapterConfig).ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TEntity>> GetAllAsync<TEntity>(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<TEntity>> GetAllAsync<TEntity>(CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
     {
         return await applicationDbContext.Set<TEntity>().AsQueryable().ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TDestination>> GetByConditionAsync<TEntity, TDestination>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<TDestination>> GetByConditionAsync<TEntity, TDestination>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
         where TDestination : class
     {
         return await queryable(applicationDbContext.Set<TEntity>().AsQueryable()).ProjectToType<TDestination>(typeAdapterConfig).ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TEntity>> GetByConditionAsync<TEntity>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<TEntity>> GetByConditionAsync<TEntity>(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryable, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
     {
         return await queryable(applicationDbContext.Set<TEntity>().AsQueryable()).ToListAsync(cancellationToken);
