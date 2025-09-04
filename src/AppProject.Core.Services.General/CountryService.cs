@@ -20,7 +20,8 @@ public class CountryService(
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
 
         var tbCountry = await databaseRepository.GetFirstOrDefaultAsync<TbCountry>(
-            query => query.Where(x => x.Id == request.Id), cancellationToken);
+            query => query.Where(x => x.Id == request.Id),
+            cancellationToken);
 
         if (tbCountry == null)
         {
@@ -66,7 +67,8 @@ public class CountryService(
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
 
         var tbCountry = await databaseRepository.GetFirstOrDefaultAsync<TbCountry>(
-            query => query.Where(x => x.Id == request.Id), cancellationToken);
+            query => query.Where(x => x.Id == request.Id),
+            cancellationToken);
 
         if (tbCountry == null)
         {
@@ -81,7 +83,8 @@ public class CountryService(
     private async Task ValidateCountryAsync(Country country, CancellationToken cancellationToken = default)
     {
         if (await databaseRepository.HasAnyAsync<TbCountry>(
-            query => query.Where(x => x.Name == country.Name && x.Id != country.Id), cancellationToken))
+            query => query.Where(x => x.Name == country.Name && x.Id != country.Id),
+            cancellationToken))
         {
             throw new AppException(ExceptionCode.General_Country_DuplicateName);
         }

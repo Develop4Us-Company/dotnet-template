@@ -20,7 +20,8 @@ public class StateService(
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
 
         var tbState = await databaseRepository.GetFirstOrDefaultAsync<TbState>(
-            query => query.Where(x => x.Id == request.Id), cancellationToken);
+            query => query.Where(x => x.Id == request.Id),
+            cancellationToken);
 
         if (tbState == null)
         {
@@ -66,7 +67,8 @@ public class StateService(
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
 
         var tbState = await databaseRepository.GetFirstOrDefaultAsync<TbState>(
-            query => query.Where(x => x.Id == request.Id), cancellationToken);
+            query => query.Where(x => x.Id == request.Id),
+            cancellationToken);
 
         if (tbState == null)
         {
