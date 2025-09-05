@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppProject.Core.API.Controllers.Auth;
 
-[Route("api/[controller]/[action]")]
+[Route("api/auth/[controller]/[action]")]
 [ApiController]
 [Authorize]
 public class PermissionController(IPermissionService permissionService)

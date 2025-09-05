@@ -4,7 +4,7 @@ namespace AppProject.Core.Infrastructure.Email.Models;
 
 public class SampleEmailModel
 {
-    public string Name { get; set; } = string.Empty;
+    required public string Name { get; set; }
 
-    public DateTime Date { get; set; } = DateTime.UtcNow;
+    required public DateTime Date { get; set; } = DateTime.UtcNow;
 }

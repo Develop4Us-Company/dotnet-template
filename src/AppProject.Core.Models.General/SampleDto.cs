@@ -9,7 +9,7 @@ public class SampleDto : IEntity
     public Guid Id { get; set; }
 
     [Required]
-    public string Name { get; set; } = string.Empty;
+    required public string Name { get; set; }
 
     public byte[]? RowVersion { get; set; }
 }

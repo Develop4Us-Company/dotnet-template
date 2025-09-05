@@ -19,18 +19,18 @@ public class CountryService(
     {
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
 
-        var tbCountry = await databaseRepository.GetFirstOrDefaultAsync<TbCountry>(
+        var country = await databaseRepository.GetFirstOrDefaultAsync<TbCountry, Country>(
             query => query.Where(x => x.Id == request.Id),
             cancellationToken);
 
-        if (tbCountry == null)
+        if (country == null)
         {
             throw new AppException(ExceptionCode.EntityNotFound);
         }
 
         return new EntityResponse<Country>
         {
-            Entity = tbCountry.Adapt<Country>()
+            Entity = country
         };
     }
 
@@ -53,7 +53,17 @@ public class CountryService(
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
         await this.ValidateCountryAsync(request.Entity, cancellationToken);
 
-        var tbCountry = request.Entity.Adapt<TbCountry>();
+        var tbCountry = await databaseRepository.GetFirstOrDefaultAsync<TbCountry>(
+            query => query.Where(x => x.Id == request.Entity.Id),
+            cancellationToken);
+
+        if (tbCountry == null)
+        {
+            throw new AppException(ExceptionCode.EntityNotFound);
+        }
+
+        request.Entity.Adapt(tbCountry);
+
         await databaseRepository.UpdateAndSaveAsync(tbCountry, cancellationToken);
 
         return new KeyResponse<Guid>

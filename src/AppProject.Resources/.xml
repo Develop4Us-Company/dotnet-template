@@ -22,6 +22,16 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.General_City_DuplicateName">
+            <summary>
+              Looks up a localized string similar to This city name already exists for the same state..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_City_Neighborhood_DuplicateName">
+            <summary>
+              Looks up a localized string similar to This neighborhood name already exists for the same city..
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.General_Country_DuplicateName">
             <summary>
               Looks up a localized string similar to This country name already exists..

@@ -4,9 +4,9 @@ namespace AppProject.Core.Infrastructure.Email;
 
 public class SendEmailOptions
 {
-    public string ApiKey { get; set; } = string.Empty;
+    public string? ApiKey { get; set; }
 
-    public string FromEmailAddress { get; set; } = string.Empty;
+    public string? FromEmailAddress { get; set; }
 
-    public string FromName { get; set; } = string.Empty;
+    public string? FromName { get; set; }
 }

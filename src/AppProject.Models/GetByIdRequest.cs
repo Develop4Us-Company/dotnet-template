@@ -6,5 +6,5 @@ namespace AppProject.Models;
 public class GetByIdRequest<TIdType> : IRequest
 {
     [Required]
-    public TIdType Id { get; set; } = default!;
+    required public TIdType Id { get; set; }
 }

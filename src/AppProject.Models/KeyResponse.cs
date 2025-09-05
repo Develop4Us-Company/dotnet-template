@@ -4,5 +4,5 @@ namespace AppProject.Models;
 
 public class KeyResponse<TIdType> : IResponse
 {
-    public TIdType Id { get; set; } = default!;
+    required public TIdType Id { get; set; }
 }

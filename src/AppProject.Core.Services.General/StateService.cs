@@ -19,18 +19,18 @@ public class StateService(
     {
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
 
-        var tbState = await databaseRepository.GetFirstOrDefaultAsync<TbState>(
+        var state = await databaseRepository.GetFirstOrDefaultAsync<TbState, State>(
             query => query.Where(x => x.Id == request.Id),
             cancellationToken);
 
-        if (tbState == null)
+        if (state == null)
         {
             throw new AppException(ExceptionCode.EntityNotFound);
         }
 
         return new EntityResponse<State>
         {
-            Entity = tbState.Adapt<State>()
+            Entity = state
         };
     }
 
@@ -53,7 +53,17 @@ public class StateService(
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
         await this.ValidateStateAsync(request.Entity, cancellationToken);
 
-        var tbState = request.Entity.Adapt<TbState>();
+        var tbState = await databaseRepository.GetFirstOrDefaultAsync<TbState>(
+            query => query.Where(x => x.Id == request.Entity.Id),
+            cancellationToken);
+
+        if (tbState == null)
+        {
+            throw new AppException(ExceptionCode.EntityNotFound);
+        }
+
+        request.Entity.Adapt(tbState);
+
         await databaseRepository.UpdateAndSaveAsync(tbState, cancellationToken);
 
         return new KeyResponse<Guid>

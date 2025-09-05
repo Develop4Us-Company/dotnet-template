@@ -13,7 +13,7 @@ public abstract class BaseEntity
 
     [MaxLength(255)]
     [Required]
-    public string CreatedByUserName { get; set; } = string.Empty;
+    required public string CreatedByUserName { get; set; }
 
     public DateTimeOffset? UpdatedAt { get; set; }
 

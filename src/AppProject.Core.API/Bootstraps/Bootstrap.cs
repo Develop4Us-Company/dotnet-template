@@ -90,6 +90,12 @@ public static class Bootstrap
                 var auth0Options = new Auth0Options();
                 app.Configuration.GetSection("Auth0").Bind(auth0Options);
 
+                if (string.IsNullOrEmpty(auth0Options.Audience)
+                    || string.IsNullOrEmpty(auth0Options.ClientId))
+                {
+                    throw new ArgumentException("Auth0 is not configured properly.");
+                }
+
                 c.OAuthClientId(auth0Options.ClientId);
                 c.OAuthAppName("API - Swagger");
                 c.OAuthUsePkce();
@@ -516,23 +522,23 @@ public static class Bootstrap
 
     private class ConnectionStringsOptions
     {
-        public string DatabaseConnection { get; set; } = string.Empty;
+        public string? DatabaseConnection { get; set; }
     }
 
     private class Auth0Options
     {
-        public string Authority { get; set; } = string.Empty;
+        public string? Authority { get; set; }
 
-        public string ClientId { get; set; } = string.Empty;
+        public string? ClientId { get; set; }
 
-        public string Audience { get; set; } = string.Empty;
+        public string? Audience { get; set; }
     }
 
     private class SystemAdminUserOptions
     {
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; }
 
-        public string Email { get; set; } = string.Empty;
+        public string? Email { get; set; }
     }
 
     private class CorsOptions
