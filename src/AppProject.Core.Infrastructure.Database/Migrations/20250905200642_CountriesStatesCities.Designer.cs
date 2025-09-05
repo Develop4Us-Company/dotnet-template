@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppProject.Core.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250904115028_CountriesStatesCities")]
+    [Migration("20250905200642_CountriesStatesCities")]
     partial class CountriesStatesCities
     {
         /// <inheritdoc />
@@ -228,6 +228,8 @@ namespace AppProject.Core.Infrastructure.Database.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Neighborhoods");
                 });

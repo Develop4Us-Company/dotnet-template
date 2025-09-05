@@ -45,10 +45,12 @@ Para validar campos obrigatórios, tamanho máximo de campos strings ou ranges d
 #### Validações de entidades
 Ao validar uma entidade, a API retorna uma instância da classe ExceptionDetail, contendo o valor RequestValidation na propriedade ExceptionCode. Na propriedade AdditionalInfo, contém os erros encontrados nos campos escritos no idioma Inglês. Não traduzimos esses campos, pois o preferível é que normalmente os DTOs sejam validados do lado do client que consome a API.
 
+Foi criado uma pasta chamada CustomValidators no AppProject.Core.Models. Caso deseje criar atributos específicos para fazer validações, poderá colocar nela. Já existe uma classe chamada ValidateCollectionAttribute, que deverá ser colocado nas propriedades que são coleções. Essa classe faz com que a API valide também cada item da lista. Isso é necessário porque nativamente o .NET não faz essa validação em cascata.
+
 Info: sobre as validações, veja o arquivo ExceptionMiddleware que intercepta todas as exceções da API e retorna o ExceptionDetail preenchido. Ao ocorrer uma exceção, é retornado também o HttpStatusCode correto, de acordo com a exceção encontrada. Também, no Bootstrap da API, temos o método ConfigureValidations, que faz com que seja lançada uma exceção nas validações que ocorrem nas requests dos endpoints.
 
 #### Exemplo de DTOs do tipo entidade
-A seguir, veja os DTOs das entidades Country e State. 
+A seguir, veja os DTOs das entidades Country, State, City e Neighborhood. 
 
 [`Country.cs`](./src/AppProject.Core.Models.General/Country.cs):
 
@@ -65,10 +67,10 @@ public class Country : IEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 
     [MaxLength(200)]
-    public string? Code { get; set; }
+    public string Code { get; set; }
 
     public byte[]? RowVersion { get; set; }
 }
@@ -89,10 +91,10 @@ public class State : IEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 
     [MaxLength(200)]
-    public string? Code { get; set; }
+    public string Code { get; set; }
 
     [Required]
     public Guid CountryId { get; set; }
@@ -101,7 +103,88 @@ public class State : IEntity
 }
 ```
 
-Note que usamos atributos para as principais validações. Nos relacionamentos, usamos apenas o nome dos campos mesmo, ao invés de adicionar também a classe DTO. Isso evita problemas ao converter o DTO para a entidade do banco de dados, como por exemplo, acabar inserindo/alterando um país só porque ele está referenciado numa outra tabela. Claro que, não há problemas em ter outras entidades nos DTOs, inclusive listas, mas desde que o propósito seja inserir/alterar tudo junto. Por exemplo, imagine um DTO de Pedido que tem uma lista de Itens (que é outro DTO). Nesse caso, ao inserir/alterar o DTO de Pedido, ele vai manipular também os itens, porque estão no DTO de Pedido. Avalie sempre qual o melhor cenário para cada caso. Pode ser que em cadastros gigantes, com muitos DTOs filhos, talvez seja melhor inserir eles separadamente, para não trafegar todos os dados de uma vez (mas claro, não é uma regra e isso se aplica a casos muito grandes).
+[`City.cs`](./src/AppProject.Core.Models.General/City.cs):
+
+```csharp
+using System;
+using System.ComponentModel.DataAnnotations;
+using AppProject.Core.Models.CustomValidators;
+using AppProject.Models;
+
+namespace AppProject.Core.Models.General;
+
+public class City : IEntity
+{
+    public Guid Id { get; set; }
+
+    [Required]
+    [MaxLength(200)]
+    public string Name { get; set; }
+
+    [MaxLength(200)]
+    public string Code { get; set; }
+
+    [Required]
+    public Guid StateId { get; set; }
+
+    public byte[]? RowVersion { get; set; }
+
+    [ValidateCollection]
+    public IList<CreateOrUpdateRequest<Neighborhood>> ChangedNeighborhoodRequests { get; set; } = new List<CreateOrUpdateRequest<Neighborhood>>();
+
+    [ValidateCollection]
+    public IList<DeleteRequest<Guid>> DeletedNeighborhoodRequests { get; set; } = new List<DeleteRequest<Guid>>();
+}
+```
+
+[`Neighborhood.cs`](./src/AppProject.Core.Models.General/Neighborhood.cs):
+
+```csharp
+using System;
+using System.ComponentModel.DataAnnotations;
+using AppProject.Models;
+
+namespace AppProject.Core.Models.General;
+
+public class Neighborhood : IEntity
+{
+    public Guid Id { get; set; }
+
+    [Required]
+    [MaxLength(200)]
+    public string Name { get; set; }
+
+    [MaxLength(200)]
+    public string Code { get; set; }
+
+    public byte[]? RowVersion { get; set; }
+}
+```
+
+Note que usamos atributos para as principais validações. Nos relacionamentos, usamos apenas o nome dos campos mesmo, ao invés de adicionar também a classe DTO. Isso evita problemas ao converter o DTO para a entidade do banco de dados, como por exemplo, acabar inserindo/alterando um país só porque ele está referenciado numa outra tabela. Claro que, não há problemas em ter outras entidades nos DTOs, mas desde que o propósito seja inserir/alterar tudo junto. 
+
+Quando houver situações onde temos um DTO pai e DTOs filhos, como por exemplo no caso do DTO de Cidade que também insere, altera e exclui os DTOs de bairros, nós podemos adicionar no DTO pai coleções de requests, como fizemos no DTO chamado City. Perceba que nesse DTO nós temos as seguintes coleções:
+* Para inserir ou alterar registros filhos:
+
+```csharp
+[ValidateCollection]
+    public IList<CreateOrUpdateRequest<Neighborhood>> ChangedNeighborhoodRequests { get; set; } = new List<CreateOrUpdateRequest<Neighborhood>>();
+```
+
+Adicionamos uma lista da CreateOrUpdateRequest<Neighborhood>, que representa os registros de bairros para inserir ou modificar. Se o Neighborhood tiver um Id preenchido, o registro é para modificar. Caso contrário, será para alterar.
+
+Note também que na classe Neighborhood, nós não colocamos a propriedade CityId, visto que o cadastro de bairros só será feito através do DTO de cidade.
+
+* Para excluir registros filhos:
+
+```csharp
+[ValidateCollection]
+    public IList<DeleteRequest<Guid>> DeletedNeighborhoodRequests { get; set; } = new List<DeleteRequest<Guid>>();
+```
+
+Para excluir registros filhos, a lista é uma coleção de DeleteRequest<>. Assim, para deletar os filhos, nós passamos apenas os Ids dos filhos.
+
+Se não houver alterações nos filhos, não é necessário enviar essas duas listas acima preenchidas com cadastros existentes.
 
 ### DTOs de summaries
 Um DTO do tipo summary é utilizado para listar dados que estão cadastrados. Por exemplo, imagine que você tem uma página que lista os países cadastrados e uma tela para inserir/alterar um desses registros cadastrados. A página que lista, vai utilizar uma lista de DTOs do tipo summary, enquanto que a página que efetivamente cadastra (insere/altera), vai utilizar um DTO do tipo entidade que citamos antes.
@@ -115,7 +198,7 @@ Os DTOs do tipo summary ficam nos mesmos projetos que os DTOs do tipo entidade (
 Importante: não há validações nos DTOs do tipo summary (visto que eles não são usados para fazer insert/update). Por isso, não coloque DataAnnotations neles.
 
 #### Exemplo de DTOs do tipo summary
-A seguir, veja os DTOs dos summaries CountrySummary e StateSummary. 
+A seguir, veja os DTOs dos summaries CountrySummary, StateSummary e CitySummary. 
 
 [`CountrySummary.cs`](./src/AppProject.Core.Models.General/CountrySummary.cs):
 
@@ -129,7 +212,7 @@ public class CountrySummary : ISummary
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 }
 ```
 
@@ -145,15 +228,39 @@ public class StateSummary : ISummary
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 
-    public string CountryName { get; set; } = string.Empty;
+    public string CountryName { get; set; }
 
     public Guid CountryId { get; set; }
 }
 ```
 
-Perceba que o Summary herda de ISummary. Note também que, no caso do StateSummary, nós trouxemos o CountryId e, ao invés de carregarmos o CountrySummary, trouxemos o CountryName, que é o campo que vamos utilizar. No entanto, não há objeções para que nos Summaries tragamos outros summaries aninhados, tomando os devidos cuidados para que apenas não tenha referências circulares infinitas entre eles.
+[`CitySummary.cs`](./src/AppProject.Core.Models.General/CitySummary.cs):
+
+```csharp
+using System;
+using AppProject.Models;
+
+namespace AppProject.Core.Models.General;
+
+public class CitySummary : ISummary
+{
+    public Guid Id { get; set; }
+
+    public string Name { get; set; }
+
+    public string StateName { get; set; }
+
+    public Guid StateId { get; set; }
+
+    public string CountryName { get; set; }
+
+    public Guid CountryId { get; set; }
+}
+```
+
+Perceba que o Summary herda de ISummary. Note também que, no caso do StateSummary, nós trouxemos o CountryId e, ao invés de carregarmos o CountrySummary, trouxemos o CountryName, que é o campo que vamos utilizar. No entanto, não há objeções para que nos Summaries tragamos outros summaries aninhados, apenas tomando os devidos cuidados para que não tenha referências circulares infinitas entre eles.
 
 ## Adicionando as entidades de banco
 No projeto, utilizamos o EF (no estilo code first) para podermos manipular um banco de dados SQL Server. 
@@ -162,7 +269,7 @@ As entidades de banco são adicionadas no projeto AppProject.Core.Infrastructure
 
 Os arquivos de entidades (.cs) que representam as tabelas de banco começam com a sigla Tb (de Table). 
 
-Veja a seguir os arquivos TbCountry e TbCity.
+Veja a seguir os arquivos TbCountry, TbState, TbCity e TbNeighborhood.
 
 [`TbCountry.cs`](./src/AppProject.Core.Infrastructure.Database/Entities/General/TbCountry.cs):
 
@@ -181,10 +288,10 @@ public class TbCountry : BaseEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 
     [MaxLength(200)]
-    public string? Code { get; set; }
+    public string Code { get; set; }
 
     public ICollection<TbState> States { get; set; } = new List<TbState>();
 }
@@ -207,18 +314,80 @@ public class TbState : BaseEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 
     [MaxLength(200)]
-    public string? Code { get; set; }
+    public string Code { get; set; }
 
     [Required]
     public Guid CountryId { get; set; }
 
     [ForeignKey(nameof(CountryId))]
-    public TbCountry Country { get; set; } = default!;
+    public TbCountry Country { get; set; }
 
     public ICollection<TbCity> Cities { get; set; } = new List<TbCity>();
+}
+```
+
+[`TbCity.cs`](./src/AppProject.Core.Infrastructure.Database/Entities/General/TbCity.cs):
+
+```csharp
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AppProject.Core.Infrastructure.Database.Entities.General;
+
+[Table("Cities")]
+public class TbCity : BaseEntity
+{
+    [Key]
+    public Guid Id { get; set; }
+
+    [Required]
+    [MaxLength(200)]
+    public string Name { get; set; }
+
+    [MaxLength(200)]
+    public string Code { get; set; }
+
+    [Required]
+    public Guid StateId { get; set; }
+
+    [ForeignKey(nameof(StateId))]
+    public TbState State { get; set; }
+
+    public ICollection<TbNeighborhood> Neighborhoods { get; set; } = new List<TbNeighborhood>();
+}
+```
+
+[`TbNeighborhood.cs`](./src/AppProject.Core.Infrastructure.Database/Entities/General/TbNeighborhood.cs):
+
+```csharp
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AppProject.Core.Infrastructure.Database.Entities.General;
+
+[Table("Neighborhoods")]
+public class TbNeighborhood : BaseEntity
+{
+    [Key]
+    public Guid Id { get; set; }
+
+    [Required]
+    [MaxLength(200)]
+    public string Name { get; set; }
+
+    [MaxLength(200)]
+    public string Code { get; set; }
+
+    [Required]
+    public Guid CityId { get; set; }
+
+    [ForeignKey(nameof(CityId))]
+    public TbCity City { get; set; }
 }
 ```
 
@@ -231,7 +400,7 @@ Para chaves estrangeiras, nós adicionamos o campo que representa o nome da chav
 ### Adicionando os arquivos EntityTypeConfiguration
 Para podermos adicionar mais configurações das tabelas, como índices, nós usamos classes que ficam no projeto AppProject.Core.Infrastructure.Database, dentro da pasta EntityTypeConfiguration. Nesta pasta, nós temos as subpastas com o nome dos módulos. E dentro de cada subpasta, temos os arquivos com o nome no formato Table + Configuration (por exemplo TbCountryConfiguration e TbStateConfiguration).
 
-Veja os arquivos TbCountryConfiguration e TbStateConfiguration:
+Veja os arquivos TbCountryConfiguration, TbStateConfiguration e TbCityConfiguration:
 
 [`TbCountryConfiguration.cs`](./src/AppProject.Core.Infrastructure.Database/EntityTypeConfiguration/General/TbCountryConfiguration.cs):
 
@@ -271,6 +440,44 @@ public class TbStateConfiguration : IEntityTypeConfiguration<TbState>
 }
 ```
 
+[`TbCityConfiguration.cs`](./src/AppProject.Core.Infrastructure.Database/EntityTypeConfiguration/General/TbCityConfiguration.cs):
+
+```csharp
+using System;
+using AppProject.Core.Infrastructure.Database.Entities.General;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace AppProject.Core.Infrastructure.Database.EntityTypeConfiguration.General;
+
+public class TbCityConfiguration : IEntityTypeConfiguration<TbCity>
+{
+    public void Configure(EntityTypeBuilder<TbCity> builder)
+    {
+        builder.HasIndex(x => x.Name);
+    }
+}
+```
+
+[`TbNeighborhoodConfiguration.cs`](./src/AppProject.Core.Infrastructure.Database/EntityTypeConfiguration/General/TbNeighborhoodConfiguration.cs):
+
+```csharp
+using System;
+using AppProject.Core.Infrastructure.Database.Entities.General;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace AppProject.Core.Infrastructure.Database.EntityTypeConfiguration.General;
+
+public class TbNeighborhoodConfiguration : IEntityTypeConfiguration<TbNeighborhood>
+{
+    public void Configure(EntityTypeBuilder<TbNeighborhood> builder)
+    {
+        builder.HasIndex(x => x.Name);
+    }
+}
+```
+
 Note que, esses arquivos herdam de IEntityTypeConfiguration. Dentro do método Configure, temos as configurações adicionais daquela tabela. As validações, podem ser colocadas como DataAnnotations nas classes que representam as tabelas. Mas outras validações podem ser colocadas nesses arquivos de configurações.
 
 Importante: ao adicionar um novo arquivo herdando de IEntityTypeConfiguration, não precisamos adicionar código na classe ApplicationDbContext, pois o método OnModelCreating dessa classe já lê todos os arquivos que herdam de IEntityTypeConfiguration do assembly corrente.
@@ -282,6 +489,10 @@ No arquivo [`ApplicationDbContext`](./src/AppProject.Core.Infrastructure.Databas
     public DbSet<TbCountry> Countries { get; set; }
 
     public DbSet<TbState> States { get; set; }
+
+    public DbSet<TbCity> Cities { get; set; }
+
+    public DbSet<TbNeighborhood> Neighborhoods { get; set; }
 ```
 
 O nome da propriedade vai ser o mesmo nome da tabela (que no caso deve ser no plural e sem o Tb).
@@ -310,7 +521,7 @@ As classes de serviço ficam nos projetos abaixo:
 As interfaces e classes de serviços tem normalmente a estrutura a seguir.
 
 ### Interface da classe de serviço
-Uma interface de uma classe de serviço implementa uma outra interface que diz como que ela será registrada no DI. Essas são as opções:
+Uma interface de uma classe de serviço implementa uma outra interface que diz como que ela será registrada no DI. As opções são:
 * IScopedService (será registrada como scoped);
 * ITransientService (será registrada como transient);
 * ISingletonService (será registrada como singleton).
@@ -323,7 +534,7 @@ Sendo o objetivo da classe de serviço fazer um CRUD no banco de dados, a interf
 * IGetEntity<GetByIdRequest<Guid>, EntityResponse<Country>>: Isso fará com que tenha um método para trazer uma entidade. O parâmetro do método será uma request que contém como propriedade um Id do tipo informado (que nesse exemplo é Guid). A resposta será uma classe que contém o DTO da entidade informada, que nesse caso será Country;
 * IPostEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>: Isso fará com que tenha um método para inserir um novo registro de entidade. O parâmetro será uma request que contém como propriedade uma instância do DTO da entidade que será inserido (que nesse caso é Country). A resposta será uma classe que contém o Id do tipo informado (que nesse caso é Guid) com o valor do Id do registro que foi inserido no banco de dados.
 * IPutEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>: Isso fará com que tenha um método para atualizar um registro já existente. O parâmetro será uma request que contém como propriedade uma instância do DTO da entidade que será inserido (que nesse caso é Country). A resposta será uma classe que contém o Id do tipo informado (que nesse caso é Guid) com o valor do Id do registro que foi alterado no banco de dados.
-* IDeleteEntity<DeleteRequest<Guid>, EmptyResponse>: Isso fará cm que tenha um método para deletar um registro do banco de dados. O parâmetro será uma request contendo como propriedade o Id do tipo especificado (que nesse caso é Guid). Esse é o Id que será utilizado para deletar o registro. A resposta será uma classe EmptyResponse, que não tem nenhuma propriedade dentro.
+* IDeleteEntity<DeleteRequest<Guid>, EmptyResponse>: Isso fará com que tenha um método para deletar um registro do banco de dados. O parâmetro será uma request contendo como propriedade o Id do tipo especificado (que nesse caso é Guid). Esse é o Id que será utilizado para deletar o registro. A resposta será uma classe EmptyResponse, que não tem nenhuma propriedade dentro.
 
 Em casos onde há outras entidades agregadas que são pesquisadas pela entidade pai (exemplo: os bairros de uma cidade), poderá se adicionar um método para trazer essas entidades, similar ao exemplo abaixo. O parâmetro deste método será uma request que contém o ParentId (que é o Id do pai, sendo nesse caso o Id da City). Também informamos o tipo desse ParentId (que nesse caso é um Guid). O retorno será uma classe que tenha como propriedade uma coleção (IReadOnlyCollection) da entidade (que nesse caso será a Neighborhood).
 

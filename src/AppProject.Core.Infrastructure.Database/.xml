@@ -28,17 +28,5 @@
         <member name="M:AppProject.Core.Infrastructure.Database.Migrations.Users.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:AppProject.Core.Infrastructure.Database.Migrations.CountriesStatesCities">
-            <inheritdoc />
-        </member>
-        <member name="M:AppProject.Core.Infrastructure.Database.Migrations.CountriesStatesCities.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:AppProject.Core.Infrastructure.Database.Migrations.CountriesStatesCities.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:AppProject.Core.Infrastructure.Database.Migrations.CountriesStatesCities.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
     </members>
 </doc>
