@@ -522,23 +522,23 @@ public static class Bootstrap
 
     private class ConnectionStringsOptions
     {
-        public string? DatabaseConnection { get; set; }
+        public string DatabaseConnection { get; set; }
     }
 
     private class Auth0Options
     {
-        public string? Authority { get; set; }
+        public string Authority { get; set; }
 
-        public string? ClientId { get; set; }
+        public string ClientId { get; set; }
 
-        public string? Audience { get; set; }
+        public string Audience { get; set; }
     }
 
     private class SystemAdminUserOptions
     {
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
-        public string? Email { get; set; }
+        public string Email { get; set; }
     }
 
     private class CorsOptions

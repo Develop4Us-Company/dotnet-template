@@ -4,11 +4,11 @@ namespace AppProject.Core.Contracts;
 
 public class UserInfo
 {
-    required public Guid UserId { get; set; }
+    public Guid UserId { get; set; }
 
-    required public string UserName { get; set; }
+    public string UserName { get; set; }
 
-    required public string Email { get; set; }
+    public string Email { get; set; }
 
-    required public bool IsSystemAdmin { get; set; }
+    public bool IsSystemAdmin { get; set; }
 }

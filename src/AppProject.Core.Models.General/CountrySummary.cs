@@ -7,5 +7,5 @@ public class CountrySummary : ISummary
 {
     public Guid Id { get; set; }
 
-    required public string Name { get; set; }
+    public string Name { get; set; }
 }

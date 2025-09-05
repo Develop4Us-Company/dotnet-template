@@ -5,7 +5,7 @@ namespace AppProject.Exceptions;
 public class AppException : Exception
 {
     public AppException(
-            ExceptionCode exceptionCode = ExceptionCode.Generic, string? additionalInfo = null, Exception? innerException = null)
+            ExceptionCode exceptionCode = ExceptionCode.Generic, string additionalInfo = null, Exception? innerException = null)
             : base(innerException?.Message, innerException)
     {
         this.ExceptionCode = exceptionCode;
@@ -14,5 +14,5 @@ public class AppException : Exception
 
     public ExceptionCode ExceptionCode { get; }
 
-    public string? AdditionalInfo { get; }
+    public string AdditionalInfo { get; }
 }

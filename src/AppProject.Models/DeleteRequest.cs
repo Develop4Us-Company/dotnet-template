@@ -6,5 +6,5 @@ namespace AppProject.Models;
 public class DeleteRequest<TIdType> : IRequest
 {
     [Required]
-    required public TIdType Id { get; set; }
+    public TIdType Id { get; set; }
 }
