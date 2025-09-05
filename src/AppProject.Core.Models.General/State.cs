@@ -10,10 +10,10 @@ public class State : IEntity
 
     [Required]
     [MaxLength(200)]
-    required public string Name { get; set; }
+    public string Name { get; set; }
 
     [MaxLength(200)]
-    public string? Code { get; set; }
+    public string Code { get; set; }
 
     [Required]
     public Guid CountryId { get; set; }

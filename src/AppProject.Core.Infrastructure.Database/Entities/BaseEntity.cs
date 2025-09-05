@@ -13,14 +13,14 @@ public abstract class BaseEntity
 
     [MaxLength(255)]
     [Required]
-    required public string CreatedByUserName { get; set; }
+    public string CreatedByUserName { get; set; }
 
     public DateTimeOffset? UpdatedAt { get; set; }
 
     public Guid? UpdatedByUserId { get; set; }
 
     [MaxLength(255)]
-    public string? UpdatedByUserName { get; set; }
+    public string UpdatedByUserName { get; set; }
 
     [Timestamp]
     [Required]
