@@ -12,11 +12,11 @@ public class TbUser : BaseEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
+    required public string Name { get; set; }
 
     [Required]
     [MaxLength(200)]
-    public string Email { get; set; } = string.Empty;
+    required public string Email { get; set; }
 
     public bool IsSystemAdmin { get; set; }
 }

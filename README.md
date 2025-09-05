@@ -321,12 +321,17 @@ O nome de toda interface começa com a letra I, de interface.
 
 Sendo o objetivo da classe de serviço fazer um CRUD no banco de dados, a interface poderá fazer também as seguintes implementações:
 * IGetEntity<GetByIdRequest<Guid>, EntityResponse<Country>>: Isso fará com que tenha um método para trazer uma entidade. O parâmetro do método será uma request que contém como propriedade um Id do tipo informado (que nesse exemplo é Guid). A resposta será uma classe que contém o DTO da entidade informada, que nesse caso será Country;
-* IGetEntities<GetByParentIdRequest<Guid>, EntitiesResponse<CountryLanguage>>: Esse método não tem em todas as circunstâncias de CRUD. Ele serve normalmente para lidar com entidades que estão agregadas. Por exemplo, diríamos que tenhamos uma entidade chamada CountryLanguage. Essa entidade permite adicionar vários idiomas à uma entidade Country. Eu quero que tenha um método que retorne todos os idiomas de acordo com o Id do país. Então, eu posso usar esse IGetEntities para ter um método que retorne essas entidades. O parâmetro será uma request que contém o ParentId (que é o Id do pai, sendo nesse caso o Id do Country). Também informamos o tipo desse ParentId (que nesse caso é um Guid). O retorno será uma classe que tenha como propriedade uma coleção (IReadOnlyCollection) da entidade (que nesse caso será a CountryLanguage);
 * IPostEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>: Isso fará com que tenha um método para inserir um novo registro de entidade. O parâmetro será uma request que contém como propriedade uma instância do DTO da entidade que será inserido (que nesse caso é Country). A resposta será uma classe que contém o Id do tipo informado (que nesse caso é Guid) com o valor do Id do registro que foi inserido no banco de dados.
 * IPutEntity<CreateOrUpdateRequest<Country>, KeyResponse<Guid>>: Isso fará com que tenha um método para atualizar um registro já existente. O parâmetro será uma request que contém como propriedade uma instância do DTO da entidade que será inserido (que nesse caso é Country). A resposta será uma classe que contém o Id do tipo informado (que nesse caso é Guid) com o valor do Id do registro que foi alterado no banco de dados.
 * IDeleteEntity<DeleteRequest<Guid>, EmptyResponse>: Isso fará cm que tenha um método para deletar um registro do banco de dados. O parâmetro será uma request contendo como propriedade o Id do tipo especificado (que nesse caso é Guid). Esse é o Id que será utilizado para deletar o registro. A resposta será uma classe EmptyResponse, que não tem nenhuma propriedade dentro.
 
-Veja nos exemplos a seguir, duas interfaces de CRUD, uma para a entidade Country e outra para State.
+Em casos onde há outras entidades agregadas que são pesquisadas pela entidade pai (exemplo: os bairros de uma cidade), poderá se adicionar um método para trazer essas entidades, similar ao exemplo abaixo. O parâmetro deste método será uma request que contém o ParentId (que é o Id do pai, sendo nesse caso o Id da City). Também informamos o tipo desse ParentId (que nesse caso é um Guid). O retorno será uma classe que tenha como propriedade uma coleção (IReadOnlyCollection) da entidade (que nesse caso será a Neighborhood).
+
+```csharp
+Task<EntitiesResponse<Neighborhood>> GetNeighborhoodEntitiesAsync(GetByParentIdRequest<Guid> request, CancellationToken cancellationToken = default);
+```
+
+Continuando com o nosso exemplo de CRUD, veja nos códigos a seguir duas interfaces de CRUD, uma para a entidade Country e outra para State.
 
 [`ICountryService.cs`](./src/AppProject.Core.Services.General/ICountryService.cs):
 

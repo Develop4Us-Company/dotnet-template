@@ -12,7 +12,7 @@ public class TbCity : BaseEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
+    required public string Name { get; set; }
 
     [MaxLength(200)]
     public string? Code { get; set; }
@@ -21,7 +21,7 @@ public class TbCity : BaseEntity
     public Guid StateId { get; set; }
 
     [ForeignKey(nameof(StateId))]
-    public TbState State { get; set; } = default!;
+    required public TbState State { get; set; }
 
     public ICollection<TbNeighborhood> Neighborhoods { get; set; } = new List<TbNeighborhood>();
 }
