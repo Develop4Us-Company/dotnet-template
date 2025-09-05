@@ -226,6 +226,8 @@ namespace AppProject.Core.Infrastructure.Database.Migrations
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("Name");
+
                     b.ToTable("Neighborhoods");
                 });
 
