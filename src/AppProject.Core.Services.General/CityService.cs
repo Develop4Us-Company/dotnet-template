@@ -42,11 +42,6 @@ public class CityService(
             query => query.Where(x => x.CityId == request.ParentId),
             cancellationToken);
 
-        if (neighborhood == null)
-        {
-            throw new AppException(ExceptionCode.EntityNotFound);
-        }
-
         return new EntitiesResponse<Neighborhood>
         {
             Entities = neighborhood
