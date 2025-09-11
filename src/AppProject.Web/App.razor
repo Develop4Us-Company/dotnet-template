@@ -1,4 +1,8 @@
-﻿<RadzenTheme Theme="standard" @rendermode="RenderMode.InteractiveAuto" />
+﻿@using AppProject.Web.Constants
+@using Blazored.LocalStorage
+@using System.Globalization
+
+<RadzenTheme Theme="@ThemeConstants.DefaultLightTheme" @rendermode="RenderMode.InteractiveAuto" />
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
@@ -14,3 +18,42 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    [Inject]
+    private ILocalStorageService LocalStorageService { get; set; }
+
+    [Inject]
+    private ThemeService ThemeService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await SetThemeAsync();
+
+        await SetLanguageAsync();
+    }
+
+    private async Task SetThemeAsync()
+    {
+        var theme = 
+            await this.LocalStorageService.GetItemAsync<string>(ThemeConstants.ThemeLocalStorageKey)
+                ?? ThemeConstants.DefaultLightTheme;
+
+        ThemeService.SetTheme(theme);
+    }
+
+    private async Task SetLanguageAsync()
+    {
+        var storagedLanguage = await this.LocalStorageService
+            .GetItemAsync<string>(AppProjectConstants.LanguageLocalStorageKey);
+
+        var culture = string.IsNullOrEmpty(storagedLanguage)
+            ? new CultureInfo(AppProjectConstants.DefaultLanguage)
+            : new CultureInfo(storagedLanguage);
+
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+    }
+}
