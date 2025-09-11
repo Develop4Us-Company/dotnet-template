@@ -1,0 +1,39 @@
+﻿@using AppProject.Web.Constants
+@using Blazored.LocalStorage
+@using Radzen
+@using System.Globalization
+
+<RadzenDropDown 
+    TValue="CultureInfo"
+    @bind-Value=Culture
+    Change=@OnLanguageChangedAsync
+    Data=@SupportedCultures
+    TextProperty="DisplayName" />
+
+@code {
+    private CultureInfo[] SupportedCultures => new[]
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("pt-BR"),
+    };
+
+    [Inject]
+    private ILocalStorageService LocalStorageService { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    private CultureInfo Culture { get; set; } = CultureInfo.CurrentCulture;
+
+    private async Task OnLanguageChangedAsync(object value)
+    {
+        var culture = value != null ? (CultureInfo)value : new CultureInfo(AppProjectConstants.DefaultLanguage);
+
+        await LocalStorageService.SetItemAsync(AppProjectConstants.LanguageLocalStorageKey, culture.Name);
+        
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+}

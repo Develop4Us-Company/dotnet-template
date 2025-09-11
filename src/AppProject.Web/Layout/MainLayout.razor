@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using AppProject.Web.Constants
+
+@inherits LayoutComponentBase
 
 <RadzenLayout style="position: relative">
     <RadzenHeader>
@@ -6,12 +8,14 @@
             <RadzenColumn Size="4">
                 <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
                     <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
-                    <RadzenLabel Text="Project Name" />
+                    <RadzenLabel Text="@AppProjectConstants.ProjectName" />
                 </RadzenStack>
             </RadzenColumn>
             <RadzenColumn>
                 <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Style="margin-right: 10px;">
                     <RadzenLabel Text="Hello User." />
+                    <ThemeToggle />
+                    <LanguageSelector />
                 </RadzenStack>
             </RadzenColumn>
         </RadzenRow>
