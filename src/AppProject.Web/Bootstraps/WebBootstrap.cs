@@ -1,8 +1,10 @@
 using System;
 using AppProject.Web.Pages;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Radzen;
 using Refit;
 
 namespace AppProject.Web.Bootstraps;
@@ -15,11 +17,25 @@ public static class WebBootstrap
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
+        ConfigureLocalStorage(builder);
+
+        ConfigureRadzen(builder);
+
         ConfigureAuthentication(builder);
 
         ConfigureRefit(builder);
 
         await builder.Build().RunAsync();
+    }
+
+    private static void ConfigureLocalStorage(WebAssemblyHostBuilder builder)
+    {
+        builder.Services.AddBlazoredLocalStorage();
+    }
+
+    private static void ConfigureRadzen(WebAssemblyHostBuilder builder)
+    {
+        builder.Services.AddRadzenComponents();
     }
 
     private static void ConfigureAuthentication(WebAssemblyHostBuilder builder)
