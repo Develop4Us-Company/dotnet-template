@@ -17,6 +17,8 @@ public static class WebBootstrap
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
+        ConfigureLocalization(builder);
+
         ConfigureLocalStorage(builder);
 
         ConfigureRadzen(builder);
@@ -26,6 +28,11 @@ public static class WebBootstrap
         ConfigureRefit(builder);
 
         await builder.Build().RunAsync();
+    }
+
+    private static void ConfigureLocalization(WebAssemblyHostBuilder builder)
+    {
+        builder.Services.AddLocalization();
     }
 
     private static void ConfigureLocalStorage(WebAssemblyHostBuilder builder)
