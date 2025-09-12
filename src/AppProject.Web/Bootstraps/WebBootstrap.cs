@@ -29,7 +29,11 @@ public static class WebBootstrap
 
         ConfigureRefit(builder);
 
-        await builder.Build().RunAsync();
+        var host = builder.Build();
+
+        await SetLanguageAsync(host);
+
+        await host.RunAsync();
     }
 
     private static void ConfigureLocalization(WebAssemblyHostBuilder builder)
@@ -79,5 +83,18 @@ public static class WebBootstrap
 
                 return handler;
             });
+    }
+
+    private static async Task SetLanguageAsync(WebAssemblyHost host)
+    {
+        var storagedLanguage = await host.Services.GetRequiredService<ILocalStorageService>()
+            .GetItemAsync<string>(AppProjectConstants.LanguageLocalStorageKey);
+
+        var culture = string.IsNullOrEmpty(storagedLanguage)
+            ? new CultureInfo(AppProjectConstants.DefaultLanguage)
+            : new CultureInfo(storagedLanguage);
+
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
     }
 }

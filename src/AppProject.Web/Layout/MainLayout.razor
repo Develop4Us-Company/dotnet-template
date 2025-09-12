@@ -8,14 +8,15 @@
             <RadzenColumn Size="4">
                 <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
                     <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
-                    <RadzenLabel Text="@AppProjectConstants.ProjectName" />
+                    <RadzenText TextStyle="TextStyle.DisplayH6" Text="@AppProjectConstants.ProjectName" />
                 </RadzenStack>
             </RadzenColumn>
             <RadzenColumn>
-                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Style="margin-right: 10px;">
-                    <RadzenLabel Text="Hello User." />
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
+                    JustifyContent="JustifyContent.End" Gap="3" Style="margin-right: 10px;">
                     <ThemeToggle />
                     <LanguageSelector />
+                    <RadzenText TextStyle="TextStyle.Caption" Text="Hello User." />
                 </RadzenStack>
             </RadzenColumn>
         </RadzenRow>

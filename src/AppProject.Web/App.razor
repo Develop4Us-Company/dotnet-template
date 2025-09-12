@@ -31,8 +31,6 @@
         await base.OnInitializedAsync();
 
         await SetThemeAsync();
-
-        await SetLanguageAsync();
     }
 
     private async Task SetThemeAsync()
@@ -42,18 +40,5 @@
                 ?? ThemeConstants.DefaultLightTheme;
 
         ThemeService.SetTheme(theme);
-    }
-
-    private async Task SetLanguageAsync()
-    {
-        var storagedLanguage = await this.LocalStorageService
-            .GetItemAsync<string>(AppProjectConstants.LanguageLocalStorageKey);
-
-        var culture = string.IsNullOrEmpty(storagedLanguage)
-            ? new CultureInfo(AppProjectConstants.DefaultLanguage)
-            : new CultureInfo(storagedLanguage);
-
-        CultureInfo.DefaultThreadCurrentCulture = culture;
-        CultureInfo.DefaultThreadCurrentUICulture = culture;
     }
 }
