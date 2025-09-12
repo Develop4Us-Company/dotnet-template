@@ -1,10 +1,11 @@
 ﻿@page "/"
+
 @using AppProject.Resources
 
-<PageTitle>Home</PageTitle>
+<PageTitle>@StringResource.GetStringByKey("Home_Title")</PageTitle>
 
-<h1>Hello, world!</h1>
+<RadzenText TextStyle="TextStyle.DisplayH3" Text=@StringResource.GetStringByKey("Home_Title") />
+<RadzenText TextStyle="TextStyle.Body1" Text=@StringResource.GetStringByKey("Home_Message") />
 
-Welcome to your new app.
-
-Message: @StringResource.GetStringByKey("Sample")
+@code{
+}

@@ -1,4 +1,5 @@
-﻿@using AppProject.Web.Constants
+﻿@using AppProject.Resources
+@using AppProject.Web.Constants
 
 @inherits LayoutComponentBase
 
@@ -31,7 +32,10 @@
         </div>
     </RadzenBody>
     <RadzenFooter>
-        Footer
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
+            JustifyContent="JustifyContent.Center">
+            <RadzenText TextStyle="TextStyle.Caption" Text=@StringResource.GetStringByKey("Footer_Text") />
+        </RadzenStack>
     </RadzenFooter>
 </RadzenLayout>
 

@@ -16,6 +16,7 @@
     <value>public</value>
   </resheader>
 
+  <!--Sample-->
   <data name="Sample" xml:space="preserve">
     <value>Exemplo</value>
   </data>
@@ -29,6 +30,7 @@
     <value>Enviado em: {0}</value>
   </data>
 
+  <!--Validations-->
   <data name="General_Country_DuplicateName" xml:space="preserve">
     <value>Esse nome de país já existe.</value>
   </data>
@@ -40,5 +42,16 @@
   </data>
   <data name="General_City_Neighborhood_DuplicateName" xml:space="preserve">
     <value>Esse nome de bairro já existe para a mesma cidade.</value>
+  </data>
+
+  <!--Pages-->
+  <data name="Footer_Text" xml:space="preserve">
+    <value>Copyright © Nome da Sua Empresa. Todos os direitos reservados.</value>
+  </data>
+  <data name="Home_Title" xml:space="preserve">
+    <value>Início</value>
+  </data>
+  <data name="Home_Message" xml:space="preserve">
+    <value>Bem-vindo ao seu novo App!</value>
   </data>
 </root>
