@@ -16,7 +16,7 @@
     }
 </style>
 
-<RadzenButton @ref="button" Icon="language" Text="@Culture.Name" ButtonStyle="ButtonStyle.Base"
+<RadzenButton @ref="button" Icon="language" ButtonStyle="ButtonStyle.Base"
     Click="(args => popup.ToggleAsync(button.Element))" />
 
 <Popup @ref=popup Lazy=true class="language-popup">

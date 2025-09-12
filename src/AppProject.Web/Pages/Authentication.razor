@@ -1,16 +1,17 @@
 ﻿@page "/authentication/{action}"
+
+@using AppProject.Web.Options
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.Extensions.Options
 
 @inject NavigationManager Navigation
-@inject IConfiguration Configuration
+
+@inject IOptions<WebAuth0Options> Auth0Options
 
 <RemoteAuthenticatorView Action="@Action">
     <LogOut>
         @{
-            var authority = (string)Configuration["Auth0:Authority"];
-            var clientId = (string)Configuration["Auth0:ClientId"];
-
-             Navigation.NavigateTo($"{authority}/v2/logout?client_id={clientId}");
+            Navigation.NavigateTo($"{Auth0Options.Value.Authority}/v2/logout?client_id={Auth0Options.Value.ClientId}");
         }
     </LogOut>
 </RemoteAuthenticatorView>

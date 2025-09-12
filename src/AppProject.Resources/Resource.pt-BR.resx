@@ -44,7 +44,7 @@
     <value>Esse nome de bairro já existe para a mesma cidade.</value>
   </data>
 
-  <!--Pages-->
+  <!--Frontend-->
   <data name="Footer_Text" xml:space="preserve">
     <value>Copyright © Nome da Sua Empresa. Todos os direitos reservados.</value>
   </data>
@@ -53,5 +53,19 @@
   </data>
   <data name="Home_Message" xml:space="preserve">
     <value>Bem-vindo ao seu novo App!</value>
+  </data>
+  <data name="NotFound_Title" xml:space="preserve">
+    <value>Não encontrado</value>
+  </data>
+  <data name="NotFound_Message" xml:space="preserve">
+    <value>Desculpe, essa página não existe.</value>
+  </data>
+
+  <!--Frontend Login-->
+  <data name="Login" xml:space="preserve">
+    <value>Entrar</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Sair</value>
   </data>
 </root>
