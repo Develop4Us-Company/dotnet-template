@@ -68,4 +68,18 @@
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+
+  <!--Frontend Menus-->
+  <data name="Menu_Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Menu_Countries" xml:space="preserve">
+    <value>Countries</value>
+  </data>
+  <data name="Menu_States" xml:space="preserve">
+    <value>States</value>
+  </data>
+  <data name="Menu_Cities" xml:space="preserve">
+    <value>Cities</value>
+  </data>
 </root>

@@ -4,5 +4,23 @@
         <name>AppProject.Web.ApiClient</name>
     </assembly>
     <members>
+        <member name="T:Refit.Implementation.Generated">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.AppProjectWebApiClientAuthIPermissionClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.AppProjectWebApiClientAuthIPermissionClient.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientAuthIPermissionClient.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientAuthIPermissionClient.GetCurrentUserPermissionsAsync(AppProject.Models.Auth.PermissionContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientAuthIPermissionClient.AppProject#Web#ApiClient#Auth#IPermissionClient#GetCurrentUserPermissionsAsync(AppProject.Models.Auth.PermissionContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

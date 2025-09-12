@@ -67,6 +67,26 @@
               Looks up a localized string similar to Logout.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.Menu_Cities">
+            <summary>
+              Looks up a localized string similar to Cities.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.Menu_Countries">
+            <summary>
+              Looks up a localized string similar to Countries.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.Menu_Home">
+            <summary>
+              Looks up a localized string similar to Home.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.Menu_States">
+            <summary>
+              Looks up a localized string similar to States.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.NotFound_Message">
             <summary>
               Looks up a localized string similar to Sorry, there&apos;s nothing at this address..
