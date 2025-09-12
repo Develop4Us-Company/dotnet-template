@@ -22,6 +22,11 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.Footer_Text">
+            <summary>
+              Looks up a localized string similar to Copyright © Your Company Name. All rights reserved..
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.General_City_DuplicateName">
             <summary>
               Looks up a localized string similar to This city name already exists for the same state..
@@ -40,6 +45,16 @@
         <member name="P:AppProject.Resources.Resource.General_State_DuplicateName">
             <summary>
               Looks up a localized string similar to This state name already exists for the same country..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.Home_Message">
+            <summary>
+              Looks up a localized string similar to Welcome to your new App!.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.Home_Title">
+            <summary>
+              Looks up a localized string similar to Home.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.Sample">
