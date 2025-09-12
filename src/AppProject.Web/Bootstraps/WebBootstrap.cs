@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using AppProject.Web.Constants;
+using AppProject.Web.Options;
 using AppProject.Web.Pages;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
@@ -53,7 +54,6 @@ public static class WebBootstrap
 
     private static void ConfigureAuthentication(WebAssemblyHostBuilder builder)
     {
-        // Configuração do Auth0
         builder.Services.AddOidcAuthentication(options =>
         {
             builder.Configuration.Bind("Auth0", options.ProviderOptions);
@@ -65,6 +65,8 @@ public static class WebBootstrap
 
             options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);
         });
+
+        builder.Services.Configure<WebAuth0Options>(builder.Configuration.GetSection("Auth0"));
     }
 
     private static void ConfigureRefit(WebAssemblyHostBuilder builder)

@@ -1,4 +1,5 @@
-﻿@using AppProject.Web.Constants
+﻿@using AppProject.Resources
+@using AppProject.Web.Constants
 @using Blazored.LocalStorage
 @using System.Globalization
 
@@ -11,9 +12,9 @@
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>
-            <PageTitle>Not found</PageTitle>
+            <PageTitle>@StringResource.GetStringByKey("NotFound_Title")</PageTitle>
             <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
+                <RadzenText TextStyle="TextStyle.DisplayH3" Text=@StringResource.GetStringByKey("NotFound_Message") />
             </LayoutView>
         </NotFound>
     </Router>
@@ -35,9 +36,9 @@
 
     private async Task SetThemeAsync()
     {
-        var theme = 
-            await this.LocalStorageService.GetItemAsync<string>(ThemeConstants.ThemeLocalStorageKey)
-                ?? ThemeConstants.DefaultLightTheme;
+        var theme =
+        await this.LocalStorageService.GetItemAsync<string>(ThemeConstants.ThemeLocalStorageKey)
+        ?? ThemeConstants.DefaultLightTheme;
 
         ThemeService.SetTheme(theme);
     }

@@ -44,7 +44,7 @@
     <value>This neighborhood name already exists for the same city.</value>
   </data>
 
-  <!--Pages-->
+  <!--Frontend-->
   <data name="Footer_Text" xml:space="preserve">
     <value>Copyright © Your Company Name. All rights reserved.</value>
   </data>
@@ -53,5 +53,19 @@
   </data>
   <data name="Home_Message" xml:space="preserve">
     <value>Welcome to your new App!</value>
+  </data>
+  <data name="NotFound_Title" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="NotFound_Message" xml:space="preserve">
+    <value>Sorry, there's nothing at this address.</value>
+  </data>
+
+  <!--Frontend Login-->
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
   </data>
 </root>
