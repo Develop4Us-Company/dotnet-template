@@ -2,20 +2,37 @@
 @using Blazored.LocalStorage
 @using Radzen
 @using System.Globalization
+@using Radzen.Blazor.Rendering
 
-<RadzenDropDown 
-    TValue="CultureInfo"
-    @bind-Value=Culture
-    Change=@OnLanguageChangedAsync
-    Data=@SupportedCultures
-    TextProperty="DisplayName" />
+<style type="text/css">
+    .language-popup {
+        display: none;
+        position: absolute;
+        overflow: hidden;
+        border: var(--rz-panel-border);
+        background-color: var(--rz-panel-background-color);
+        box-shadow: var(--rz-panel-shadow);
+        border-radius: var(--rz-border-radius)
+    }
+</style>
+
+<RadzenButton @ref="button" Icon="language" Text="@Culture.Name" ButtonStyle="ButtonStyle.Base"
+    Click="(args => popup.ToggleAsync(button.Element))" />
+
+<Popup @ref=popup Lazy=true class="language-popup">
+    <RadzenDropDown TValue="CultureInfo" @bind-Value=Culture Change=@OnLanguageChangedAsync Data=@SupportedCultures
+        TextProperty="DisplayName" />
+</Popup>
 
 @code {
+    private RadzenButton button;
+    private Popup popup;
+
     private CultureInfo[] SupportedCultures => new[]
     {
-        new CultureInfo("en-US"),
-        new CultureInfo("pt-BR"),
-    };
+new CultureInfo("en-US"),
+new CultureInfo("pt-BR"),
+};
 
     [Inject]
     private ILocalStorageService LocalStorageService { get; set; }
@@ -30,7 +47,7 @@
         var culture = value != null ? (CultureInfo)value : new CultureInfo(AppProjectConstants.DefaultLanguage);
 
         await LocalStorageService.SetItemAsync(AppProjectConstants.LanguageLocalStorageKey, culture.Name);
-        
+
         CultureInfo.DefaultThreadCurrentCulture = culture;
         CultureInfo.DefaultThreadCurrentUICulture = culture;
 
