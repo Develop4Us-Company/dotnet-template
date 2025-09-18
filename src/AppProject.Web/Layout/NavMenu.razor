@@ -25,10 +25,10 @@
     private IEnumerable<PermissionType> permissions = Enumerable.Empty<PermissionType>();
 
     [Inject]
-    private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+    private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
     [Inject]
-    private IPermissionClient PermissionClient { get; set; } = null!;
+    private IPermissionClient PermissionClient { get; set; } = default!;
 
     public void Dispose()
     {

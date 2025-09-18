@@ -10,7 +10,7 @@ public class Neighborhood : IEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
     public string? Code { get; set; }

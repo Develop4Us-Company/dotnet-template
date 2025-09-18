@@ -13,10 +13,10 @@
     private const string DarkIconName = "dark_mode";
 
     [Inject]
-    private ILocalStorageService LocalStorageService { get; set; } = null!;
+    private ILocalStorageService LocalStorageService { get; set; } = default!;
 
     [Inject]
-    private ThemeService ThemeService { get; set; } = null!;
+    private ThemeService ThemeService { get; set; } = default!;
 
     private bool IsDarkTheme { get; set; }
 

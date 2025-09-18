@@ -38,10 +38,10 @@
     };
 
     [Inject]
-    private ILocalStorageService LocalStorageService { get; set; } = null!;
+    private ILocalStorageService LocalStorageService { get; set; } = default!;
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
+    private NavigationManager NavigationManager { get; set; } = default!;
 
     private CultureInfo Culture { get; set; } = CultureInfo.CurrentCulture;
 
