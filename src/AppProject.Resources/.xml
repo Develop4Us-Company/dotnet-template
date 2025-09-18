@@ -132,11 +132,6 @@
               Looks up a localized string similar to Search.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.SearchControl_SearchField_Placeholder">
-            <summary>
-              Looks up a localized string similar to Search....
-            </summary>
-        </member>
         <member name="P:AppProject.Resources.Resource.SearchControl_ShowFiltersButton_Text">
             <summary>
               Looks up a localized string similar to Show additional filters.
