@@ -11,7 +11,7 @@
 <RemoteAuthenticatorView Action="@Action">
     <LogOut>
         @{
-            Navigation.NavigateTo($"{Auth0Options.Value.Authority}/v2/logout?client_id={Auth0Options.Value.ClientId}");
+            NavigateToLogout();
         }
     </LogOut>
 </RemoteAuthenticatorView>
@@ -19,4 +19,18 @@
 @code {
     [Parameter]
     public string Action { get; set; } = string.Empty;
+
+    private void NavigateToLogout()
+    {
+        var options = Auth0Options.Value;
+        var authority = options.Authority;
+        var clientId = options.ClientId;
+
+        if (string.IsNullOrWhiteSpace(authority) || string.IsNullOrWhiteSpace(clientId))
+        {
+            throw new InvalidOperationException("Auth0 options are not configured properly.");
+        }
+
+        Navigation.NavigateTo($"{authority}/v2/logout?client_id={clientId}");
+    }
 }

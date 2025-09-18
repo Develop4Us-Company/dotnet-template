@@ -45,7 +45,7 @@ public class ExceptionMiddleware
         }
     }
 
-    private async Task HandleExceptionAsync(HttpContext context, ExceptionCode exceptionCode = ExceptionCode.Generic, string additionalInfo = null, HttpStatusCode httpStatusCode = HttpStatusCode.InternalServerError)
+    private async Task HandleExceptionAsync(HttpContext context, ExceptionCode exceptionCode = ExceptionCode.Generic, string? additionalInfo = null, HttpStatusCode httpStatusCode = HttpStatusCode.InternalServerError)
     {
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)httpStatusCode;

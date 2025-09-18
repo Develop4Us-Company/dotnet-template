@@ -18,60 +18,74 @@ public class EmailSender(
         IEnumerable<string>? to = null,
         IEnumerable<string>? cc = null,
         IEnumerable<string>? bcc = null,
-        string fromEmailAddress = null,
-        string fromName = null,
+        string? fromEmailAddress = null,
+        string? fromName = null,
         IEnumerable<EmailAttachment>? emailAttachments = null,
         CancellationToken cancellationToken = default)
     {
-        fromEmailAddress ??= sendEmailOptions.Value?.FromEmailAddress;
-        fromName ??= sendEmailOptions.Value?.FromName;
+        var optionsValue = sendEmailOptions.Value;
 
-        if (string.IsNullOrEmpty(fromEmailAddress))
+        fromEmailAddress ??= optionsValue.FromEmailAddress;
+        fromName ??= optionsValue.FromName;
+
+        if (string.IsNullOrWhiteSpace(fromEmailAddress))
         {
             throw new InvalidOperationException("From email address must be provided.");
         }
 
-        if (string.IsNullOrEmpty(sendEmailOptions.Value?.ApiKey))
+        if (string.IsNullOrWhiteSpace(optionsValue.ApiKey))
         {
             throw new InvalidOperationException("SendEmail API key must be configured.");
         }
 
         var message = new SendGridMessage
         {
-            From = new EmailAddress(fromEmailAddress, fromName),
+            From = new EmailAddress(fromEmailAddress, fromName ?? string.Empty),
             Subject = subject,
             HtmlContent = body,
         };
 
         var addedRecipients = false;
 
-        if (to?.Any() == true)
+        if (to != null)
         {
-            addedRecipients = true;
-
             foreach (var recipient in to)
             {
+                if (string.IsNullOrWhiteSpace(recipient))
+                {
+                    continue;
+                }
+
                 message.AddTo(new EmailAddress(recipient));
+                addedRecipients = true;
             }
         }
 
-        if (cc?.Any() == true)
+        if (cc != null)
         {
-            addedRecipients = true;
-
             foreach (var recipient in cc)
             {
+                if (string.IsNullOrWhiteSpace(recipient))
+                {
+                    continue;
+                }
+
                 message.AddCc(new EmailAddress(recipient));
+                addedRecipients = true;
             }
         }
 
-        if (bcc?.Any() == true)
+        if (bcc != null)
         {
-            addedRecipients = true;
-
             foreach (var recipient in bcc)
             {
+                if (string.IsNullOrWhiteSpace(recipient))
+                {
+                    continue;
+                }
+
                 message.AddBcc(new EmailAddress(recipient));
+                addedRecipients = true;
             }
         }
 
@@ -85,14 +99,25 @@ public class EmailSender(
         {
             foreach (var attachment in emailAttachments)
             {
+                if (string.IsNullOrWhiteSpace(attachment.Content)
+                    || string.IsNullOrWhiteSpace(attachment.FileName)
+                    || string.IsNullOrWhiteSpace(attachment.Type))
+                {
+                    continue;
+                }
+
                 var sendGridAttachment = new Attachment
                 {
                     Content = attachment.Content,
                     Filename = attachment.FileName,
                     Type = attachment.Type,
                     Disposition = attachment.Disposition,
-                    ContentId = attachment.ContentId
                 };
+
+                if (!string.IsNullOrWhiteSpace(attachment.ContentId))
+                {
+                    sendGridAttachment.ContentId = attachment.ContentId;
+                }
 
                 message.AddAttachment(sendGridAttachment);
             }

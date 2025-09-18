@@ -6,5 +6,5 @@ public class SearchRequest : IRequest
 {
     public int? Take { get; set; }
 
-    public string SearchText { get; set; }
+    public string? SearchText { get; set; }
 }
