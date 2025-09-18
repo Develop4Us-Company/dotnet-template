@@ -5,5 +5,5 @@ namespace AppProject.Models;
 public class SummaryResponse<TSummary> : IResponse
     where TSummary : class, ISummary
 {
-    public required TSummary Summary { get; set; }
+    required public TSummary Summary { get; set; }
 }

@@ -1,5 +1,4 @@
 ﻿@using AppProject.Models.Auth
-@using AppProject.Resources
 @using AppProject.Web.ApiClient.Auth
 @using System.Threading.Tasks
 
@@ -12,7 +11,7 @@
 
             @if(permissions?.Contains(PermissionType.System_ManageSettings) == true)
             {
-                <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Countries") Icon="globe" />
+                <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Countries") Icon="globe" Path="general/countries" />
                 <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_States") Icon="globe_location_pin" />
                 <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Cities") Icon="location_city" />
             }

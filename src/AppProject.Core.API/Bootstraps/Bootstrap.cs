@@ -387,11 +387,11 @@ public static class Bootstrap
             {
                 Type = SecuritySchemeType.OAuth2,
                 Flows = new OpenApiOAuthFlows
+                {
+                    AuthorizationCode = new OpenApiOAuthFlow
                     {
-                        AuthorizationCode = new OpenApiOAuthFlow
-                        {
-                            AuthorizationUrl = new Uri($"{authority}/authorize"),
-                            TokenUrl = new Uri($"{authority}/oauth/token"),
+                        AuthorizationUrl = new Uri($"{authority}/authorize"),
+                        TokenUrl = new Uri($"{authority}/oauth/token"),
                         Scopes = new Dictionary<string, string>
                         {
                             { "openid", "OpenID" },

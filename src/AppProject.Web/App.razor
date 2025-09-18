@@ -1,12 +1,13 @@
-﻿@using AppProject.Resources
-@using AppProject.Web.Constants
+﻿@using AppProject.Web.Constants
 @using Blazored.LocalStorage
 @using System.Globalization
+@using System.Reflection
+@using Microsoft.AspNetCore.Components.WebAssembly.Services
 
 <RadzenTheme Theme="@ThemeConstants.DefaultLightTheme" @rendermode="RenderMode.InteractiveAuto" />
 
 <CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(App).Assembly">
+    <Router AppAssembly="@typeof(App).Assembly" OnNavigateAsync="OnNavigateAsync" AdditionalAssemblies="lazyAssemblies">
         <Found Context="routeData">
             <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
@@ -21,11 +22,16 @@
 </CascadingAuthenticationState>
 
 @code {
+    private List<Assembly> lazyAssemblies = new();
+
     [Inject]
     private ILocalStorageService LocalStorageService { get; set; } = default!;
 
     [Inject]
     private ThemeService ThemeService { get; set; } = default!;
+
+    [Inject]
+    private LazyAssemblyLoader AssemblyLoader { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -37,8 +43,21 @@
     private async Task SetThemeAsync()
     {
         var theme = await this.LocalStorageService.GetItemAsync<string>(ThemeConstants.ThemeLocalStorageKey)
-            ?? ThemeConstants.DefaultLightTheme;
+        ?? ThemeConstants.DefaultLightTheme;
 
         ThemeService.SetTheme(theme);
+    }
+
+    private async Task OnNavigateAsync(NavigationContext args)
+    {
+        if (args.Path.StartsWith("general", StringComparison.OrdinalIgnoreCase))
+        {
+            if (!lazyAssemblies.Any(a => a.GetName().Name == "AppProject.Web.General"))
+            {
+                var assemblies = await AssemblyLoader.LoadAssembliesAsync(
+                    new[] { "AppProject.Web.General.dll" });
+                lazyAssemblies.AddRange(assemblies);
+            }
+        }
     }
 }
