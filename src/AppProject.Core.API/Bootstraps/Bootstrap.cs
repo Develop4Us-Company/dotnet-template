@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using SendGrid.Extensions.DependencyInjection;
 using Serilog;
@@ -90,13 +91,16 @@ public static class Bootstrap
                 var auth0Options = new Auth0Options();
                 app.Configuration.GetSection("Auth0").Bind(auth0Options);
 
-                if (string.IsNullOrEmpty(auth0Options.Audience)
-                    || string.IsNullOrEmpty(auth0Options.ClientId))
+                var audience = auth0Options.Audience;
+                var clientId = auth0Options.ClientId;
+
+                if (string.IsNullOrEmpty(audience)
+                    || string.IsNullOrEmpty(clientId))
                 {
                     throw new ArgumentException("Auth0 is not configured properly.");
                 }
 
-                c.OAuthClientId(auth0Options.ClientId);
+                c.OAuthClientId(clientId);
                 c.OAuthAppName("API - Swagger");
                 c.OAuthUsePkce();
                 c.OAuthScopeSeparator(" ");
@@ -105,7 +109,7 @@ public static class Bootstrap
 
                 c.OAuthAdditionalQueryStringParams(new Dictionary<string, string>
                 {
-                    { "audience", auth0Options.Audience }
+                    { "audience", audience }
                 });
             });
 
@@ -162,9 +166,8 @@ public static class Bootstrap
         var systemAdminUserOptions = new SystemAdminUserOptions();
         app.Configuration.GetSection("SystemAdminUser").Bind(systemAdminUserOptions);
 
-        if (systemAdminUserOptions is null
-            || string.IsNullOrEmpty(systemAdminUserOptions.Name)
-            || string.IsNullOrEmpty(systemAdminUserOptions.Email))
+        if (string.IsNullOrWhiteSpace(systemAdminUserOptions.Name)
+            || string.IsNullOrWhiteSpace(systemAdminUserOptions.Email))
         {
             throw new ArgumentException("SystemAdminUser configuration is not set properly.");
         }
@@ -308,16 +311,17 @@ public static class Bootstrap
         var connectionStringsOptions = new ConnectionStringsOptions();
         builder.Configuration.GetSection("ConnectionStrings").Bind(connectionStringsOptions);
 
-        if (string.IsNullOrEmpty(connectionStringsOptions.DatabaseConnection))
+        var databaseConnection = connectionStringsOptions.DatabaseConnection;
+        if (string.IsNullOrWhiteSpace(databaseConnection))
         {
             throw new ArgumentException("Database connection string is not configured.");
         }
 
         builder.Services.AddDbContext<ApplicationDbContext>(x =>
             x.UseSqlServer(
-                connectionStringsOptions.DatabaseConnection,
-                y => y.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+                    databaseConnection,
+                    y => y.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
     }
 
     private static void ConfigureAuthentication(WebApplicationBuilder builder)
@@ -327,7 +331,10 @@ public static class Bootstrap
         var auth0Options = new Auth0Options();
         builder.Configuration.GetSection("Auth0").Bind(auth0Options);
 
-        if (string.IsNullOrEmpty(auth0Options.Authority) || string.IsNullOrEmpty(auth0Options.Audience))
+        var authority = auth0Options.Authority;
+        var audience = auth0Options.Audience;
+
+        if (string.IsNullOrWhiteSpace(authority) || string.IsNullOrWhiteSpace(audience))
         {
             throw new ArgumentException("Auth0 configuration is not set properly.");
         }
@@ -339,15 +346,15 @@ public static class Bootstrap
         })
         .AddJwtBearer(options =>
         {
-            options.Authority = $"{auth0Options.Authority}";
-            options.Audience = auth0Options.Audience;
+            options.Authority = authority;
+            options.Audience = audience;
 
             options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
             {
                 ValidateIssuer = true,
-                ValidIssuer = $"{auth0Options.Authority}",
+                ValidIssuer = authority,
                 ValidateAudience = true,
-                ValidAudience = auth0Options.Audience,
+                ValidAudience = audience,
                 ValidateLifetime = true,
                 NameClaimType = ClaimTypes.NameIdentifier
             };
@@ -361,6 +368,13 @@ public static class Bootstrap
         var auth0Options = new Auth0Options();
         builder.Configuration.GetSection("Auth0").Bind(auth0Options);
 
+        var authority = auth0Options.Authority;
+
+        if (string.IsNullOrWhiteSpace(authority))
+        {
+            throw new ArgumentException("Auth0 configuration is not set properly.");
+        }
+
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo
@@ -373,11 +387,11 @@ public static class Bootstrap
             {
                 Type = SecuritySchemeType.OAuth2,
                 Flows = new OpenApiOAuthFlows
-                {
-                    AuthorizationCode = new OpenApiOAuthFlow
                     {
-                        AuthorizationUrl = new Uri($"{auth0Options.Authority}/authorize"),
-                        TokenUrl = new Uri($"{auth0Options.Authority}/oauth/token"),
+                        AuthorizationCode = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri($"{authority}/authorize"),
+                            TokenUrl = new Uri($"{authority}/oauth/token"),
                         Scopes = new Dictionary<string, string>
                         {
                             { "openid", "OpenID" },
@@ -487,7 +501,14 @@ public static class Bootstrap
             var sendEmailOptions = new SendEmailOptions();
             builder.Configuration.GetSection("SendEmail").Bind(sendEmailOptions);
 
-            options.ApiKey = sendEmailOptions.ApiKey;
+            var apiKey = sendEmailOptions.ApiKey;
+
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                throw new ArgumentException("SendEmail API key must be configured.");
+            }
+
+            options.ApiKey = apiKey;
         });
     }
 
@@ -501,7 +522,14 @@ public static class Bootstrap
     {
         builder.Services.AddHangfire(config =>
         {
-            config.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection"));
+            var hangfireConnection = builder.Configuration.GetConnectionString("HangfireConnection");
+
+            if (string.IsNullOrWhiteSpace(hangfireConnection))
+            {
+                throw new ArgumentException("Hangfire connection string is not configured.");
+            }
+
+            config.UseSqlServerStorage(hangfireConnection);
         });
 
         builder.Services.AddHangfireServer();
@@ -522,23 +550,23 @@ public static class Bootstrap
 
     private class ConnectionStringsOptions
     {
-        public string DatabaseConnection { get; set; }
+        public string? DatabaseConnection { get; set; }
     }
 
     private class Auth0Options
     {
-        public string Authority { get; set; }
+        public string? Authority { get; set; }
 
-        public string ClientId { get; set; }
+        public string? ClientId { get; set; }
 
-        public string Audience { get; set; }
+        public string? Audience { get; set; }
     }
 
     private class SystemAdminUserOptions
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
     }
 
     private class CorsOptions

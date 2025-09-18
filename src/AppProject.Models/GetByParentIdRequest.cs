@@ -6,5 +6,5 @@ namespace AppProject.Models;
 public class GetByParentIdRequest<TIdType> : IRequest
 {
     [Required]
-    public TIdType ParentId { get; set; }
+    public required TIdType ParentId { get; set; }
 }

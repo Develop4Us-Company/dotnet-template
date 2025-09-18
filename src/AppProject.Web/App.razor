@@ -22,10 +22,10 @@
 
 @code {
     [Inject]
-    private ILocalStorageService LocalStorageService { get; set; }
+    private ILocalStorageService LocalStorageService { get; set; } = null!;
 
     [Inject]
-    private ThemeService ThemeService { get; set; }
+    private ThemeService ThemeService { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -36,9 +36,8 @@
 
     private async Task SetThemeAsync()
     {
-        var theme =
-        await this.LocalStorageService.GetItemAsync<string>(ThemeConstants.ThemeLocalStorageKey)
-        ?? ThemeConstants.DefaultLightTheme;
+        var theme = await this.LocalStorageService.GetItemAsync<string>(ThemeConstants.ThemeLocalStorageKey)
+            ?? ThemeConstants.DefaultLightTheme;
 
         ThemeService.SetTheme(theme);
     }
