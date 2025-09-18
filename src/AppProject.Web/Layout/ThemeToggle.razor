@@ -2,6 +2,8 @@
 @using Blazored.LocalStorage
 @using Radzen
 
+@inherits AppProjectComponentBase
+
 <RadzenToggleButton @bind-Value=@this.IsDarkTheme Change=@OnThemeChangedAsync Icon="@DarkIconName"
     ToggleIcon="@LightIconName" ButtonStyle="ButtonStyle.Base" ToggleButtonStyle="ButtonStyle.Base"
     ToggleShade="Shade.Default" />
