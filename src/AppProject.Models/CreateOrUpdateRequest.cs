@@ -7,5 +7,5 @@ public class CreateOrUpdateRequest<TEntity> : IRequest
     where TEntity : class, IEntity
 {
     [Required]
-    public required TEntity Entity { get; set; }
+    required public TEntity Entity { get; set; }
 }

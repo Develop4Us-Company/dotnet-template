@@ -1,0 +1,124 @@
+﻿@using AppProject.Models
+@using System.Collections.ObjectModel
+
+@inherits AppProjectComponentBase
+
+@typeparam TSummary where TSummary : ISummary
+
+<RadzenCard>
+    <RadzenRow>
+        <RadzenColumn>
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+                <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_SearchField_Label")>
+                    <RadzenTextBox @bind-Value=@SearchText/>
+                </RadzenFormField>
+                <RadzenButton Icon="search" Text=@StringResource.GetStringByKey("SearchControl_SearchButton_Text")
+                    ButtonStyle="ButtonStyle.Primary"
+                    Click=@OnSearch />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn>
+            <RadzenToggleButton Icon="filter_list" Text=@MoreFilterText @bind-Value=@IsShowingMoreFilter
+                ButtonStyle="ButtonStyle.Primary" />
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn>
+            <RadzenCard Visible="IsShowingMoreFilter">
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
+                            <RadzenNumeric ShowUpDown="false" TValue="int?" @bind-Value=@Take />
+                        </RadzenFormField>
+                    </RadzenColumn>
+                </RadzenRow>
+
+                @if (FilterContent is not null)
+                {
+                    <RadzenRow class="mt-2">
+                        <RadzenColumn>
+                            @FilterContent
+                        </RadzenColumn>
+                    </RadzenRow>
+                }
+
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn Width="3" Style="text-align: right;">
+            @if (ExtraButtons is not null)
+            {
+                @ExtraButtons
+            }
+            <RadzenButton Icon="add_circle" Text="Novo" Click="@OnNewItem" Style="margin-left: 10px" />
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn>
+            <RadzenDataGrid TItem="TSummary" Data=@Items RowSelect="@OnRowSelected"
+                SelectionMode="DataGridSelectionMode.Multiple" @bind-Value=@Items AllowColumnReorder="true"
+                AllowMultiColumnSorting="true" AllowAlternatingRows="true" AllowFiltering="true" AllowSorting="true"
+                AllowColumnResize="true" AllowGrouping="true">
+                <Columns>
+                    @ChildContent
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenColumn>
+    </RadzenRow>
+
+</RadzenCard>
+
+@code {
+    [Parameter]
+    public RenderFragment? FilterContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? ExtraButtons { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string SearchText { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<string> SearchTextChanged { get; set; }
+
+    [Parameter]
+    public int? Take { get; set; }
+
+    [Parameter]
+    public EventCallback<int?> TakeChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnSearch { get; set; }
+
+    [Parameter]
+    public EventCallback OnNewItem { get; set; }
+
+    [Parameter]
+    public EventCallback OnEditItem { get; set; }
+
+    [Parameter]
+    public EventCallback OnDeleteItem { get; set; }
+
+    [Parameter]
+    public EventCallback<TSummary?> OnRowSelected { get; set; }
+
+    private bool IsShowingMoreFilter { get; set; }
+
+    private IList<TSummary> Items { get; set; } = new List<TSummary>();
+
+    private IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
+
+    private string MoreFilterText => IsShowingMoreFilter
+        ? StringResource.GetStringByKey("SearchControl_HideFiltersButton_Text")
+        : StringResource.GetStringByKey("SearchControl_ShowFiltersButton_Text");
+}

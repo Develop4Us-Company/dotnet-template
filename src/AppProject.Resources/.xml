@@ -117,5 +117,35 @@
               Looks up a localized string similar to This is a sample message for you..
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.SearchControl_HideFiltersButton_Text">
+            <summary>
+              Looks up a localized string similar to Hide additional filters.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.SearchControl_SearchButton_Text">
+            <summary>
+              Looks up a localized string similar to Search.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.SearchControl_SearchField_Label">
+            <summary>
+              Looks up a localized string similar to Search.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.SearchControl_SearchField_Placeholder">
+            <summary>
+              Looks up a localized string similar to Search....
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.SearchControl_ShowFiltersButton_Text">
+            <summary>
+              Looks up a localized string similar to Show additional filters.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.SearchControl_TakeField_Label">
+            <summary>
+              Looks up a localized string similar to Take.
+            </summary>
+        </member>
     </members>
 </doc>

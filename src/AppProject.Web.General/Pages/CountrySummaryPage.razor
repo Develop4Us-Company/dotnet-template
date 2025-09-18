@@ -1,0 +1,47 @@
+﻿@page "/general/countries"
+
+@inherits SearchPage<SearchRequest, CountrySummary>
+
+<SearchControl TSummary="CountrySummary"
+               OnSearch=@FetchDataAsync>
+</SearchControl>
+
+@code{
+    protected override Task<IEnumerable<CountrySummary>> FetchDataAsync()
+    {
+        return Task.FromResult(this.Items.AsEnumerable());
+    }
+/*
+    protected override Task OnNewItemAsync() => Navigation.NavigateToAsync("general/country");
+
+    protected override Task OnEditItemAsync()
+    {
+        if (this.SelectedItems.Count == 1)
+        {
+            var id = this.SelectedItems.First().Id;
+            return Navigation.NavigateToAsync($"general/country/{id}");
+        }
+
+        return Task.CompletedTask;
+    }
+
+    protected override async Task OnDeleteItemAsync()
+    {
+        if (this.SelectedItems.Count > 0)
+        {
+            var confirmed = await DialogService.Confirm(
+                StringResource.GetStringByKey("CountrySummaryPage_Delete_Confirmation_Message"),
+                StringResource.GetStringByKey("CountrySummaryPage_Delete_Confirmation_Title"),
+                new ConfirmOptions() { OkButtonText = StringResource.GetStringByKey("Yes"), CancelButtonText = StringResource.GetStringByKey("No") });
+
+            if (confirmed == true)
+            {
+                var ids = this.SelectedItems.Select(i => i.Id).ToArray();
+                await CountryClient.DeleteCountriesAsync(ids);
+                await OnSearchAsync();
+                this.SelectedItems.Clear();
+                StateHasChanged();
+            }
+        }
+    }*/
+}
