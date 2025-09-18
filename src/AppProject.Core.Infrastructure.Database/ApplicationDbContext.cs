@@ -13,15 +13,15 @@ public class ApplicationDbContext : DbContext
     }
 
     // DbSets for your entities
-    public DbSet<TbUser> Users { get; set; } = null!;
+    public DbSet<TbUser> Users { get; set; } = default!;
 
-    public DbSet<TbCountry> Countries { get; set; } = null!;
+    public DbSet<TbCountry> Countries { get; set; } = default!;
 
-    public DbSet<TbState> States { get; set; } = null!;
+    public DbSet<TbState> States { get; set; } = default!;
 
-    public DbSet<TbCity> Cities { get; set; } = null!;
+    public DbSet<TbCity> Cities { get; set; } = default!;
 
-    public DbSet<TbNeighborhood> Neighborhoods { get; set; } = null!;
+    public DbSet<TbNeighborhood> Neighborhoods { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

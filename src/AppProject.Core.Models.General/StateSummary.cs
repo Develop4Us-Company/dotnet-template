@@ -7,9 +7,9 @@ public class StateSummary : ISummary
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
 
-    public string CountryName { get; set; } = string.Empty;
+    public string CountryName { get; set; } = default!;
 
     public Guid CountryId { get; set; }
 }

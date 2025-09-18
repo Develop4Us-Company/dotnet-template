@@ -11,9 +11,9 @@ public abstract class BaseEntity
     [Required]
     public Guid CreatedByUserId { get; set; }
 
-    [MaxLength(255)]
     [Required]
-    public string CreatedByUserName { get; set; } = string.Empty;
+    [MaxLength(255)]
+    public string CreatedByUserName { get; set; } = default!;
 
     public DateTimeOffset? UpdatedAt { get; set; }
 

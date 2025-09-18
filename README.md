@@ -67,13 +67,14 @@ public class Country : IEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     public byte[]? RowVersion { get; set; }
 }
+
 ```
 
 [`State.cs`](./src/AppProject.Core.Models.General/State.cs):
@@ -91,16 +92,17 @@ public class State : IEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     [Required]
     public Guid CountryId { get; set; }
 
     public byte[]? RowVersion { get; set; }
 }
+
 ```
 
 [`City.cs`](./src/AppProject.Core.Models.General/City.cs):
@@ -119,10 +121,10 @@ public class City : IEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     [Required]
     public Guid StateId { get; set; }
@@ -135,6 +137,7 @@ public class City : IEntity
     [ValidateCollection]
     public IList<DeleteRequest<Guid>> DeletedNeighborhoodRequests { get; set; } = new List<DeleteRequest<Guid>>();
 }
+
 ```
 
 [`Neighborhood.cs`](./src/AppProject.Core.Models.General/Neighborhood.cs):
@@ -152,13 +155,14 @@ public class Neighborhood : IEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     public byte[]? RowVersion { get; set; }
 }
+
 ```
 
 Note que usamos atributos para as principais validações. Nos relacionamentos, usamos apenas o nome dos campos mesmo, ao invés de adicionar também a classe DTO. Isso evita problemas ao converter o DTO para a entidade do banco de dados, como por exemplo, acabar inserindo/alterando um país só porque ele está referenciado numa outra tabela. Claro que, não há problemas em ter outras entidades nos DTOs, mas desde que o propósito seja inserir/alterar tudo junto. 
@@ -168,7 +172,7 @@ Quando houver situações onde temos um DTO pai e DTOs filhos, como por exemplo 
 
 ```csharp
 [ValidateCollection]
-    public IList<CreateOrUpdateRequest<Neighborhood>> ChangedNeighborhoodRequests { get; set; } = new List<CreateOrUpdateRequest<Neighborhood>>();
+public IList<CreateOrUpdateRequest<Neighborhood>> ChangedNeighborhoodRequests { get; set; } = new List<CreateOrUpdateRequest<Neighborhood>>();
 ```
 
 Adicionamos uma lista da CreateOrUpdateRequest<Neighborhood>, que representa os registros de bairros para inserir ou modificar. Se o Neighborhood tiver um Id preenchido, o registro é para modificar. Caso contrário, será para alterar.
@@ -179,7 +183,7 @@ Note também que na classe Neighborhood, nós não colocamos a propriedade CityI
 
 ```csharp
 [ValidateCollection]
-    public IList<DeleteRequest<Guid>> DeletedNeighborhoodRequests { get; set; } = new List<DeleteRequest<Guid>>();
+public IList<DeleteRequest<Guid>> DeletedNeighborhoodRequests { get; set; } = new List<DeleteRequest<Guid>>();
 ```
 
 Para excluir registros filhos, a lista é uma coleção de DeleteRequest<>. Assim, para deletar os filhos, nós passamos apenas os Ids dos filhos.
@@ -212,8 +216,9 @@ public class CountrySummary : ISummary
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 }
+
 ```
 
 [`StateSummary.cs`](./src/AppProject.Core.Models.General/StateSummary.cs):
@@ -228,12 +233,13 @@ public class StateSummary : ISummary
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
-    public string CountryName { get; set; }
+    public string CountryName { get; set; } = default!;
 
     public Guid CountryId { get; set; }
 }
+
 ```
 
 [`CitySummary.cs`](./src/AppProject.Core.Models.General/CitySummary.cs):
@@ -248,16 +254,17 @@ public class CitySummary : ISummary
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
-    public string StateName { get; set; }
+    public string StateName { get; set; } = default!;
 
     public Guid StateId { get; set; }
 
-    public string CountryName { get; set; }
+    public string CountryName { get; set; } = default!;
 
     public Guid CountryId { get; set; }
 }
+
 ```
 
 Perceba que o Summary herda de ISummary. Note também que, no caso do StateSummary, nós trouxemos o CountryId e, ao invés de carregarmos o CountrySummary, trouxemos o CountryName, que é o campo que vamos utilizar. No entanto, não há objeções para que nos Summaries tragamos outros summaries aninhados, apenas tomando os devidos cuidados para que não tenha referências circulares infinitas entre eles.
@@ -288,13 +295,14 @@ public class TbCountry : BaseEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     public ICollection<TbState> States { get; set; } = new List<TbState>();
 }
+
 ```
 
 [`TbState.cs`](./src/AppProject.Core.Infrastructure.Database/Entities/General/TbState.cs):
@@ -314,19 +322,20 @@ public class TbState : BaseEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     [Required]
     public Guid CountryId { get; set; }
 
     [ForeignKey(nameof(CountryId))]
-    public TbCountry Country { get; set; }
+    public TbCountry Country { get; set; } = default!;
 
     public ICollection<TbCity> Cities { get; set; } = new List<TbCity>();
 }
+
 ```
 
 [`TbCity.cs`](./src/AppProject.Core.Infrastructure.Database/Entities/General/TbCity.cs):
@@ -346,19 +355,20 @@ public class TbCity : BaseEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     [Required]
     public Guid StateId { get; set; }
 
     [ForeignKey(nameof(StateId))]
-    public TbState State { get; set; }
+    public TbState State { get; set; } = default!;
 
     public ICollection<TbNeighborhood> Neighborhoods { get; set; } = new List<TbNeighborhood>();
 }
+
 ```
 
 [`TbNeighborhood.cs`](./src/AppProject.Core.Infrastructure.Database/Entities/General/TbNeighborhood.cs):
@@ -378,17 +388,18 @@ public class TbNeighborhood : BaseEntity
 
     [Required]
     [MaxLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [MaxLength(200)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     [Required]
     public Guid CityId { get; set; }
 
     [ForeignKey(nameof(CityId))]
-    public TbCity City { get; set; }
+    public TbCity City { get; set; } = default!;
 }
+
 ```
 
 No atributo Table, nós colocamos o nome da tabela no plural, sem o prefixo Tb.
@@ -438,8 +449,8 @@ public class TbStateConfiguration : IEntityTypeConfiguration<TbState>
         builder.HasIndex(x => x.Name);
     }
 }
-```
 
+```
 [`TbCityConfiguration.cs`](./src/AppProject.Core.Infrastructure.Database/EntityTypeConfiguration/General/TbCityConfiguration.cs):
 
 ```csharp
@@ -457,8 +468,8 @@ public class TbCityConfiguration : IEntityTypeConfiguration<TbCity>
         builder.HasIndex(x => x.Name);
     }
 }
-```
 
+```
 [`TbNeighborhoodConfiguration.cs`](./src/AppProject.Core.Infrastructure.Database/EntityTypeConfiguration/General/TbNeighborhoodConfiguration.cs):
 
 ```csharp
@@ -476,8 +487,8 @@ public class TbNeighborhoodConfiguration : IEntityTypeConfiguration<TbNeighborho
         builder.HasIndex(x => x.Name);
     }
 }
-```
 
+```
 Note que, esses arquivos herdam de IEntityTypeConfiguration. Dentro do método Configure, temos as configurações adicionais daquela tabela. As validações, podem ser colocadas como DataAnnotations nas classes que representam as tabelas. Mas outras validações podem ser colocadas nesses arquivos de configurações.
 
 Importante: ao adicionar um novo arquivo herdando de IEntityTypeConfiguration, não precisamos adicionar código na classe ApplicationDbContext, pois o método OnModelCreating dessa classe já lê todos os arquivos que herdam de IEntityTypeConfiguration do assembly corrente.
