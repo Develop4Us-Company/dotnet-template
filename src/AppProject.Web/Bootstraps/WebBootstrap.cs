@@ -8,6 +8,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Radzen;
 using Refit;
 
@@ -64,7 +65,14 @@ public static class WebBootstrap
             options.ProviderOptions.DefaultScopes.Add("email");
             options.ProviderOptions.DefaultScopes.Add("offline_access");
 
-            options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);
+            var audience = builder.Configuration["Auth0:Audience"];
+
+            if (string.IsNullOrWhiteSpace(audience))
+            {
+                throw new InvalidOperationException("Auth0:Audience configuration is missing.");
+            }
+
+            options.ProviderOptions.AdditionalProviderParameters.Add("audience", audience);
         });
 
         builder.Services.Configure<WebAuth0Options>(builder.Configuration.GetSection("Auth0"));
@@ -79,10 +87,15 @@ public static class WebBootstrap
         var apiOptions = new ApiOptions();
         builder.Configuration.GetSection("Api").Bind(apiOptions);
 
-        if (string.IsNullOrEmpty(apiOptions.BaseUrl))
+        var baseUrl = apiOptions.BaseUrl;
+
+        if (string.IsNullOrWhiteSpace(baseUrl))
         {
             throw new InvalidOperationException("Api:BaseUrl configuration is missing.");
         }
+
+        var baseUri = new Uri(baseUrl);
+        var authorizedUrls = new[] { baseUrl };
 
         foreach (var refitInterface in refitInterfaces)
         {
@@ -90,10 +103,10 @@ public static class WebBootstrap
                 .AddRefitClient(refitInterface)
                 .ConfigureHttpClient(c =>
                 {
-                    c.BaseAddress = new Uri(apiOptions.BaseUrl);
+                    c.BaseAddress = baseUri;
                 })
-                .AddHttpMessageHandler(sp => sp.GetService<AuthorizationMessageHandler>()
-                    .ConfigureHandler(authorizedUrls: new[] { apiOptions.BaseUrl }));
+                .AddHttpMessageHandler(sp => sp.GetRequiredService<AuthorizationMessageHandler>()
+                    .ConfigureHandler(authorizedUrls: authorizedUrls));
         }
     }
 
@@ -118,6 +131,6 @@ public static class WebBootstrap
 
     private class ApiOptions
     {
-        public string BaseUrl { get; set; }
+        public string? BaseUrl { get; set; }
     }
 }
