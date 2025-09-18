@@ -10,21 +10,24 @@ public class ChatClient(IOptions<AIOptions> aiOptions)
 {
     public async Task<string> SendMessageAsync(string systemMessage, IEnumerable<string> userMessages, string model, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrEmpty(aiOptions.Value?.Endpoint) || string.IsNullOrEmpty(aiOptions.Value?.Token))
+        var optionsValue = aiOptions.Value;
+        var endpoint = optionsValue.Endpoint;
+        var token = optionsValue.Token;
+
+        if (string.IsNullOrWhiteSpace(endpoint) || string.IsNullOrWhiteSpace(token))
         {
             throw new InvalidOperationException("AI options are not configured properly.");
         }
 
-        if (string.IsNullOrEmpty(model))
+        if (string.IsNullOrWhiteSpace(model))
         {
             throw new ArgumentException("Model must be provided.", nameof(model));
         }
 
-        var endpoint = new Uri(aiOptions.Value.Endpoint);
-        var credential = new AzureKeyCredential(aiOptions.Value.Token);
+        var credential = new AzureKeyCredential(token);
 
         var client = new ChatCompletionsClient(
-            endpoint,
+            new Uri(endpoint),
             credential,
             new AzureAIInferenceClientOptions());
 
@@ -35,7 +38,7 @@ public class ChatClient(IOptions<AIOptions> aiOptions)
             // Adjust the temperature, max tokens, and other parameters as needed
         };
 
-        if (string.IsNullOrEmpty(systemMessage))
+        if (!string.IsNullOrEmpty(systemMessage))
         {
             requestOptions.Messages.Add(new ChatRequestSystemMessage(systemMessage));
         }

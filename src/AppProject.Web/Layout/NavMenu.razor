@@ -23,10 +23,10 @@
     private IEnumerable<PermissionType> permissions = Enumerable.Empty<PermissionType>();
 
     [Inject]
-    private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+    private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
 
     [Inject]
-    private IPermissionClient PermissionClient { get; set; }
+    private IPermissionClient PermissionClient { get; set; } = null!;
 
     public void Dispose()
     {
@@ -46,14 +46,16 @@
         _ = LoadPermissionsAsync(task);
     }
 
-    private async Task LoadPermissionsAsync(Task<AuthenticationState> task)
+    private async Task LoadPermissionsAsync(Task<AuthenticationState>? authenticationStateTask)
     {
         permissions = Enumerable.Empty<PermissionType>();
 
-        var authState = task != null ? await task : await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var authState = authenticationStateTask != null
+            ? await authenticationStateTask
+            : await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
 
-        if (user.Identity.IsAuthenticated)
+        if (user.Identity?.IsAuthenticated == true)
         {
             permissions = await PermissionClient.GetCurrentUserPermissionsAsync();
         }
