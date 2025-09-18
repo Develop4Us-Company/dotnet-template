@@ -3,6 +3,8 @@
 @using AppProject.Web.ApiClient.Auth
 @using System.Threading.Tasks
 
+@inherits AppProjectComponentBase
+
 <RadzenPanelMenu>
     <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Home") Icon="home" Path="/" />
     <AuthorizeView>
