@@ -3,13 +3,29 @@
 @inherits SearchPage<SearchRequest, CountrySummary>
 
 <SearchControl TSummary="CountrySummary"
-               OnSearch=@FetchDataAsync>
+                Items=@this.Items
+                @bind-SelectedItems=@this.SelectedItems
+                OnExecuteSearch=@this.ExecuteSearchAsync>
+                <ContextActions>
+                    <RadzenButton Icon="arrow_upward" ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined" Text="Exportar"
+                        Disabled=@this.IsContextActionsDisabled />
+                </ContextActions>
+                <GridColumns>
+                    <RadzenDataGridColumn TItem="CountrySummary" Title="Nome do País" Property=@nameof(CountrySummary.Name) />
+                </GridColumns>
 </SearchControl>
 
 @code{
     protected override Task<IEnumerable<CountrySummary>> FetchDataAsync()
     {
-        return Task.FromResult(this.Items.AsEnumerable());
+        IEnumerable<CountrySummary> summaries = new List<CountrySummary>()
+        {
+            new CountrySummary { Id = Guid.NewGuid(), Name = "Brazil" },
+            new CountrySummary { Id = Guid.NewGuid(), Name = "USA" },
+            new CountrySummary { Id = Guid.NewGuid(), Name = "France" },
+        };
+
+        return Task.FromResult(summaries);
     }
 /*
     protected override Task OnNewItemAsync() => Navigation.NavigateToAsync("general/country");
