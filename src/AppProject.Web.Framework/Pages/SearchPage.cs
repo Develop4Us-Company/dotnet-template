@@ -8,28 +8,25 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
     where TRequest : IRequest
     where TSummary : ISummary
 {
-    public ObservableCollection<TSummary> Items { get; private set; } = new ObservableCollection<TSummary>();
+    public IList<TSummary> Items { get; set; } = new List<TSummary>();
 
-    public ObservableCollection<TSummary> SelectedItems { get; set; } = new ObservableCollection<TSummary>();
+    public IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
 
-    public async Task ExecuteSearchAsync(bool validateRequest = true)
+    protected bool IsContextActionsDisabled => !this.SelectedItems.Any();
+
+    public async Task ExecuteSearchAsync()
     {
         this.IsBusy = true;
 
-        if (validateRequest)
+        if (!await this.ValidateRequestAsync())
         {
-            await this.ValidateRequestAsync();
+            return;
         }
 
-        this.SelectedItems.Clear();
-        this.Items.Clear();
+        this.SelectedItems = new List<TSummary>();
+        this.Items = new List<TSummary>();
 
-        var items = await this.FetchDataAsync();
-
-        foreach (var item in items)
-        {
-            this.Items.Add(item);
-        }
+        this.Items = (await this.FetchDataAsync()).ToList();
 
         this.IsBusy = false;
 
@@ -46,9 +43,9 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
         this.SelectedItems.Remove(summary);
     }
 
-    protected virtual async Task ValidateRequestAsync()
+    protected virtual Task<bool> ValidateRequestAsync()
     {
-        await Task.CompletedTask;
+        return Task.FromResult(true);
     }
 
     protected abstract Task<IEnumerable<TSummary>> FetchDataAsync();

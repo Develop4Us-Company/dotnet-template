@@ -6,86 +6,119 @@
 @typeparam TSummary where TSummary : ISummary
 
 <RadzenCard>
-        <RadzenCard class="mb-3">
-            <RadzenRow>
+    <RadzenCard class="rz-mb-3">
+        <RadzenRow AlignItems="AlignItems.End">
+            <RadzenColumn Size="12" SizeSM="7">
+                <RadzenFormField class="rz-w-100"
+                    Text=@StringResource.GetStringByKey("SearchControl_SearchField_Label")>
+                    <RadzenTextBox @bind-Value=@this.SearchText />
+                </RadzenFormField>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenButton Icon="search" Text=@StringResource.GetStringByKey("SearchControl_SearchButton_Text")
+                    ButtonStyle="ButtonStyle.Primary" Click=@this.ExecuteSearchAsync />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow class="rz-mt-3">
+            <RadzenColumn>
+                <RadzenToggleButton Icon="filter_list" Text=@this.MoreFilterText @bind-Value=@this.IsShowingMoreFilter
+                    ButtonStyle="ButtonStyle.Base" ToggleButtonStyle="ButtonStyle.Base" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenCard Visible=@this.IsShowingMoreFilter>
+                    <RadzenRow>
+                        <RadzenColumn>
+                            <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
+                                <RadzenNumeric ShowUpDown="false" TValue="int?" @bind-Value=@this.Take />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    @FilterContent
+
+                </RadzenCard>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenRow AlignItems="AlignItems.End">
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap">
+                    <RadzenButton Icon="add_circle" ButtonStyle="ButtonStyle.Success" Text="Novo"
+                        Click=@this.OnNewItem />
+                    <RadzenButton Icon="arrow_downward" ButtonStyle="ButtonStyle.Base" Text="Importar"
+                        Click=@this.OnNewItem />
+                    @this.GlobalActions
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenCard class="rz-mt-4 rz-p-1" Variant="Variant.Outlined">
+            <RadzenRow AlignItems="AlignItems.End">
                 <RadzenColumn>
-                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" Gap="1rem">
-                        <RadzenFormField class="rz-w-75" Text=@StringResource.GetStringByKey("SearchControl_SearchField_Label")>
-                            <RadzenTextBox @bind-Value=@SearchText />
-                        </RadzenFormField>
-                        <RadzenButton Icon="search" Text=@StringResource.GetStringByKey("SearchControl_SearchButton_Text")
-                            ButtonStyle="ButtonStyle.Primary" Click=@OnSearch />
+                    <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap">
+                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined" Text="Editar" Click=@this.OnNewItem Disabled=@this.IsContextActionsDisabled />
+                        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Outlined" Text="Excluir"
+                            Click=@this.OnNewItem Disabled=@this.IsContextActionsDisabled />
+                        @this.ContextActions
                     </RadzenStack>
                 </RadzenColumn>
             </RadzenRow>
-            <RadzenRow class="mt-3">
+            <RadzenRow class="rz-mt-1">
                 <RadzenColumn>
-                    <RadzenToggleButton Icon="filter_list" Text=@MoreFilterText @bind-Value=@IsShowingMoreFilter
-                        ButtonStyle="ButtonStyle.Primary" />
-                </RadzenColumn>
-            </RadzenRow>
-            <RadzenRow>
-                <RadzenColumn>
-                    <RadzenCard Visible="IsShowingMoreFilter">
-                        <RadzenRow>
-                            <RadzenColumn>
-                                <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
-                                    <RadzenNumeric ShowUpDown="false" TValue="int?" @bind-Value=@Take />
-                                </RadzenFormField>
-                            </RadzenColumn>
-                        </RadzenRow>
-
-                        @if (FilterContent is not null)
-                        {
-                            <RadzenRow class="mt-2">
-                                <RadzenColumn>
-                                    @FilterContent
-                                </RadzenColumn>
-                            </RadzenRow>
-                        }
-
-                    </RadzenCard>
-                </RadzenColumn>
-            </RadzenRow>
-        </RadzenCard>
-    
-        <RadzenCard class="mb-3">
-            <RadzenRow>
-                <RadzenColumn Width="3" Style="text-align: right;">
-                    @if (ExtraButtons is not null)
-                    {
-                        @ExtraButtons
-                    }
-                    <RadzenButton Icon="add_circle" Text="Novo" Click="@OnNewItem" Style="margin-left: 10px" />
-                </RadzenColumn>
-            </RadzenRow>
-        </RadzenCard>
-    
-        <RadzenCard class="mb-3">
-            <RadzenRow>
-                <RadzenColumn>
-                    <RadzenDataGrid TItem="TSummary" Data=@Items RowSelect="@OnRowSelected"
-                        SelectionMode="DataGridSelectionMode.Multiple" @bind-Value=@Items AllowColumnReorder="true"
-                        AllowMultiColumnSorting="true" AllowAlternatingRows="true" AllowFiltering="true" AllowSorting="true"
-                        AllowColumnResize="true" AllowGrouping="true">
+                    <RadzenDataGrid TItem="TSummary" @ref=@this.dataGrid Data=@Items
+                        AllowRowSelectOnRowClick="true" SelectionMode="DataGridSelectionMode.Multiple"
+                        Value=@this.SelectedItems ValueChanged=@OnSelectedItemsChangedAsync
+                        AllowColumnReorder="true" AllowMultiColumnSorting="true"
+                        AllowAlternatingRows="true" AllowFiltering="true" AllowSorting="true" AllowColumnResize="true"
+                        AllowGrouping="true">
                         <Columns>
-                            @ChildContent
+                            <RadzenDataGridColumn Width="60px" Sortable="false" Filterable="false">
+                                <HeaderTemplate>
+                                    <RadzenCheckBox TValue="bool?" TabIndex="-1" TriState="false"
+                                        Value=@this.AreAllItemsSelected
+                                        Change=@this.SetAllRowsSelection />
+                                </HeaderTemplate>
+                                <Template Context="data">
+                                    <RadzenCheckBox TValue="bool" TabIndex="-1" TriState="false"
+                                        Value=@(this.SelectedItems != null && this.SelectedItems.Contains(data)) />
+                                </Template>
+                            </RadzenDataGridColumn>
+
+                            @this.GridColumns
                         </Columns>
                     </RadzenDataGrid>
                 </RadzenColumn>
             </RadzenRow>
         </RadzenCard>
+    </RadzenCard>
 </RadzenCard>
 
 @code {
+    private RadzenDataGrid<TSummary> dataGrid = default!;
+
     [Parameter]
     public RenderFragment? FilterContent { get; set; }
 
     [Parameter]
-    public RenderFragment? ExtraButtons { get; set; }
+    public RenderFragment? GlobalActions { get; set; }
 
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public RenderFragment? ContextActions { get; set; }
+
+    [Parameter]
+    public RenderFragment? GridColumns { get; set; }
+
+    [Parameter]
+    public IList<TSummary> Items { get; set; } = new List<TSummary>();
+
+    [Parameter]
+    public IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
+
+    [Parameter]
+    public EventCallback<IList<TSummary>> SelectedItemsChanged { get; set; }
 
     [Parameter]
     public string SearchText { get; set; } = string.Empty;
@@ -100,7 +133,7 @@
     public EventCallback<int?> TakeChanged { get; set; }
 
     [Parameter]
-    public EventCallback OnSearch { get; set; }
+    public EventCallback OnExecuteSearch { get; set; }
 
     [Parameter]
     public EventCallback OnNewItem { get; set; }
@@ -111,16 +144,55 @@
     [Parameter]
     public EventCallback OnDeleteItem { get; set; }
 
-    [Parameter]
-    public EventCallback<TSummary?> OnRowSelected { get; set; }
-
     private bool IsShowingMoreFilter { get; set; }
 
-    private IList<TSummary> Items { get; set; } = new List<TSummary>();
+    private bool? AreAllItemsSelected
+    {
+        get
+        {
+            if (this.SelectedItems == null || !this.SelectedItems.Any())
+            {
+                return false;
+            }
 
-    private IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
+            if (!this.Items.All(item => this.SelectedItems.Contains(item)))
+            {
+                return null;
+            }
+
+            return true;
+        }
+    }
+
+    private bool IsContextActionsDisabled => !this.SelectedItems.Any();
 
     private string MoreFilterText => IsShowingMoreFilter
-    ? StringResource.GetStringByKey("SearchControl_HideFiltersButton_Text")
-    : StringResource.GetStringByKey("SearchControl_ShowFiltersButton_Text");
+        ? StringResource.GetStringByKey("SearchControl_HideFiltersButton_Text")
+        : StringResource.GetStringByKey("SearchControl_ShowFiltersButton_Text");
+
+    private void SetAllRowsSelection(bool? isSelected)
+    {
+        foreach (var item in this.Items)
+        {
+            this.dataGrid.SelectRow(item);
+        }
+    }
+
+    private async Task OnSelectedItemsChangedAsync(IList<TSummary> selectedItems)
+    {
+        this.SelectedItems = selectedItems;
+
+        if (this.SelectedItemsChanged.HasDelegate)
+        {
+            await this.SelectedItemsChanged.InvokeAsync(selectedItems);
+        }
+    }
+
+    private async Task ExecuteSearchAsync()
+    {
+        if (this.OnExecuteSearch.HasDelegate)
+        {
+            await this.OnExecuteSearch.InvokeAsync();
+        }
+    }
 }
