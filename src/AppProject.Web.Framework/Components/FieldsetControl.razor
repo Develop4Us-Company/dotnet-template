@@ -1,0 +1,26 @@
+﻿@inherits AppProjectComponentBase
+
+<RadzenFieldset AllowCollapse=@this.AllowCollapse Collapsed=@this.Collapsed HeaderTemplate=@this.HeaderTemplate>
+    <ChildContent>
+        @this.ChildContent
+    </ChildContent>
+</RadzenFieldset>
+
+@code {
+    private RenderFragment? HeaderTemplate =>
+        string.IsNullOrWhiteSpace(this.Title)
+            ? null
+            : @<RadzenText Text=@this.Title TextStyle="TextStyle.Subtitle1" />;
+
+    [Parameter]
+    public bool AllowCollapse { get; set; }
+
+    [Parameter]
+    public bool Collapsed { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
