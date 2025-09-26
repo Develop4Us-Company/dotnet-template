@@ -12,7 +12,9 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
 
     public IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
 
-    protected bool IsContextActionsDisabled => !this.SelectedItems.Any();
+    protected bool IsSingleItemSelected => this.SelectedItems.Count() == 1;
+
+    protected bool HasItemsSelected => this.SelectedItems.Any();
 
     public async Task ExecuteSearchAsync()
     {

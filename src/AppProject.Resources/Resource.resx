@@ -69,6 +69,23 @@
     <value>Logout</value>
   </data>
 
+  <!--Frontend DataGridControl-->
+  <data name="DataGridControl_NewButton_Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="DataGridControl_AddButton_Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="DataGridControl_EditButton_Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="DataGridControl_OpenButton_Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="DataGridControl_DeleteButton_Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+
   <!--Frontend SearchControl and SearchPage-->
   <data name="SearchControl_SearchField_Label" xml:space="preserve">
     <value>Search</value>
@@ -76,14 +93,11 @@
   <data name="SearchControl_SearchButton_Text" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="SearchControl_AdvancedFiltersButton_Text" xml:space="preserve">
+    <value>Advanced filters</value>
+  </data>
   <data name="SearchControl_TakeField_Label" xml:space="preserve">
     <value>Take</value>
-  </data>
-  <data name="SearchControl_HideFiltersButton_Text" xml:space="preserve">
-    <value>Hide additional filters</value>
-  </data>
-  <data name="SearchControl_ShowFiltersButton_Text" xml:space="preserve">
-    <value>Show additional filters</value>
   </data>
 
   <!--Frontend Menus-->

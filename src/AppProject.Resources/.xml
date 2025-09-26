@@ -22,6 +22,31 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.DataGridControl_AddButton_Text">
+            <summary>
+              Looks up a localized string similar to Add.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.DataGridControl_DeleteButton_Text">
+            <summary>
+              Looks up a localized string similar to Delete.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.DataGridControl_EditButton_Text">
+            <summary>
+              Looks up a localized string similar to Edit.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.DataGridControl_NewButton_Text">
+            <summary>
+              Looks up a localized string similar to New.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.DataGridControl_OpenButton_Text">
+            <summary>
+              Looks up a localized string similar to Open.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.Footer_Text">
             <summary>
               Looks up a localized string similar to Copyright © Your Company Name. All rights reserved..
@@ -117,9 +142,9 @@
               Looks up a localized string similar to This is a sample message for you..
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.SearchControl_HideFiltersButton_Text">
+        <member name="P:AppProject.Resources.Resource.SearchControl_AdvancedFiltersButton_Text">
             <summary>
-              Looks up a localized string similar to Hide additional filters.
+              Looks up a localized string similar to Advanced filters.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.SearchControl_SearchButton_Text">
@@ -130,11 +155,6 @@
         <member name="P:AppProject.Resources.Resource.SearchControl_SearchField_Label">
             <summary>
               Looks up a localized string similar to Search.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.SearchControl_ShowFiltersButton_Text">
-            <summary>
-              Looks up a localized string similar to Show additional filters.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.SearchControl_TakeField_Label">
