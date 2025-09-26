@@ -1,10 +1,33 @@
 ﻿@page "/general/countries"
+@using System.Runtime.CompilerServices
 
 @inherits SearchPage<SearchRequest, CountrySummary>
 
-<SearchControl OnExecuteSearch=@this.ExecuteSearchAsync>
-    <DataGridContent>
-        <DataGridControl TSummary="CountrySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems>
+<SearchControl OnExecuteSearch=@this.ExecuteSearchAsync @bind-Take=@this.Request.Take
+    @bind-SearchText=@this.Request.SearchText>
+    <FilterContent>
+    <RadzenRow>
+        <RadzenColumn>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
+                <RadzenFormField Text="Customer name">
+                    <RadzenTextBox />
+                </RadzenFormField>
+                <RadzenFormField Text="Customer age">
+                    <RadzenTextBox />
+                </RadzenFormField>
+                <RadzenFormField Text="Customer id">
+                    <RadzenTextBox />
+                </RadzenFormField>
+                <RadzenFormField Text="Date">
+                    <RadzenDatePicker TValue="DateTime?" />
+                </RadzenFormField>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    </FilterContent>
+    <ChildContent>
+        <DataGridControl TSummary="CountrySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
+            OnNewItem=@this.OnNewItemAsync>
             <GlobalActions>
                 <RadzenButton Icon="arrow_downward" ButtonStyle="ButtonStyle.Base" Text="Import" />
             </GlobalActions>
@@ -17,24 +40,29 @@
                     Property=@nameof(CountrySummary.Name) />
             </ChildContent>
         </DataGridControl>
-    </DataGridContent>
+    </ChildContent>
 </SearchControl>
 
 @code {
-    protected override Task<IEnumerable<CountrySummary>> FetchDataAsync()
+    protected override async Task<IEnumerable<CountrySummary>> FetchDataAsync()
     {
+        await Task.Delay(5000);
+
         IEnumerable<CountrySummary> summaries = new List<CountrySummary>()
-{
-new CountrySummary { Id = Guid.NewGuid(), Name = "Brazil" },
-new CountrySummary { Id = Guid.NewGuid(), Name = "USA" },
-new CountrySummary { Id = Guid.NewGuid(), Name = "France" },
-};
-
-        return Task.FromResult(summaries);
+        {
+            new CountrySummary { Id = Guid.NewGuid(), Name = "Brazil" },
+            new CountrySummary { Id = Guid.NewGuid(), Name = "USA" },
+            new CountrySummary { Id = Guid.NewGuid(), Name = "France" },
+        };
+        Console.WriteLine("Take: " + this.Request.Take);
+        return summaries;
     }
-    /*
-    protected override Task OnNewItemAsync() => Navigation.NavigateToAsync("general/country");
-
+    
+    private async Task OnNewItemAsync()
+    {
+        await this.OpenDialogAsync<CountryFormPage>();
+    }
+/*
     protected override Task OnEditItemAsync()
     {
     if (this.SelectedItems.Count == 1)
