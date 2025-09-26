@@ -24,8 +24,8 @@
 	</PropertyGroup>
 
     <PropertyGroup>
-        <!-- Disables the SA1200, SA1413 and SA1633 rules from StyleCop -->
-        <NoWarn>$(NoWarn),SA1200,SA1413,SA1633</NoWarn>
+        <!-- Disables the SA1011, SA1200, SA1413 and SA1633 rules from StyleCop -->
+        <NoWarn>$(NoWarn),SA1011,SA1200,SA1413,SA1633</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

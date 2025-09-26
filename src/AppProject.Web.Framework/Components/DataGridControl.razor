@@ -5,71 +5,70 @@
 @typeparam TSummary where TSummary : ISummary
 
 <FieldsetControl AllowCollapse=@this.AllowCollapse Collapsed=@this.Collapsed Title=@this.Title>
-    <ChildContent>
+    <RadzenRow AlignItems="AlignItems.End">
+        <RadzenColumn>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
+                <RadzenButton ButtonStyle="ButtonStyle.Success" 
+                    Icon=@(this.PreferAddOverNew ? "add_ad" : "add_circle")
+                    Text=@StringResource.GetStringByKey(this.PreferAddOverNew ? "DataGridControl_AddButton_Text" : "DataGridControl_NewButton_Text")
+                    Visible=@this.ShowNewAction
+                    Click=@this.OnNewItem />
+                @this.GlobalActions
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenCard class="rz-mt-4 rz-p-1" Variant="Variant.Outlined">
         <RadzenRow AlignItems="AlignItems.End">
             <RadzenColumn>
-                <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap">
-                    <RadzenButton ButtonStyle="ButtonStyle.Success" 
-                        Icon=@(this.PreferAddOverNew ? "add_ad" : "add_circle")
-                        Text=@StringResource.GetStringByKey(this.PreferAddOverNew ? "DataGridControl_AddButton_Text" : "DataGridControl_NewButton_Text")
-                        Visible=@this.ShowNewAction
-                        Click=@this.OnNewItem />
-                    @this.GlobalActions
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
+                    <RadzenButton ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined" 
+                        Icon=@(this.PreferOpenOverEdit ? "arrow_right_alt" : "edit")
+                        Text=@StringResource.GetStringByKey(this.PreferAddOverNew ? "DataGridControl_OpenButton_Text" : "DataGridControl_EditButton_Text")
+                        Visible=@this.ShowEditAction
+                        Disabled=@(!this.IsSingleItemSelected)
+                        Click=@this.OnEditItem />
+                    @this.ContextActions
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Variant="Variant.Outlined" 
+                        Icon="delete"
+                        Text=@StringResource.GetStringByKey("DataGridControl_DeleteButton_Text")
+                        Visible=@this.ShowEditAction
+                        Disabled=@(!this.HasItemsSelected)
+                        Click=@this.OnDeleteItem />
                 </RadzenStack>
             </RadzenColumn>
         </RadzenRow>
-        <RadzenCard class="rz-mt-4 rz-p-1" Variant="Variant.Outlined">
-            <RadzenRow AlignItems="AlignItems.End">
-                <RadzenColumn>
-                    <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap">
-                        <RadzenButton ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined" 
-                            Icon=@(this.PreferOpenOverEdit ? "arrow_right_alt" : "edit")
-                            Text=@StringResource.GetStringByKey(this.PreferAddOverNew ? "DataGridControl_OpenButton_Text" : "DataGridControl_EditButton_Text")
-                            Visible=@this.ShowEditAction
-                            Disabled=@(!this.IsSingleItemSelected)
-                            Click=@this.OnEditItem />
-                        @this.ContextActions
-                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Variant="Variant.Outlined" 
-                            Icon="delete"
-                            Text=@StringResource.GetStringByKey("DataGridControl_DeleteButton_Text")
-                            Visible=@this.ShowEditAction
-                            Disabled=@(!this.HasItemsSelected)
-                            Click=@this.OnDeleteItem />
-                    </RadzenStack>
-                </RadzenColumn>
-            </RadzenRow>
-            <RadzenRow class="rz-mt-1">
-                <RadzenColumn>
-                    <RadzenDataGrid TItem="TSummary" @ref=@this.dataGrid Data=@Items
-                        AllowRowSelectOnRowClick="true" SelectionMode="DataGridSelectionMode.Multiple"
-                        Value=@this.SelectedItems ValueChanged=@OnSelectedItemsChangedAsync
-                        AllowColumnReorder="true" AllowMultiColumnSorting="true"
-                        AllowAlternatingRows="true" AllowFiltering="true" AllowSorting="true" AllowColumnResize="true"
-                        AllowGrouping="true">
-                        <Columns>
-                            <RadzenDataGridColumn Width="60px" Sortable="false" Filterable="false">
-                                <HeaderTemplate>
-                                    <RadzenCheckBox TValue="bool?" TabIndex="-1" TriState="false"
-                                        Value=@this.AreAllItemsSelected
-                                        Change=@this.SetAllItemsSelectionAsync />
-                                </HeaderTemplate>
-                                <Template Context="data">
-                                    <RadzenCheckBox TValue="bool" TabIndex="-1" TriState="false"
-                                        Value=@(this.SelectedItems != null && this.SelectedItems.Contains(data)) />
-                                </Template>
-                            </RadzenDataGridColumn>
-                            @this.ChildContent
-                        </Columns>
-                    </RadzenDataGrid>
-                </RadzenColumn>
-            </RadzenRow>
-        </RadzenCard>
-    </ChildContent>
+        <RadzenRow class="rz-mt-1">
+            <RadzenColumn>
+                <RadzenDataGrid TItem="TSummary" @ref=@this.dataGrid Data=@Items
+                    AllowRowSelectOnRowClick="true" SelectionMode="DataGridSelectionMode.Multiple"
+                    Value=@this.SelectedItems ValueChanged=@OnSelectedItemsChangedAsync
+                    AllowPaging="true" PageSizeOptions=@this.PageSizeOptions
+                    AllowColumnReorder="true" AllowMultiColumnSorting="true"
+                    AllowAlternatingRows="true" AllowFiltering="true" AllowSorting="true" AllowColumnResize="true"
+                    AllowGrouping="true">
+                    <Columns>
+                        <RadzenDataGridColumn Width="60px" Sortable="false" Filterable="false">
+                            <HeaderTemplate>
+                                <RadzenCheckBox TValue="bool?" TabIndex="-1" TriState="false"
+                                    Value=@this.AreAllItemsSelected
+                                    Change=@this.SetAllItemsSelectionAsync />
+                            </HeaderTemplate>
+                            <Template Context="data">
+                                <RadzenCheckBox TValue="bool" TabIndex="-1" TriState="false"
+                                    Value=@(this.SelectedItems != null && this.SelectedItems.Contains(data)) />
+                            </Template>
+                        </RadzenDataGridColumn>
+                        @this.ChildContent
+                    </Columns>
+                </RadzenDataGrid>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenCard>
 </FieldsetControl>
 
 @code {
     private RadzenDataGrid<TSummary> dataGrid = default!;
-
+    
     [Parameter]
     public bool AllowCollapse { get; set; }
 
@@ -121,6 +120,8 @@
     [Parameter]
     public EventCallback OnDeleteItem { get; set; }
 
+    private IEnumerable<int> PageSizeOptions => new int[] { 10, 20, 50, 100, 1000 };
+
     private bool IsSingleItemSelected => this.SelectedItems.Count() == 1;
 
     private bool HasItemsSelected => this.SelectedItems.Any();
@@ -150,13 +151,16 @@
         this.StateHasChanged();
     }
 
-    private async Task OnSelectedItemsChangedAsync(IList<TSummary> selectedItems)
+    private async Task OnSelectedItemsChangedAsync(IList<TSummary> value)
     {
-        this.SelectedItems = selectedItems;
-
-        if (this.SelectedItemsChanged.HasDelegate)
+        if (this.SelectedItems != value)
         {
-            await this.SelectedItemsChanged.InvokeAsync(selectedItems);
+            this.SelectedItems = value;
+
+            if (this.SelectedItemsChanged.HasDelegate)
+            {
+                await this.SelectedItemsChanged.InvokeAsync(value);
+            }
         }
     }
 }

@@ -1,0 +1,30 @@
+﻿@page "/general/country{Id}"
+
+@inherits FormPage<Country>
+
+<FormControl>
+    <FieldsetControl AllowCollapse="true" Title="General">
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
+                    <RadzenFormField Text="Customer name">
+                        <RadzenTextBox />
+                    </RadzenFormField>
+                    <RadzenFormField Text="Customer age">
+                        <RadzenTextBox />
+                    </RadzenFormField>
+                    <RadzenFormField Text="Customer id">
+                        <RadzenTextBox />
+                    </RadzenFormField>
+                    <RadzenFormField Text="Date">
+                        <RadzenDatePicker TValue="DateTime?" />
+                    </RadzenFormField>
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </FieldsetControl>
+</FormControl>
+
+@code {
+
+}

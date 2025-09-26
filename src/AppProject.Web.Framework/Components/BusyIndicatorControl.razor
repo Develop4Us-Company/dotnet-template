@@ -1,0 +1,10 @@
+﻿<RadzenStack class="rz-p-12" AlignItems="AlignItems.Center" Gap="2rem">
+    <RadzenProgressBarCircular ShowValue="false" Mode="ProgressBarMode.Indeterminate"
+        Size="ProgressBarCircularSize.Large" />
+    <RadzenText TextStyle="TextStyle.H6">@Message</RadzenText>
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public string? Message { get; set; }
+}

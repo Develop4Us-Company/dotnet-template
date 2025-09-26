@@ -69,6 +69,40 @@
     <value>Logout</value>
   </data>
 
+  <!--Frontend Default Dialogs-->
+  <data name="Dialog_Error_Title" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Dialog_Error_OkButton_Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Dialog_Info_Title" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Dialog_Info_OkButton_Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Dialog_Confirm_Title" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="Dialog_Confirm_YesButton_Text" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Dialog_Confirm_NoButton_Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Dialog_Busy_Message" xml:space="preserve">
+    <value>Working on it...</value>
+  </data>
+
+  <!--Frontend Default Exceptions-->
+  <data name="Exception_AdditionalInfo_Message" xml:space="preserve">
+    <value>Additional details: {0}</value>
+  </data>
+  <data name="Exception_UnhandledException_Message" xml:space="preserve">
+    <value>Unhandled exception.</value>
+  </data>
+
   <!--Frontend DataGridControl-->
   <data name="DataGridControl_NewButton_Text" xml:space="preserve">
     <value>New</value>
@@ -93,11 +127,28 @@
   <data name="SearchControl_SearchButton_Text" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="SearchControl_TakeField_Label" xml:space="preserve">
+    <value>Take</value>
+  </data>
+  <data name="SearchControl_TakeInfo" xml:space="preserve">
+    <value>Only {0} results will be shown. To see more results, change the Take field.</value>
+  </data>
   <data name="SearchControl_AdvancedFiltersButton_Text" xml:space="preserve">
     <value>Advanced filters</value>
   </data>
-  <data name="SearchControl_TakeField_Label" xml:space="preserve">
-    <value>Take</value>
+
+  <!--Frontend FormControl-->
+  <data name="FormControl_SaveButton_Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="FormControl_ExecuteButton_Text" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="FormControl_CancelButton_Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="FormControl_CloseButton_Text" xml:space="preserve">
+    <value>Close</value>
   </data>
 
   <!--Frontend Menus-->

@@ -5,12 +5,14 @@ using AppProject.Models;
 namespace AppProject.Web.Framework.Pages;
 
 public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
-    where TRequest : IRequest
+    where TRequest : IRequest, new()
     where TSummary : ISummary
 {
-    public IList<TSummary> Items { get; set; } = new List<TSummary>();
+    protected virtual TRequest Request { get; set; } = new TRequest();
 
-    public IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
+    protected IList<TSummary> Items { get; set; } = new List<TSummary>();
+
+    protected IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
 
     protected bool IsSingleItemSelected => this.SelectedItems.Count() == 1;
 
@@ -18,10 +20,11 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
 
     public async Task ExecuteSearchAsync()
     {
-        this.IsBusy = true;
+        await this.SetBusyAsync(true);
 
         if (!await this.ValidateRequestAsync())
         {
+            await this.SetBusyAsync(false);
             return;
         }
 
@@ -30,19 +33,7 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
 
         this.Items = (await this.FetchDataAsync()).ToList();
 
-        this.IsBusy = false;
-
-        this.StateHasChanged();
-    }
-
-    public virtual void OnSelectedItem(TSummary summary)
-    {
-        this.SelectedItems.Add(summary);
-    }
-
-    public virtual void OnDeselectedItem(TSummary summary)
-    {
-        this.SelectedItems.Remove(summary);
+        await this.SetBusyAsync(false);
     }
 
     protected virtual Task<bool> ValidateRequestAsync()

@@ -9,7 +9,7 @@
             <RadzenColumn Size="12" SizeSM="7">
                 <RadzenFormField class="rz-w-100"
                     Text=@StringResource.GetStringByKey("SearchControl_SearchField_Label")>
-                    <RadzenTextBox @bind-Value=@this.SearchText />
+                    <RadzenTextBox Value=@this.SearchText ValueChanged=@this.OnSearchTextChangedAsync />
                 </RadzenFormField>
             </RadzenColumn>
             <RadzenColumn>
@@ -21,22 +21,29 @@
             <RadzenColumn>
                 <FieldsetControl AllowCollapse="true" Collapsed="true"
                     Title=@StringResource.GetStringByKey("SearchControl_AdvancedFiltersButton_Text")>
-                    <RadzenRow>
-                        <RadzenColumn>
+                        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
                             <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
-                                <RadzenNumeric ShowUpDown="false" TValue="int?" @bind-Value=@this.Take />
+                                <RadzenNumeric ShowUpDown="false" TValue="int?" Value=@this.Take ValueChanged=@this.OnTakeChangedAsync />
                             </RadzenFormField>
-                        </RadzenColumn>
-                    </RadzenRow>
-                    @FilterContent
+                            @FilterContent
+                        </RadzenStack>
                 </FieldsetControl>
             </RadzenColumn>
         </RadzenRow>
     </RadzenCard>
+    @this.TakeInfo
     @this.ChildContent
 </RadzenCard>
 
 @code {
+    private RenderFragment? TakeInfo => 
+        !this.Take.HasValue
+            ? null
+            : @<RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Lighter">
+                    @StringResource.GetStringByKey("SearchControl_TakeInfo", this.Take.Value)
+                </RadzenAlert>
+    ;
+
     [Parameter]
     public RenderFragment? FilterContent { get; set; }
 
@@ -56,13 +63,54 @@
     public EventCallback<int?> TakeChanged { get; set; }
 
     [Parameter]
+    public bool UseDefaultTakeValue { get; set; } = true;
+
+    [Parameter]
     public EventCallback OnExecuteSearch { get; set; }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        const int DefaultTakeValue = 100;
+
+        await base.SetParametersAsync(parameters);
+
+        if (this.UseDefaultTakeValue && this.Take is null)
+        {
+            await this.OnTakeChangedAsync(DefaultTakeValue);
+        }
+    }
 
     private async Task ExecuteSearchAsync()
     {
         if (this.OnExecuteSearch.HasDelegate)
         {
             await this.OnExecuteSearch.InvokeAsync();
+        }
+    }
+
+    private async Task OnSearchTextChangedAsync(string? value)
+    {
+        if (this.SearchText != value)
+        {
+            this.SearchText = value;
+
+            if (this.SearchTextChanged.HasDelegate)
+            {
+                await this.SearchTextChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    private async Task OnTakeChangedAsync(int? value)
+    {
+        if (this.Take != value)
+        {
+            this.Take = value;
+
+            if (this.TakeChanged.HasDelegate)
+            {
+                await this.TakeChanged.InvokeAsync(value);
+            }
         }
     }
 }
