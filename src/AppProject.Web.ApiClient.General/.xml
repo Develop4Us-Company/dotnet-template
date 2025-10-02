@@ -4,5 +4,62 @@
         <name>AppProject.Web.ApiClient.General</name>
     </assembly>
     <members>
+        <member name="T:Refit.Implementation.Generated">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.GetAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.PostAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.Country},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.PutAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.Country},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.DeleteAsync(AppProject.Models.DeleteRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.AppProject#Web#ApiClient#General#ICountryClient#GetAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.AppProject#Web#ApiClient#General#ICountryClient#PostAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.Country},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.AppProject#Web#ApiClient#General#ICountryClient#PutAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.Country},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.AppProject#Web#ApiClient#General#ICountryClient#DeleteAsync(AppProject.Models.DeleteRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.GetSummariesAsync(AppProject.Models.SearchRequest,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.AppProject#Web#ApiClient#General#ICountrySummaryClient#GetSummariesAsync(AppProject.Models.SearchRequest,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.AppProject#Web#ApiClient#General#ICountrySummaryClient#GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

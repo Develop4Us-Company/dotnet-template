@@ -3,35 +3,39 @@
 
 @inherits AppProjectComponentBase
 
+@typeparam TItem
+
 <RadzenText TextStyle="TextStyle.DisplayH5">@this.Title</RadzenText>
 <RadzenCard>
-    <RadzenCard class="rz-mb-3">
-        <RadzenRow AlignItems="AlignItems.End">
-            <RadzenColumn Size="12" SizeSM="7">
-                <RadzenFormField class="rz-w-100"
-                    Text=@StringResource.GetStringByKey("SearchControl_SearchField_Label")>
-                    <RadzenTextBox Value=@this.SearchText ValueChanged=@this.OnSearchTextChangedAsync />
-                </RadzenFormField>
-            </RadzenColumn>
-            <RadzenColumn>
-                <RadzenButton Icon="search" Text=@StringResource.GetStringByKey("SearchControl_SearchButton_Text")
-                    ButtonStyle="ButtonStyle.Primary" Click=@this.ExecuteSearchAsync />
-            </RadzenColumn>
-        </RadzenRow>
-        <RadzenRow class="rz-mt-3">
-            <RadzenColumn>
-                <FieldsetControl AllowCollapse="true" Collapsed="true"
-                    Title=@StringResource.GetStringByKey("SearchControl_AdvancedFiltersButton_Text")>
-                        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
-                            <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
-                                <RadzenNumeric ShowUpDown="false" TValue="int?" Value=@this.Take ValueChanged=@this.OnTakeChangedAsync />
-                            </RadzenFormField>
-                            @FilterContent
-                        </RadzenStack>
-                </FieldsetControl>
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenCard>
+    <RadzenTemplateForm TItem="TItem" Submit=@this.ExecuteSearchAsync>
+        <RadzenCard class="rz-mb-3">
+            <RadzenRow AlignItems="AlignItems.End">
+                <RadzenColumn Size="12" SizeSM="7">
+                    <RadzenFormField class="rz-w-100"
+                        Text=@StringResource.GetStringByKey("SearchControl_SearchField_Label")>
+                        <RadzenTextBox Value=@this.SearchText ValueChanged=@this.OnSearchTextChangedAsync />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn>
+                    <RadzenButton Icon="search" Text=@StringResource.GetStringByKey("SearchControl_SearchButton_Text")
+                        ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow class="rz-mt-3">
+                <RadzenColumn>
+                    <FieldsetControl AllowCollapse="true" Collapsed="true"
+                        Title=@StringResource.GetStringByKey("SearchControl_AdvancedFiltersButton_Text")>
+                            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
+                                <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
+                                    <RadzenNumeric ShowUpDown="false" TValue="int?" Value=@this.Take ValueChanged=@this.OnTakeChangedAsync />
+                                </RadzenFormField>
+                                @FilterContent
+                            </RadzenStack>
+                    </FieldsetControl>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenCard>
+    </RadzenTemplateForm>
     @this.TakeInfo
     @this.ChildContent
 </RadzenCard>

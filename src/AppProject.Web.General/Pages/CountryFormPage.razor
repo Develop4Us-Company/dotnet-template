@@ -1,21 +1,23 @@
-﻿@inherits FormPage<Country>
+﻿@using AppProject.Web.ApiClient.General
 
-<FormControl PreferExecuteOverSave="true" PreferCloseOverCancel="true" OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>
-    <FieldsetControl Title="General">
+@inherits FormPage<Country>
+
+<FormControl TItem="Country" OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>
+    <FieldsetControl Title=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldsetControl_Title")>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenText TextStyle="TextStyle.Subtitle2">@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_IdField_Text", this.Entity.Id)</RadzenText>
+            </RadzenColumn>
+        </RadzenRow>
         <RadzenRow>
             <RadzenColumn>
                 <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
-                    <RadzenFormField Text="Country name">
-                        <RadzenTextBox @bind-Value=@this.Entity.Name />
+                    <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Label")>
+                        <RadzenTextBox Name="NameField" @bind-Value=@this.Entity.Name />
+                        <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Required")/>
                     </RadzenFormField>
-                    <RadzenFormField Text="Customer age">
-                        <RadzenTextBox />
-                    </RadzenFormField>
-                    <RadzenFormField Text="Country id">
-                        <RadzenText>@this.Entity.Id</RadzenText>
-                    </RadzenFormField>
-                    <RadzenFormField Text="Date">
-                        <RadzenDatePicker TValue="DateTime?" />
+                    <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_CodeField_Label")>
+                        <RadzenTextBox @bind-Value=@this.Entity.Code />
                     </RadzenFormField>
                 </RadzenStack>
             </RadzenColumn>
@@ -24,12 +26,34 @@
 </FormControl>
 
 @code {
+    [Inject]
+    private ICountryClient CountryClient { get; set; } = default!;
+
     [Parameter]
     public Guid? Id { get; set; }
 
     private Task OnCancelAsync() => this.CloseDialogAsync();
 
-    private Task OnSaveAsync() => this.CloseDialogAsync(this.Entity);
+    private async Task OnSaveAsync()
+    {
+        var keyResponse = await this.GetResultOrHandleExceptionAsync<KeyResponse<Guid>>(
+            async () => 
+            {
+                if (this.Entity.Id != Guid.NewGuid())
+                {
+                    return await this.CountryClient.PutAsync(new CreateOrUpdateRequest<Country> { Entity = this.Entity });
+                }
+                
+                return await this.CountryClient.PostAsync(new CreateOrUpdateRequest<Country> { Entity = this.Entity });
+            }
+        );
+
+        if (keyResponse is not null)
+        {
+            this.Entity.Id = keyResponse.Id;
+            await this.CloseDialogAsync(this.Entity);
+        }
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -37,18 +61,14 @@
 
         if (this.Id.HasValue)
         {
-            await this.NotifyInfoAsync("Opening the country with id: " + this.Id);
+            var entityResponse = await this.GetResultOrHandleExceptionAsync<EntityResponse<Country>>(
+                () => this.CountryClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value })
+            );
 
-            this.SetEntity(new Country()
+            if (entityResponse is not null)
             {
-                Id = this.Id.Value,
-                Name = "Existing Brazil"
-            });
+                this.SetEntity(entityResponse.Entity);
+            }
         }
-    }
-
-    protected override void OnEntityPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-        this.NotifySuccessAsync("Parametro: " + e.PropertyName + " changed to: " + sender);
     }
 }

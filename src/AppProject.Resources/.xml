@@ -52,6 +52,11 @@
               Looks up a localized string similar to Working on it....
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.Dialog_Confirm_Delete">
+            <summary>
+              Looks up a localized string similar to Are you sure you want to delete?.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.Dialog_Confirm_NoButton_Text">
             <summary>
               Looks up a localized string similar to No.
@@ -135,6 +140,46 @@
         <member name="P:AppProject.Resources.Resource.General_Country_DuplicateName">
             <summary>
               Looks up a localized string similar to This country name already exists..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_CodeField_Label">
+            <summary>
+              Looks up a localized string similar to Code.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_IdField_Text">
+            <summary>
+              Looks up a localized string similar to Id: {0}.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_NameField_Label">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_NameField_Required">
+            <summary>
+              Looks up a localized string similar to Name is required.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_Title">
+            <summary>
+              Looks up a localized string similar to General.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryFormPage_Title">
+            <summary>
+              Looks up a localized string similar to Country.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountrySummaryPage_NameColumn_Title">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountrySummaryPage_Title">
+            <summary>
+              Looks up a localized string similar to Countries.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.General_State_DuplicateName">
@@ -359,7 +404,7 @@
         </member>
         <member name="P:AppProject.Resources.Resource.SearchControl_TakeInfo">
             <summary>
-              Looks up a localized string similar to Only {0} results were shown. To see more results, change the &quot;Take&quot; field..
+              Looks up a localized string similar to Only {0} results were shown. To see more results, change the Take field..
             </summary>
         </member>
     </members>

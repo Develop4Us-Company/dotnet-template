@@ -1,23 +1,29 @@
-﻿@inherits AppProjectComponentBase
+﻿@using AppProject.Models
 
-<RadzenRow class="rz-mb-1" AlignItems="AlignItems.End">
-    <RadzenColumn>
-        <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
-            <RadzenButton ButtonStyle="ButtonStyle.Primary"
-                Icon=@(this.PreferExecuteOverSave ? "start": "save")
-                Text=@(this.PreferExecuteOverSave ? StringResource.GetStringByKey("FormControl_ExecuteButton_Text") : StringResource.GetStringByKey("FormControl_SaveButton_Text"))
-                Visible=@this.ShowSaveAction
-                Click=@this.OnSave />
-            @this.GlobalActions
-            <RadzenButton ButtonStyle="ButtonStyle.Base"
-                Icon=@(this.PreferCloseOverCancel ? "close" : "cancel")
-                Text=@(this.PreferCloseOverCancel ? StringResource.GetStringByKey("FormControl_CloseButton_Text") : StringResource.GetStringByKey("FormControl_CancelButton_Text"))
-                Visible=@this.ShowCancelAction
-                Click=@this.OnCancel />
-        </RadzenStack>
-    </RadzenColumn>
-</RadzenRow>
-@this.ChildContent
+@inherits AppProjectComponentBase
+
+@typeparam TItem
+
+<RadzenTemplateForm TItem="TItem" Submit=@this.OnSave>
+    <RadzenRow class="rz-mb-1" AlignItems="AlignItems.End">
+        <RadzenColumn>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
+                <RadzenButton ButtonStyle="ButtonStyle.Primary"
+                    Icon=@(this.PreferExecuteOverSave ? "start": "save")
+                    Text=@(this.PreferExecuteOverSave ? StringResource.GetStringByKey("FormControl_ExecuteButton_Text") : StringResource.GetStringByKey("FormControl_SaveButton_Text"))
+                    Visible=@this.ShowSaveAction
+                    ButtonType="ButtonType.Submit" />
+                @this.GlobalActions
+                <RadzenButton ButtonStyle="ButtonStyle.Base"
+                    Icon=@(this.PreferCloseOverCancel ? "close" : "cancel")
+                    Text=@(this.PreferCloseOverCancel ? StringResource.GetStringByKey("FormControl_CloseButton_Text") : StringResource.GetStringByKey("FormControl_CancelButton_Text"))
+                    Visible=@this.ShowCancelAction
+                    Click=@this.OnCancel />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    @this.ChildContent
+</RadzenTemplateForm>
 
 @code {
     [Parameter]

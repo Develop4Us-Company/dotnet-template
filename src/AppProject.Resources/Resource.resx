@@ -91,6 +91,9 @@
   <data name="Dialog_Confirm_NoButton_Text" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="Dialog_Confirm_Delete" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
   <data name="Dialog_Busy_Message" xml:space="preserve">
     <value>Working on it...</value>
   </data>
@@ -131,7 +134,7 @@
     <value>Take</value>
   </data>
   <data name="SearchControl_TakeInfo" xml:space="preserve">
-    <value>Only {0} results were shown. To see more results, change the "Take" field.</value>
+    <value>Only {0} results were shown. To see more results, change the Take field.</value>
   </data>
   <data name="SearchControl_AdvancedFiltersButton_Text" xml:space="preserve">
     <value>Advanced filters</value>
@@ -240,5 +243,33 @@
   </data>
   <data name="Menu_Cities" xml:space="preserve">
     <value>Cities</value>
+  </data>
+
+  <!--Frontend General/CountrySummaryPage-->
+  <data name="General_CountrySummaryPage_Title" xml:space="preserve">
+    <value>Countries</value>
+  </data>
+  <data name="General_CountrySummaryPage_NameColumn_Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+
+  <!--Frontend General/CountrySummaryPage-->
+  <data name="General_CountryFormPage_Title" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="General_CountryFormPage_GeneralFieldset_Title" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="General_CountryFormPage_GeneralFieldset_IdField_Text" xml:space="preserve">
+    <value>Id: {0}</value>
+  </data>
+  <data name="General_CountryFormPage_GeneralFieldset_NameField_Label" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="General_CountryFormPage_GeneralFieldset_NameField_Required" xml:space="preserve">
+    <value>Name is required</value>
+  </data>
+  <data name="General_CountryFormPage_GeneralFieldset_CodeField_Label" xml:space="preserve">
+    <value>Code</value>
   </data>
 </root>

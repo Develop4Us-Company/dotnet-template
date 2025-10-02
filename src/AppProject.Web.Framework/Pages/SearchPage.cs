@@ -22,13 +22,12 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
 
     public async Task ExecuteSearchAsync()
     {
-        await this.SetBusyAsync(true);
-
         if (!await this.ValidateRequestAsync())
         {
-            await this.SetBusyAsync(false);
             return;
         }
+
+        await this.SetBusyAsync(true);
 
         this.SelectedItems = new List<TSummary>();
         this.Items = new List<TSummary>();
