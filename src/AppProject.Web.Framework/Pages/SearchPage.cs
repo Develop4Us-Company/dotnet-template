@@ -14,6 +14,8 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
 
     protected IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
 
+    protected bool DisplayTakeInfo { get; set; } = false;
+
     protected bool IsSingleItemSelected => this.SelectedItems.Count() == 1;
 
     protected bool HasItemsSelected => this.SelectedItems.Any();
@@ -32,6 +34,11 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
         this.Items = new List<TSummary>();
 
         this.Items = (await this.FetchDataAsync()).ToList();
+
+        if (this.Request is SearchRequest searchRequest)
+        {
+            this.DisplayTakeInfo = this.Items.Count() >= searchRequest.Take.GetValueOrDefault();
+        }
 
         await this.SetBusyAsync(false);
     }

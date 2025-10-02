@@ -3,7 +3,7 @@
 
 @inherits SearchPage<SearchRequest, CountrySummary>
 
-<SearchControl Title="Countries" OnExecuteSearch=@this.ExecuteSearchAsync @bind-Take=@this.Request.Take
+<SearchControl Title="Countries" DisplayTakeInfo=@this.DisplayTakeInfo OnExecuteSearch=@this.ExecuteSearchAsync @bind-Take=@this.Request.Take
     @bind-SearchText=@this.Request.SearchText>
     <FilterContent>
     <RadzenRow>
@@ -48,7 +48,7 @@
     {
         await Task.Delay(5000);
 
-        IEnumerable<CountrySummary> summaries = new List<CountrySummary>()
+        List<CountrySummary> summaries = new List<CountrySummary>()
         {
             new CountrySummary { Id = Guid.NewGuid(), Name = "Brazil" },
             new CountrySummary { Id = Guid.NewGuid(), Name = "USA" },
@@ -83,6 +83,12 @@
             new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
             new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
         };
+
+        for (int count = 0; count <= 100; count++)
+        {
+            summaries.Add(new CountrySummary { Id = Guid.NewGuid(), Name = "Another " + count });
+        }
+
         Console.WriteLine("Take: " + this.Request.Take);
         return summaries;
     }

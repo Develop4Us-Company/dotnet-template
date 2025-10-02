@@ -359,7 +359,7 @@
         </member>
         <member name="P:AppProject.Resources.Resource.SearchControl_TakeInfo">
             <summary>
-              Looks up a localized string similar to Only {0} results will be shown. To see more results, change the Take field..
+              Looks up a localized string similar to Only {0} results were shown. To see more results, change the &quot;Take&quot; field..
             </summary>
         </member>
     </members>

@@ -131,7 +131,7 @@
     <value>Quantidade de registros</value>
   </data>
   <data name="SearchControl_TakeInfo" xml:space="preserve">
-    <value>Serão trazidos apenas {0} registros. Para visualizar mais, altere o campo "Quantidade de registros".</value>
+    <value>Foram exibidos apenas {0} registros. Para visualizar mais, altere o campo "Quantidade de registros".</value>
   </data>
   <data name="SearchControl_AdvancedFiltersButton_Text" xml:space="preserve">
     <value>Filtros avançados</value>

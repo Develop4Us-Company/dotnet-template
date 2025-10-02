@@ -131,7 +131,7 @@
     <value>Take</value>
   </data>
   <data name="SearchControl_TakeInfo" xml:space="preserve">
-    <value>Only {0} results will be shown. To see more results, change the Take field.</value>
+    <value>Only {0} results were shown. To see more results, change the "Take" field.</value>
   </data>
   <data name="SearchControl_AdvancedFiltersButton_Text" xml:space="preserve">
     <value>Advanced filters</value>
