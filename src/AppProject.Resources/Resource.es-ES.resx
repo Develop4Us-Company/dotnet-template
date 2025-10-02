@@ -91,6 +91,9 @@
   <data name="Dialog_Confirm_NoButton_Text" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="Dialog_Confirm_Delete" xml:space="preserve">
+    <value>¿Está seguro de que desea eliminar?</value>
+  </data>
   <data name="Dialog_Busy_Message" xml:space="preserve">
     <value>Trabajando en ello...</value>
   </data>
@@ -131,7 +134,7 @@
     <value>Cantidad</value>
   </data>
   <data name="SearchControl_TakeInfo" xml:space="preserve">
-    <value>Solo se mostraron {0} resultados. Para ver más resultados, cambie el campo "Cantidad".</value>
+    <value>Solo se mostraron {0} resultados. Para ver más resultados, cambie el campo Cantidad.</value>
   </data>
   <data name="SearchControl_AdvancedFiltersButton_Text" xml:space="preserve">
     <value>Filtros avanzados</value>

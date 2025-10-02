@@ -1,142 +1,67 @@
 ﻿@page "/general/countries"
+
 @using System.Runtime.CompilerServices
+@using AppProject.Web.ApiClient.General
 
 @inherits SearchPage<SearchRequest, CountrySummary>
 
-<SearchControl Title="Countries" DisplayTakeInfo=@this.DisplayTakeInfo OnExecuteSearch=@this.ExecuteSearchAsync @bind-Take=@this.Request.Take
-    @bind-SearchText=@this.Request.SearchText>
-    <FilterContent>
-    <RadzenRow>
-        <RadzenColumn>
-            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
-                <RadzenFormField Text="Customer name">
-                    <RadzenTextBox />
-                </RadzenFormField>
-                <RadzenFormField Text="Customer age">
-                    <RadzenTextBox />
-                </RadzenFormField>
-                <RadzenFormField Text="Customer id">
-                    <RadzenTextBox />
-                </RadzenFormField>
-                <RadzenFormField Text="Date">
-                    <RadzenDatePicker TValue="DateTime?" />
-                </RadzenFormField>
-            </RadzenStack>
-        </RadzenColumn>
-    </RadzenRow>
-    </FilterContent>
-    <ChildContent>
-        <DataGridControl TSummary="CountrySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
-            OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync>
-            <GlobalActions>
-                <RadzenButton Icon="arrow_downward" ButtonStyle="ButtonStyle.Base" Text="Import" />
-            </GlobalActions>
-            <ContextActions>
-                <RadzenButton Icon="arrow_upward" ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined"
-                    Text="Export" Disabled=@(!this.HasItemsSelected) />
-            </ContextActions>
-            <ChildContent>
-                <RadzenDataGridColumn TItem="CountrySummary" Title="Country name"
-                    Property=@nameof(CountrySummary.Name) />
-            </ChildContent>
-        </DataGridControl>
-    </ChildContent>
+<SearchControl TItem="CountrySummary" Title=@StringResource.GetStringByKey("General_CountrySummaryPage_Title") @bind-Take=@this.Request.Take
+    @bind-SearchText=@this.Request.SearchText DisplayTakeInfo=@this.DisplayTakeInfo
+    OnExecuteSearch=@this.ExecuteSearchAsync>
+    <DataGridControl TItem="CountrySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
+        OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@this.OnDeleteItemAsync>
+        <RadzenDataGridColumn TItem="CountrySummary"
+            Title=@StringResource.GetStringByKey("General_CountrySummaryPage_NameColumn_Title")
+            Property=@nameof(CountrySummary.Name) />
+    </DataGridControl>
 </SearchControl>
 
 @code {
+    [Inject]
+    private ICountrySummaryClient CountrySummaryClient { get; set; } = default!;
+
+    [Inject]
+    private ICountryClient CountryClient { get; set; } = default!;
+
     protected override async Task<IEnumerable<CountrySummary>> FetchDataAsync()
     {
-        await Task.Delay(5000);
+        var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<CountrySummary>>(
+        () => this.CountrySummaryClient.GetSummariesAsync(this.Request)
+        );
 
-        List<CountrySummary> summaries = new List<CountrySummary>()
-        {
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Brazil" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "USA" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "France" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-            new CountrySummary { Id = Guid.NewGuid(), Name = "Another" },
-        };
-
-        for (int count = 0; count <= 100; count++)
-        {
-            summaries.Add(new CountrySummary { Id = Guid.NewGuid(), Name = "Another " + count });
-        }
-
-        Console.WriteLine("Take: " + this.Request.Take);
-        return summaries;
+        return summariesResponse?.Summaries ?? Enumerable.Empty<CountrySummary>();
     }
-    
+
     private async Task OnNewItemAsync()
     {
-        var newCountry = await this.OpenDialogAsync<CountryFormPage, Country>(title: "New Country");
-        await this.NotifyInfoAsync("New country created: " + newCountry?.Name);
+        await this.OpenDialogAsync<CountryFormPage, Country>(
+            title: StringResource.GetStringByKey("General_CountryFormPage_Title"));
         await this.ExecuteSearchAsync();
     }
 
     private async Task OnEditItemAsync()
     {
-        var selectedCountryId = this.SelectedItems.FirstOrDefault()?.Id;
-        var changedCountry = await this.OpenDialogAsync<CountryFormPage, Country>(title: "Edit Country", new Dictionary<string, object>() { { "Id", selectedCountryId } });
-        await this.NotifyInfoAsync("Changed country: " + changedCountry?.Name);
-        await this.ExecuteSearchAsync();
-    }
-/*
-    protected override Task OnEditItemAsync()
-    {
-    if (this.SelectedItems.Count == 1)
-    {
-    var id = this.SelectedItems.First().Id;
-    return Navigation.NavigateToAsync($"general/country/{id}");
+        var selectedId = this.SelectedItems.FirstOrDefault()?.Id;
+
+        if (selectedId.HasValue)
+        {
+            await this.OpenDialogAsync<CountryFormPage, Country>(
+                title: StringResource.GetStringByKey("General_CountryFormPage_Title"),
+                parameters: new Dictionary<string, object>() { { "Id", selectedId } });
+            await this.ExecuteSearchAsync();
+        }
     }
 
-    return Task.CompletedTask;
-    }
+    private async Task OnDeleteItemAsync()
+    {
+        var selectedIds = this.SelectedItems.Select(x => x.Id);
 
-    protected override async Task OnDeleteItemAsync()
-    {
-    if (this.SelectedItems.Count > 0)
-    {
-    var confirmed = await DialogService.Confirm(
-    StringResource.GetStringByKey("CountrySummaryPage_Delete_Confirmation_Message"),
-    StringResource.GetStringByKey("CountrySummaryPage_Delete_Confirmation_Title"),
-    new ConfirmOptions() { OkButtonText = StringResource.GetStringByKey("Yes"), CancelButtonText =
-    StringResource.GetStringByKey("No") });
-
-    if (confirmed == true)
-    {
-    var ids = this.SelectedItems.Select(i => i.Id).ToArray();
-    await CountryClient.DeleteCountriesAsync(ids);
-    await OnSearchAsync();
-    this.SelectedItems.Clear();
-    StateHasChanged();
+        if (selectedIds.Any() && await this.ConfirmAsync(StringResource.GetStringByKey("Dialog_Confirm_Delete")))
+        {
+            foreach (var selectedId in selectedIds)
+            {
+                await this.HandleExceptionAsync(() => this.CountryClient.DeleteAsync(new DeleteRequest<Guid> { Id = selectedId }));
+            }
+        }
     }
-    }
-    }*/
 }

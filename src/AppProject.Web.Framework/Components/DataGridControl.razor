@@ -2,7 +2,7 @@
 
 @inherits AppProjectComponentBase
 
-@typeparam TSummary where TSummary : ISummary
+@typeparam TItem
 
 <FieldsetControl AllowCollapse=@this.AllowCollapse Collapsed=@this.Collapsed Title=@this.Title>
     <RadzenRow AlignItems="AlignItems.End">
@@ -39,7 +39,7 @@
         </RadzenRow>
         <RadzenRow class="rz-mt-1">
             <RadzenColumn>
-                <RadzenDataGrid TItem="TSummary" @ref=@this.dataGrid Data=@Items
+                <RadzenDataGrid TItem="TItem" @ref=@this.dataGrid Data=@Items
                     GroupPanelText=@StringResource.GetStringByKey("RadzenDataGrid_GroupPanelText")
                     PageSizeText=@StringResource.GetStringByKey("RadzenDataGrid_PageSizeText")
                     EmptyText=@StringResource.GetStringByKey("RadzenDataGrid_EmptyText")
@@ -90,7 +90,7 @@
 </FieldsetControl>
 
 @code {
-    private RadzenDataGrid<TSummary> dataGrid = default!;
+    private RadzenDataGrid<TItem> dataGrid = default!;
     
     [Parameter]
     public bool AllowCollapse { get; set; }
@@ -126,13 +126,13 @@
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public IList<TSummary> Items { get; set; } = new List<TSummary>();
+    public IList<TItem> Items { get; set; } = new List<TItem>();
 
     [Parameter]
-    public IList<TSummary> SelectedItems { get; set; } = new List<TSummary>();
+    public IList<TItem> SelectedItems { get; set; } = new List<TItem>();
 
     [Parameter]
-    public EventCallback<IList<TSummary>> SelectedItemsChanged { get; set; }
+    public EventCallback<IList<TItem>> SelectedItemsChanged { get; set; }
 
     [Parameter]
     public EventCallback OnNewItem { get; set; }
@@ -169,12 +169,12 @@
 
     private async Task SetAllItemsSelectionAsync(bool? isSelected)
     {
-        await this.OnSelectedItemsChangedAsync(isSelected == true ? this.Items : new List<TSummary>());
+        await this.OnSelectedItemsChangedAsync(isSelected == true ? this.Items : new List<TItem>());
 
         this.StateHasChanged();
     }
 
-    private async Task OnSelectedItemsChangedAsync(IList<TSummary> value)
+    private async Task OnSelectedItemsChangedAsync(IList<TItem> value)
     {
         if (this.SelectedItems != value)
         {
