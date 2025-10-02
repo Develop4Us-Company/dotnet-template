@@ -20,19 +20,19 @@ public abstract class AppProjectComponentBase : ComponentBase
     [Inject]
     protected NavigationManager NavigationManager { get; set; } = default!;
 
-    public Task NotifySuccessAsync(string message, string? title = null, double duration = 10000, Action<object>? notificationClick = null, object? payload = null) =>
+    protected Task NotifySuccessAsync(string message, string? title = null, double duration = 10000, Action<object>? notificationClick = null, object? payload = null) =>
         this.NotifyAsync(NotificationSeverity.Success, message, title, duration, notificationClick, payload);
 
-    public Task NotifyWarningAsync(string message, string? title = null, double duration = 10000, Action<object>? notificationClick = null, object? payload = null) =>
+    protected Task NotifyWarningAsync(string message, string? title = null, double duration = 10000, Action<object>? notificationClick = null, object? payload = null) =>
         this.NotifyAsync(NotificationSeverity.Warning, message, title, duration, notificationClick, payload);
 
-    public Task NotifyErrorAsync(string message, string? title = null, double duration = 10000, Action<object>? notificationClick = null, object? payload = null) =>
+    protected Task NotifyErrorAsync(string message, string? title = null, double duration = 10000, Action<object>? notificationClick = null, object? payload = null) =>
         this.NotifyAsync(NotificationSeverity.Error, message, title, duration, notificationClick, payload);
 
-    public Task NotifyInfoAsync(string message, string? title = null, double duration = 10000, Action<object>? notificationClick = null, object? payload = null) =>
+    protected Task NotifyInfoAsync(string message, string? title = null, double duration = 10000, Action<object>? notificationClick = null, object? payload = null) =>
         this.NotifyAsync(NotificationSeverity.Info, message, title, duration, notificationClick, payload);
 
-    public async Task ShowErrorMessageAsync(string message, string? title = null)
+    protected async Task ShowErrorMessageAsync(string message, string? title = null)
     {
         await this.DialogService.Alert(
             message,
@@ -40,7 +40,7 @@ public abstract class AppProjectComponentBase : ComponentBase
             new AlertOptions() { OkButtonText = StringResource.GetStringByKey("Dialog_Error_OkButton_Text") });
     }
 
-    public async Task ShowInfoMessageAsync(string message, string? title = null)
+    protected async Task ShowInfoMessageAsync(string message, string? title = null)
     {
         await this.DialogService.Alert(
             message,
@@ -48,7 +48,7 @@ public abstract class AppProjectComponentBase : ComponentBase
             new AlertOptions() { OkButtonText = StringResource.GetStringByKey("Dialog_Info_OkButton_Text") });
     }
 
-    public async Task<bool> ConfirmAsync(string message, string? title = null)
+    protected async Task<bool> ConfirmAsync(string message, string? title = null)
     {
         return (await this.DialogService.Confirm(
             message,
@@ -60,7 +60,7 @@ public abstract class AppProjectComponentBase : ComponentBase
             })) ?? false;
     }
 
-    public async Task ShowBusyIndicatorAsync(string? message = null)
+    protected async Task ShowBusyIndicatorAsync(string? message = null)
     {
         message ??= StringResource.GetStringByKey("Dialog_Busy_Message");
 
@@ -84,7 +84,7 @@ public abstract class AppProjectComponentBase : ComponentBase
             });
     }
 
-    public Task NavigateToPageAsync<TPage>(Dictionary<string, object>? routeParameters = null, Dictionary<string, object>? queryParameters = null, bool forceLoad = false)
+    protected Task NavigateToPageAsync<TPage>(Dictionary<string, object>? routeParameters = null, Dictionary<string, object>? queryParameters = null, bool forceLoad = false)
             where TPage : AppProjectPageBase
     {
         this.NavigationManager.NavigateTo($"{typeof(TPage).Name}{this.GetParameters(routeParameters, queryParameters)}", forceLoad: forceLoad);
@@ -92,33 +92,33 @@ public abstract class AppProjectComponentBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    public async Task OpenDialogAsync<TPage>(string? title = null, Dictionary<string, object>? parameters = null, bool showClose = false, bool isDraggable = true, bool isResizable = true)
+    protected async Task OpenDialogAsync<TPage>(string? title = null, Dictionary<string, object>? parameters = null, bool showClose = false, bool isDraggable = true, bool isResizable = true)
         where TPage : AppProjectPageBase
     {
         await this.OpenDialogWithDynamicAsync<TPage>(title, parameters, showClose, isDraggable, isResizable);
     }
 
-    public async Task<TResult> OpenDialogAsync<TPage, TResult>(string? title = null, Dictionary<string, object>? parameters = null, bool showClose = false, bool isDraggable = true, bool isResizable = true)
+    protected async Task<TResult> OpenDialogAsync<TPage, TResult>(string? title = null, Dictionary<string, object>? parameters = null, bool showClose = false, bool isDraggable = true, bool isResizable = true)
         where TPage : AppProjectPageBase
     {
         return await this.OpenDialogWithDynamicAsync<TPage>(title, parameters, showClose, isDraggable, isResizable);
     }
 
-    public Task CloseDialogAsync()
+    protected Task CloseDialogAsync()
     {
         this.DialogService.Close();
 
         return Task.CompletedTask;
     }
 
-    public Task CloseDialogAsync<TResult>(TResult result)
+    protected Task CloseDialogAsync<TResult>(TResult result)
     {
         this.DialogService.Close(result);
 
         return Task.CompletedTask;
     }
 
-    public async Task<TResult?> GetResultOrHandleExceptionAsync<TResult>(Func<Task<TResult>> operation, Func<Exception, Task<bool>>? exceptionHandler = null, bool showMessage = true)
+    protected async Task<TResult?> GetResultOrHandleExceptionAsync<TResult>(Func<Task<TResult>> operation, Func<Exception, Task<bool>>? exceptionHandler = null, bool showMessage = true)
     {
         if (operation is null)
         {
@@ -139,7 +139,7 @@ public abstract class AppProjectComponentBase : ComponentBase
         return default;
     }
 
-    public async Task HandleExceptionAsync(Func<Task> operation, Func<Exception, Task<bool>>? exceptionHandler = null, bool showMessage = true)
+    protected async Task HandleExceptionAsync(Func<Task> operation, Func<Exception, Task<bool>>? exceptionHandler = null, bool showMessage = true)
     {
         if (operation is null)
         {
@@ -222,6 +222,7 @@ public abstract class AppProjectComponentBase : ComponentBase
             ShowClose = showClose,
             Draggable = isDraggable,
             Resizable = isResizable,
+            Style = "top:50% !important; left:50% !important; transform:translate(-50%,-50%) !important; position:fixed !important; min-height:auto; min-width:auto; width:auto",
         };
 
         return await this.DialogService.OpenAsync<TPage>(title, parameters, options);

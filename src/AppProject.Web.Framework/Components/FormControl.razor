@@ -1,38 +1,23 @@
-﻿
-@inherits AppProjectComponentBase
+﻿@inherits AppProjectComponentBase
 
-<RadzenCard>
-    <RadzenCard class="rz-mb-3">
-        <RadzenRow AlignItems="AlignItems.End">
-            <RadzenColumn>
-                <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
-                    <RadzenButton ButtonStyle="ButtonStyle.Success" 
-                        Icon="save"
-                        Text=@StringResource.GetStringByKey("FormControl_SaveButton_Text")
-                        Visible=@this.ShowSaveAction
-                        Click=@this.OnSave />
-                    <RadzenButton ButtonStyle="ButtonStyle.Success" 
-                        Icon="start"
-                        Text=@StringResource.GetStringByKey("FormControl_ExecuteButton_Text")
-                        Visible=@this.ShowExecuteAction
-                        Click=@this.OnExecute />
-                    @this.GlobalActions
-                    <RadzenButton ButtonStyle="ButtonStyle.Success" 
-                        Icon="cancel"
-                        Text=@StringResource.GetStringByKey("FormControl_CancelButton_Text")
-                        Visible=@this.ShowCancelAction
-                        Click=@this.OnCancel />
-                    <RadzenButton ButtonStyle="ButtonStyle.Success" 
-                        Icon="close"
-                        Text=@StringResource.GetStringByKey("FormControl_CloseButton_Text")
-                        Visible=@this.ShowCloseAction
-                        Click=@this.OnClose />
-                </RadzenStack>
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenCard>
-    @this.ChildContent
-</RadzenCard>
+<RadzenRow AlignItems="AlignItems.End">
+    <RadzenColumn>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
+            <RadzenButton ButtonStyle="ButtonStyle.Primary"
+                Icon=@(this.PreferExecuteOverSave ? "start": "save")
+                Text=@(this.PreferExecuteOverSave ? StringResource.GetStringByKey("FormControl_ExecuteButton_Text") : StringResource.GetStringByKey("FormControl_SaveButton_Text"))
+                Visible=@this.ShowSaveAction
+                Click=@this.OnSave />
+            @this.GlobalActions
+            <RadzenButton ButtonStyle="ButtonStyle.Base"
+                Icon=@(this.PreferCloseOverCancel ? "close" : "cancel")
+                Text=@(this.PreferCloseOverCancel ? StringResource.GetStringByKey("FormControl_CloseButton_Text") : StringResource.GetStringByKey("FormControl_CancelButton_Text"))
+                Visible=@this.ShowCancelAction
+                Click=@this.OnCancel />
+        </RadzenStack>
+    </RadzenColumn>
+</RadzenRow>
+@this.ChildContent
 
 @code {
     [Parameter]
@@ -45,23 +30,17 @@
     public bool ShowSaveAction { get; set; } = true;
 
     [Parameter]
-    public bool ShowExecuteAction { get; set; }
+    public bool PreferExecuteOverSave { get; set; }
 
     [Parameter]
     public bool ShowCancelAction { get; set; } = true;
 
     [Parameter]
-    public bool ShowCloseAction { get; set; }
+    public bool PreferCloseOverCancel { get; set; }
 
     [Parameter]
     public EventCallback OnSave { get; set; }
 
     [Parameter]
-    public EventCallback OnExecute { get; set; }
-
-    [Parameter]
     public EventCallback OnCancel { get; set; }
-
-    [Parameter]
-    public EventCallback OnClose { get; set; }
 }

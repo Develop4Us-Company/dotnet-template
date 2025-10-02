@@ -10,7 +10,7 @@ public abstract class FormPage<TEntity> : AppProjectPageBase, IDisposable
 {
     protected bool IsDisposed { get; set; }
 
-    protected virtual TEntity? Entity { get; private set; }
+    protected virtual TEntity Entity { get; private set; } = default!;
 
     public virtual void Dispose()
     {

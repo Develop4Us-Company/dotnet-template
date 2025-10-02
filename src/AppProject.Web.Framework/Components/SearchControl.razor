@@ -3,6 +3,7 @@
 
 @inherits AppProjectComponentBase
 
+<RadzenText TextStyle="TextStyle.DisplayH5">@this.Title</RadzenText>
 <RadzenCard>
     <RadzenCard class="rz-mb-3">
         <RadzenRow AlignItems="AlignItems.End">
@@ -43,6 +44,9 @@
                     @StringResource.GetStringByKey("SearchControl_TakeInfo", this.Take.Value)
                 </RadzenAlert>
     ;
+
+    [Parameter]
+    public string? Title { get; set; }
 
     [Parameter]
     public RenderFragment? FilterContent { get; set; }
