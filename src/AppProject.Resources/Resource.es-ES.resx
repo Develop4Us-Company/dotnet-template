@@ -18,97 +18,97 @@
 
   <!--Sample-->
   <data name="Sample" xml:space="preserve">
-    <value>Exemplo</value>
+    <value>Ejemplo</value>
   </data>
   <data name="SampleEmailTemplate_Introduction" xml:space="preserve">
-    <value>Olá, {0}!</value>
+    <value>¡Hola, {0}!</value>
   </data>
   <data name="SampleEmailTemplate_Message" xml:space="preserve">
-    <value>Essa é uma mensagem para você.</value>
+    <value>Este es un mensaje de ejemplo para ti.</value>
   </data>
   <data name="SampleEmailTemplate_Date" xml:space="preserve">
-    <value>Enviado em: {0}</value>
+    <value>Fecha de envío: {0}</value>
   </data>
 
   <!--Validations-->
   <data name="General_Country_DuplicateName" xml:space="preserve">
-    <value>Esse nome de país já existe.</value>
+    <value>Este nombre de país ya existe.</value>
   </data>
   <data name="General_State_DuplicateName" xml:space="preserve">
-    <value>Esse nome do estado já existe para o mesmo país.</value>
+    <value>Este nombre de estado ya existe para el mismo país.</value>
   </data>
   <data name="General_City_DuplicateName" xml:space="preserve">
-    <value>Esse nome de cidade já existe para o mesmo estado.</value>
+    <value>Este nombre de ciudad ya existe para el mismo estado.</value>
   </data>
   <data name="General_City_Neighborhood_DuplicateName" xml:space="preserve">
-    <value>Esse nome de bairro já existe para a mesma cidade.</value>
+    <value>Este nombre de barrio ya existe para la misma ciudad.</value>
   </data>
 
   <!--Frontend-->
   <data name="Footer_Text" xml:space="preserve">
-    <value>Copyright © Nome da Sua Empresa. Todos os direitos reservados.</value>
+    <value>Copyright © Nombre de su empresa. Todos los derechos reservados.</value>
   </data>
   <data name="Home_Title" xml:space="preserve">
-    <value>Início</value>
+    <value>Inicio</value>
   </data>
   <data name="Home_Message" xml:space="preserve">
-    <value>Bem-vindo ao seu novo App!</value>
+    <value>¡Bienvenido a tu nueva aplicación!</value>
   </data>
   <data name="NotFound_Title" xml:space="preserve">
-    <value>Não encontrado</value>
+    <value>No encontrado</value>
   </data>
   <data name="NotFound_Message" xml:space="preserve">
-    <value>Desculpe, essa página não existe.</value>
+    <value>Lo sentimos, no hay nada en esta dirección.</value>
   </data>
 
   <!--Frontend Login-->
   <data name="Login" xml:space="preserve">
-    <value>Entrar</value>
+    <value>Iniciar sesión</value>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value>Sair</value>
+    <value>Cerrar sesión</value>
   </data>
 
   <!--Frontend Default Dialogs-->
   <data name="Dialog_Error_Title" xml:space="preserve">
-    <value>Erro</value>
+    <value>Error</value>
   </data>
   <data name="Dialog_Error_OkButton_Text" xml:space="preserve">
-    <value>Ok</value>
+    <value>Aceptar</value>
   </data>
   <data name="Dialog_Info_Title" xml:space="preserve">
-    <value>Informação</value>
+    <value>Información</value>
   </data>
   <data name="Dialog_Info_OkButton_Text" xml:space="preserve">
-    <value>Ok</value>
+    <value>Aceptar</value>
   </data>
   <data name="Dialog_Confirm_Title" xml:space="preserve">
-    <value>Confirmação</value>
+    <value>Confirmación</value>
   </data>
   <data name="Dialog_Confirm_YesButton_Text" xml:space="preserve">
-    <value>Sim</value>
+    <value>Sí</value>
   </data>
   <data name="Dialog_Confirm_NoButton_Text" xml:space="preserve">
-    <value>Não</value>
+    <value>No</value>
   </data>
   <data name="Dialog_Busy_Message" xml:space="preserve">
-    <value>Aguarde...</value>
+    <value>Trabajando en ello...</value>
   </data>
 
   <!--Frontend Default Exceptions-->
   <data name="Exception_AdditionalInfo_Message" xml:space="preserve">
-    <value>Detalhes adicionais: {0}</value>
+    <value>Información adicional: {0}</value>
   </data>
   <data name="Exception_UnhandledException_Message" xml:space="preserve">
-    <value>Exceção não tratada.</value>
+    <value>Excepción no controlada.</value>
   </data>
 
   <!--Frontend DataGridControl-->
   <data name="DataGridControl_NewButton_Text" xml:space="preserve">
-    <value>Novo</value>
+    <value>Nuevo</value>
   </data>
   <data name="DataGridControl_AddButton_Text" xml:space="preserve">
-    <value>Adicionar</value>
+    <value>Añadir</value>
   </data>
   <data name="DataGridControl_EditButton_Text" xml:space="preserve">
     <value>Editar</value>
@@ -117,43 +117,43 @@
     <value>Abrir</value>
   </data>
   <data name="DataGridControl_DeleteButton_Text" xml:space="preserve">
-    <value>Deletar</value>
+    <value>Eliminar</value>
   </data>
 
   <!--Frontend SearchControl and SearchPage-->
   <data name="SearchControl_SearchField_Label" xml:space="preserve">
-    <value>Pesquisar</value>
+    <value>Buscar</value>
   </data>
   <data name="SearchControl_SearchButton_Text" xml:space="preserve">
-    <value>Pesquisar</value>
+    <value>Buscar</value>
   </data>
   <data name="SearchControl_TakeField_Label" xml:space="preserve">
-    <value>Quantidade de registros</value>
+    <value>Cantidad</value>
   </data>
   <data name="SearchControl_TakeInfo" xml:space="preserve">
-    <value>Serão trazidos apenas {0} registros. Para visualizar mais, altere o campo "Quantidade de registros".</value>
+    <value>Solo se mostrarán {0} resultados. Para ver más resultados, cambia el campo Cantidad.</value>
   </data>
   <data name="SearchControl_AdvancedFiltersButton_Text" xml:space="preserve">
-    <value>Filtros avançados</value>
+    <value>Filtros avanzados</value>
   </data>
 
   <!--Frontend FormControl-->
   <data name="FormControl_SaveButton_Text" xml:space="preserve">
-    <value>Salvar</value>
+    <value>Guardar</value>
   </data>
   <data name="FormControl_ExecuteButton_Text" xml:space="preserve">
-    <value>Executar</value>
+    <value>Ejecutar</value>
   </data>
   <data name="FormControl_CancelButton_Text" xml:space="preserve">
     <value>Cancelar</value>
   </data>
   <data name="FormControl_CloseButton_Text" xml:space="preserve">
-    <value>Fechar</value>
+    <value>Cerrar</value>
   </data>
 
   <!--Frontend Menus-->
   <data name="Menu_Home" xml:space="preserve">
-    <value>Início</value>
+    <value>Inicio</value>
   </data>
   <data name="Menu_Countries" xml:space="preserve">
     <value>Países</value>
@@ -162,6 +162,6 @@
     <value>Estados</value>
   </data>
   <data name="Menu_Cities" xml:space="preserve">
-    <value>Cidades</value>
+    <value>Ciudades</value>
   </data>
 </root>

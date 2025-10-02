@@ -3,7 +3,7 @@
 
 @inherits SearchPage<SearchRequest, CountrySummary>
 
-<SearchControl OnExecuteSearch=@this.ExecuteSearchAsync @bind-Take=@this.Request.Take
+<SearchControl Title="Countries" OnExecuteSearch=@this.ExecuteSearchAsync @bind-Take=@this.Request.Take
     @bind-SearchText=@this.Request.SearchText>
     <FilterContent>
     <RadzenRow>
@@ -27,7 +27,7 @@
     </FilterContent>
     <ChildContent>
         <DataGridControl TSummary="CountrySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
-            OnNewItem=@this.OnNewItemAsync>
+            OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync>
             <GlobalActions>
                 <RadzenButton Icon="arrow_downward" ButtonStyle="ButtonStyle.Base" Text="Import" />
             </GlobalActions>
@@ -60,7 +60,17 @@
     
     private async Task OnNewItemAsync()
     {
-        await this.OpenDialogAsync<CountryFormPage>();
+        var newCountry = await this.OpenDialogAsync<CountryFormPage, Country>(title: "New Country");
+        await this.NotifyInfoAsync("New country created: " + newCountry?.Name);
+        await this.ExecuteSearchAsync();
+    }
+
+    private async Task OnEditItemAsync()
+    {
+        var selectedCountryId = this.SelectedItems.FirstOrDefault()?.Id;
+        var changedCountry = await this.OpenDialogAsync<CountryFormPage, Country>(title: "Edit Country", new Dictionary<string, object>() { { "Id", selectedCountryId } });
+        await this.NotifyInfoAsync("Changed country: " + changedCountry?.Name);
+        await this.ExecuteSearchAsync();
     }
 /*
     protected override Task OnEditItemAsync()

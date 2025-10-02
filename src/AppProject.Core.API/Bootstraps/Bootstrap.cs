@@ -232,7 +232,7 @@ public static class Bootstrap
             {
                     new QueryStringRequestCultureProvider(),
                     new CookieRequestCultureProvider(),
-                    new AcceptLanguageHeaderRequestCultureProvider(),
+                    new AcceptLanguageHeaderRequestCultureProvider()
             };
         });
     }

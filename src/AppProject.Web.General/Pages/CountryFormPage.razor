@@ -1,20 +1,18 @@
-﻿@page "/general/country{Id}"
+﻿@inherits FormPage<Country>
 
-@inherits FormPage<Country>
-
-<FormControl>
-    <FieldsetControl AllowCollapse="true" Title="General">
+<FormControl PreferExecuteOverSave="true" PreferCloseOverCancel="true" OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>
+    <FieldsetControl Title="General">
         <RadzenRow>
             <RadzenColumn>
                 <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
-                    <RadzenFormField Text="Customer name">
-                        <RadzenTextBox />
+                    <RadzenFormField Text="Country name">
+                        <RadzenTextBox @bind-Value=@this.Entity.Name />
                     </RadzenFormField>
                     <RadzenFormField Text="Customer age">
                         <RadzenTextBox />
                     </RadzenFormField>
-                    <RadzenFormField Text="Customer id">
-                        <RadzenTextBox />
+                    <RadzenFormField Text="Country id">
+                        <RadzenText>@this.Entity.Id</RadzenText>
                     </RadzenFormField>
                     <RadzenFormField Text="Date">
                         <RadzenDatePicker TValue="DateTime?" />
@@ -26,5 +24,31 @@
 </FormControl>
 
 @code {
+    [Parameter]
+    public Guid? Id { get; set; }
 
+    private Task OnCancelAsync() => this.CloseDialogAsync();
+
+    private Task OnSaveAsync() => this.CloseDialogAsync(this.Entity);
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        if (this.Id.HasValue)
+        {
+            await this.NotifyInfoAsync("Opening the country with id: " + this.Id);
+
+            this.SetEntity(new Country()
+            {
+                Id = this.Id.Value,
+                Name = "Existing Brazil"
+            });
+        }
+    }
+
+    protected override void OnEntityPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        this.NotifySuccessAsync("Parametro: " + e.PropertyName + " changed to: " + sender);
+    }
 }
