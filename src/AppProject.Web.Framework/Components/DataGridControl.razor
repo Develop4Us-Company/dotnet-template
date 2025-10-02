@@ -40,6 +40,29 @@
         <RadzenRow class="rz-mt-1">
             <RadzenColumn>
                 <RadzenDataGrid TItem="TSummary" @ref=@this.dataGrid Data=@Items
+                    GroupPanelText=@StringResource.GetStringByKey("RadzenDataGrid_GroupPanelText")
+                    PageSizeText=@StringResource.GetStringByKey("RadzenDataGrid_PageSizeText")
+                    EmptyText=@StringResource.GetStringByKey("RadzenDataGrid_EmptyText")
+                    FilterText=@StringResource.GetStringByKey("RadzenDataGrid_FilterText")
+                    EqualsText=@StringResource.GetStringByKey("RadzenDataGrid_EqualsText")
+                    NotEqualsText=@StringResource.GetStringByKey("RadzenDataGrid_NotEqualsText")
+                    ContainsText=@StringResource.GetStringByKey("RadzenDataGrid_ContainsText")
+                    StartsWithText=@StringResource.GetStringByKey("RadzenDataGrid_StartsWithText")
+                    EndsWithText=@StringResource.GetStringByKey("RadzenDataGrid_EndsWithText")
+                    DoesNotContainText=@StringResource.GetStringByKey("RadzenDataGrid_DoesNotContainText")
+                    IsNullText=@StringResource.GetStringByKey("RadzenDataGrid_IsNullText")
+                    IsEmptyText=@StringResource.GetStringByKey("RadzenDataGrid_IsEmptyText")
+                    IsNotNullText=@StringResource.GetStringByKey("RadzenDataGrid_IsNotNullText")
+                    IsNotEmptyText=@StringResource.GetStringByKey("RadzenDataGrid_IsNotEmptyText")
+                    ClearFilterText=@StringResource.GetStringByKey("RadzenDataGrid_ClearFilterText")
+                    ApplyFilterText=@StringResource.GetStringByKey("RadzenDataGrid_ApplyFilterText")
+                    AndOperatorText=@StringResource.GetStringByKey("RadzenDataGrid_AndOperatorText")
+                    OrOperatorText=@StringResource.GetStringByKey("RadzenDataGrid_OrOperatorText")
+                    NextPageTitle=@StringResource.GetStringByKey("RadzenDataGrid_NextPageTitle")
+                    LastPageTitle=@StringResource.GetStringByKey("RadzenDataGrid_LastPageTitle")
+                    PrevPageTitle=@StringResource.GetStringByKey("RadzenDataGrid_PrevPageTitle")
+                    FirstPageTitle=@StringResource.GetStringByKey("RadzenDataGrid_FirstPageTitle")
+                    PageTitleFormat=@StringResource.GetStringByKey("RadzenDataGrid_PageTitleFormat")
                     AllowRowSelectOnRowClick="true" SelectionMode="DataGridSelectionMode.Multiple"
                     Value=@this.SelectedItems ValueChanged=@OnSelectedItemsChangedAsync
                     AllowPaging="true" PageSizeOptions=@this.PageSizeOptions

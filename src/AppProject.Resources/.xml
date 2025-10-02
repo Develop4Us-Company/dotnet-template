@@ -192,6 +192,131 @@
               Looks up a localized string similar to Not found.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_AndOperatorText">
+            <summary>
+              Looks up a localized string similar to And.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_ApplyFilterText">
+            <summary>
+              Looks up a localized string similar to Apply filter.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_ClearFilterText">
+            <summary>
+              Looks up a localized string similar to Clear filter.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_ContainsText">
+            <summary>
+              Looks up a localized string similar to Contains.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_DoesNotContainText">
+            <summary>
+              Looks up a localized string similar to Does not contain.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_EmptyText">
+            <summary>
+              Looks up a localized string similar to No records to display..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_EndsWithText">
+            <summary>
+              Looks up a localized string similar to Ends with.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_EqualsText">
+            <summary>
+              Looks up a localized string similar to Equals.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_FilterText">
+            <summary>
+              Looks up a localized string similar to Filter.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_FirstPageTitle">
+            <summary>
+              Looks up a localized string similar to First page.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_GroupPanelText">
+            <summary>
+              Looks up a localized string similar to Drag a column header here and drop it to group by that column.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsEmptyText">
+            <summary>
+              Looks up a localized string similar to Is empty.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNotEmptyText">
+            <summary>
+              Looks up a localized string similar to Is not empty.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNotNullText">
+            <summary>
+              Looks up a localized string similar to Is not null.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNullText">
+            <summary>
+              Looks up a localized string similar to Is null.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_LastPageTitle">
+            <summary>
+              Looks up a localized string similar to Last page.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_NextPageTitle">
+            <summary>
+              Looks up a localized string similar to Next page.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_NotEqualsText">
+            <summary>
+              Looks up a localized string similar to Not equals.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_OrOperatorText">
+            <summary>
+              Looks up a localized string similar to Or.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_PageSizeText">
+            <summary>
+              Looks up a localized string similar to items per page.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_PageTitleFormat">
+            <summary>
+              Looks up a localized string similar to Page {{0}}.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_PrevPageTitle">
+            <summary>
+              Looks up a localized string similar to Previous page.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_StartsWithText">
+            <summary>
+              Looks up a localized string similar to Starts with.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenFieldset_CollapseTitle">
+            <summary>
+              Looks up a localized string similar to Collapse.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenFieldset_ExpandTitle">
+            <summary>
+              Looks up a localized string similar to Expand.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.Sample">
             <summary>
               Looks up a localized string similar to Sample.

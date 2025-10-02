@@ -1,6 +1,9 @@
 ﻿@inherits AppProjectComponentBase
 
-<RadzenFieldset AllowCollapse=@this.AllowCollapse Collapsed=@this.Collapsed HeaderTemplate=@this.HeaderTemplate>
+<RadzenFieldset AllowCollapse=@this.AllowCollapse Collapsed=@this.Collapsed
+    CollapseTitle=@StringResource.GetStringByKey("RadzenFieldset_CollapseTitle")
+    ExpandTitle=@StringResource.GetStringByKey("RadzenFieldset_ExpandTitle")
+    HeaderTemplate=@this.HeaderTemplate>
     <ChildContent>
         @this.ChildContent
     </ChildContent>

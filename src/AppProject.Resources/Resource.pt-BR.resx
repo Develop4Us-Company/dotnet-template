@@ -151,6 +151,83 @@
     <value>Fechar</value>
   </data>
 
+  <!--Frontend Radzen-->
+  <data name="RadzenFieldset_CollapseTitle" xml:space="preserve">
+    <value>Recolher</value>
+  </data>
+  <data name="RadzenFieldset_ExpandTitle" xml:space="preserve">
+    <value>Expandir</value>
+  </data>
+  <data name="RadzenDataGrid_EmptyText" xml:space="preserve">
+    <value>Sem registros para exibir.</value>
+  </data>
+  <data name="RadzenDataGrid_GroupPanelText" xml:space="preserve">
+    <value>Arraste o cabeçalho de uma coluna aqui e solte para agrupar por essa coluna</value>
+  </data>
+  <data name="RadzenDataGrid_PageSizeText" xml:space="preserve">
+    <value>itens por página</value>
+  </data>
+  <data name="RadzenDataGrid_FilterText" xml:space="preserve">
+    <value>Filtro</value>
+  </data>
+  <data name="RadzenDataGrid_EqualsText" xml:space="preserve">
+    <value>Igual a</value>
+  </data>
+  <data name="RadzenDataGrid_NotEqualsText" xml:space="preserve">
+    <value>Diferente de</value>
+  </data>
+  <data name="RadzenDataGrid_ContainsText" xml:space="preserve">
+    <value>Contém</value>
+  </data>
+  <data name="RadzenDataGrid_StartsWithText" xml:space="preserve">
+    <value>Começa com</value>
+  </data>
+  <data name="RadzenDataGrid_EndsWithText" xml:space="preserve">
+    <value>Termina com</value>
+  </data>
+  <data name="RadzenDataGrid_DoesNotContainText" xml:space="preserve">
+    <value>Não contém</value>
+  </data>
+  <data name="RadzenDataGrid_IsNullText" xml:space="preserve">
+    <value>É nulo</value>
+  </data>
+  <data name="RadzenDataGrid_IsEmptyText" xml:space="preserve">
+    <value>Está vazio</value>
+  </data>
+  <data name="RadzenDataGrid_IsNotNullText" xml:space="preserve">
+    <value>Não é nulo</value>
+  </data>
+  <data name="RadzenDataGrid_IsNotEmptyText" xml:space="preserve">
+    <value>Não está vazio</value>
+  </data>
+  <data name="RadzenDataGrid_ClearFilterText" xml:space="preserve">
+    <value>Limpar filtro</value>
+  </data>
+  <data name="RadzenDataGrid_ApplyFilterText" xml:space="preserve">
+    <value>Aplicar filtro</value>
+  </data>
+  <data name="RadzenDataGrid_AndOperatorText" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="RadzenDataGrid_OrOperatorText" xml:space="preserve">
+    <value>Ou</value>
+  </data>
+  <data name="RadzenDataGrid_NextPageTitle" xml:space="preserve">
+    <value>Próxima página</value>
+  </data>
+  <data name="RadzenDataGrid_LastPageTitle" xml:space="preserve">
+    <value>Última página</value>
+  </data>
+  <data name="RadzenDataGrid_PrevPageTitle" xml:space="preserve">
+    <value>Página anterior</value>
+  </data>
+  <data name="RadzenDataGrid_FirstPageTitle" xml:space="preserve">
+    <value>Primeira página</value>
+  </data>
+  <data name="RadzenDataGrid_PageTitleFormat" xml:space="preserve">
+    <value>Página {{0}}</value>
+  </data>
+
   <!--Frontend Menus-->
   <data name="Menu_Home" xml:space="preserve">
     <value>Início</value>
