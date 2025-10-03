@@ -1,29 +1,29 @@
 ﻿@using AppProject.Web.ApiClient.General
 
-@inherits FormPage<Country>
+@inherits ModelFormPage<Country>
 
-<FormControl TItem="Country" OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>
-    <FieldsetControl Title=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldsetControl_Title")>
+<ModelFormControl TModel="Country" Model=@this.Model OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>
+    <FieldsetControl Title=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_Title")>
         <RadzenRow>
             <RadzenColumn>
-                <RadzenText TextStyle="TextStyle.Subtitle2">@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_IdField_Text", this.Entity.Id)</RadzenText>
+                <RadzenText TextStyle="TextStyle.Subtitle2">@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_IdField_Text", this.Model.Id)</RadzenText>
             </RadzenColumn>
         </RadzenRow>
         <RadzenRow>
             <RadzenColumn>
                 <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Label")>
-                        <RadzenTextBox Name="NameField" @bind-Value=@this.Entity.Name />
+                        <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
                         <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Required")/>
                     </RadzenFormField>
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_CodeField_Label")>
-                        <RadzenTextBox @bind-Value=@this.Entity.Code />
+                        <RadzenTextBox @bind-Value=@this.Model.Code />
                     </RadzenFormField>
                 </RadzenStack>
             </RadzenColumn>
         </RadzenRow>
     </FieldsetControl>
-</FormControl>
+</ModelFormControl>
 
 @code {
     [Inject]
@@ -39,19 +39,19 @@
         var keyResponse = await this.GetResultOrHandleExceptionAsync<KeyResponse<Guid>>(
             async () => 
             {
-                if (this.Entity.Id != Guid.NewGuid())
+                if (this.Model.Id != Guid.Empty)
                 {
-                    return await this.CountryClient.PutAsync(new CreateOrUpdateRequest<Country> { Entity = this.Entity });
+                    return await this.CountryClient.PutAsync(new CreateOrUpdateRequest<Country> { Entity = this.Model });
                 }
                 
-                return await this.CountryClient.PostAsync(new CreateOrUpdateRequest<Country> { Entity = this.Entity });
+                return await this.CountryClient.PostAsync(new CreateOrUpdateRequest<Country> { Entity = this.Model });
             }
         );
 
         if (keyResponse is not null)
         {
-            this.Entity.Id = keyResponse.Id;
-            await this.CloseDialogAsync(this.Entity);
+            this.Model.Id = keyResponse.Id;
+            await this.CloseDialogAsync(this.Model);
         }
     }
 
@@ -67,7 +67,7 @@
 
             if (entityResponse is not null)
             {
-                this.SetEntity(entityResponse.Entity);
+                this.SetModel(entityResponse.Entity);
             }
         }
     }

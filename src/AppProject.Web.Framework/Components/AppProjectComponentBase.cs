@@ -11,6 +11,10 @@ namespace AppProject.Web.Framework.Components;
 
 public abstract class AppProjectComponentBase : ComponentBase
 {
+    private const string CenteredPositionStyle = "top:50% !important; left:50% !important; transform:translate(-50%,-50%) !important; position:fixed !important; min-height:auto; min-width:auto; width:auto";
+
+    protected bool IsBusy { get; private set; }
+
     [Inject]
     protected NotificationService NotificationService { get; set; } = default!;
 
@@ -37,7 +41,10 @@ public abstract class AppProjectComponentBase : ComponentBase
         await this.DialogService.Alert(
             message,
             title ?? StringResource.GetStringByKey("Dialog_Error_Title"),
-            new AlertOptions() { OkButtonText = StringResource.GetStringByKey("Dialog_Error_OkButton_Text") });
+            new AlertOptions()
+            {
+                OkButtonText = StringResource.GetStringByKey("Dialog_Error_OkButton_Text")
+            });
     }
 
     protected async Task ShowInfoMessageAsync(string message, string? title = null)
@@ -45,7 +52,10 @@ public abstract class AppProjectComponentBase : ComponentBase
         await this.DialogService.Alert(
             message,
             title ?? StringResource.GetStringByKey("Dialog_Info_Title"),
-            new AlertOptions() { OkButtonText = StringResource.GetStringByKey("Dialog_Info_OkButton_Text") });
+            new AlertOptions()
+            {
+                OkButtonText = StringResource.GetStringByKey("Dialog_Info_OkButton_Text")
+            });
     }
 
     protected async Task<bool> ConfirmAsync(string message, string? title = null)
@@ -56,12 +66,19 @@ public abstract class AppProjectComponentBase : ComponentBase
             new ConfirmOptions()
             {
                 OkButtonText = StringResource.GetStringByKey("Dialog_Confirm_YesButton_Text"),
-                CancelButtonText = StringResource.GetStringByKey("Dialog_Confirm_NoButton_Text"),
+                CancelButtonText = StringResource.GetStringByKey("Dialog_Confirm_NoButton_Text")
             })) ?? false;
     }
 
     protected async Task ShowBusyIndicatorAsync(string? message = null)
     {
+        if (this.IsBusy)
+        {
+            return;
+        }
+
+        this.IsBusy = true;
+
         message ??= StringResource.GetStringByKey("Dialog_Busy_Message");
 
         RenderFragment<DialogService> content = _ => builder =>
@@ -79,9 +96,23 @@ public abstract class AppProjectComponentBase : ComponentBase
             new DialogOptions
             {
                 ShowTitle = false,
-                Style = "top:50% !important; left:50% !important; transform:translate(-50%,-50%) !important; position:fixed !important; min-height:auto; min-width:auto; width:auto",
+                Style = CenteredPositionStyle,
                 CloseDialogOnEsc = false
             });
+    }
+
+    protected async Task CloseBusyIndicatorAsync()
+    {
+        if (!this.IsBusy)
+        {
+            return;
+        }
+
+        this.IsBusy = false;
+
+        await this.CloseDialogAsync();
+
+        this.StateHasChanged();
     }
 
     protected Task NavigateToPageAsync<TPage>(Dictionary<string, object>? routeParameters = null, Dictionary<string, object>? queryParameters = null, bool forceLoad = false)
@@ -118,40 +149,70 @@ public abstract class AppProjectComponentBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    protected async Task<TResult?> GetResultOrHandleExceptionAsync<TResult>(Func<Task<TResult>> operation, Func<Exception, Task<bool>>? exceptionHandler = null, bool showMessage = true)
+    protected async Task<TResult?> GetResultOrHandleExceptionAsync<TResult>(Func<Task<TResult>> operation, Func<Exception, Task<bool>>? exceptionHandler = null, bool showMessage = true, bool showBusyIndicator = true)
     {
         if (operation is null)
         {
             throw new ArgumentNullException(nameof(operation));
+        }
+
+        if (showBusyIndicator)
+        {
+            _ = this.ShowBusyIndicatorAsync();
         }
 
         try
         {
             var result = await operation();
 
+            if (showBusyIndicator)
+            {
+                await this.CloseBusyIndicatorAsync();
+            }
+
             return result;
         }
         catch (Exception exception)
         {
-            await this.HandleExceptionAsync(exceptionHandler, showMessage, exception);
-        }
+            if (showBusyIndicator)
+            {
+                await this.CloseBusyIndicatorAsync();
+            }
 
-        return default;
+            await this.HandleExceptionAsync(exceptionHandler, showMessage, exception);
+
+            return default;
+        }
     }
 
-    protected async Task HandleExceptionAsync(Func<Task> operation, Func<Exception, Task<bool>>? exceptionHandler = null, bool showMessage = true)
+    protected async Task HandleExceptionAsync(Func<Task> operation, Func<Exception, Task<bool>>? exceptionHandler = null, bool showMessage = true, bool showBusyIndicator = true)
     {
         if (operation is null)
         {
             throw new ArgumentNullException(nameof(operation));
         }
 
+        if (showBusyIndicator)
+        {
+            _ = this.ShowBusyIndicatorAsync();
+        }
+
         try
         {
             await operation();
+
+            if (showBusyIndicator)
+            {
+                await this.CloseBusyIndicatorAsync();
+            }
         }
         catch (Exception exception)
         {
+            if (showBusyIndicator)
+            {
+                await this.CloseBusyIndicatorAsync();
+            }
+
             await this.HandleExceptionAsync(exceptionHandler, showMessage, exception);
         }
     }
@@ -222,7 +283,7 @@ public abstract class AppProjectComponentBase : ComponentBase
             ShowClose = showClose,
             Draggable = isDraggable,
             Resizable = isResizable,
-            Style = "top:50% !important; left:50% !important; transform:translate(-50%,-50%) !important; position:fixed !important; min-height:auto; min-width:auto; width:auto",
+            Style = CenteredPositionStyle
         };
 
         return await this.DialogService.OpenAsync<TPage>(title, parameters, options);

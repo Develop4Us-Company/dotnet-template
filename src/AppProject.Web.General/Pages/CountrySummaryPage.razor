@@ -5,7 +5,8 @@
 
 @inherits SearchPage<SearchRequest, CountrySummary>
 
-<SearchControl TItem="CountrySummary" Title=@StringResource.GetStringByKey("General_CountrySummaryPage_Title") @bind-Take=@this.Request.Take
+<SearchControl TRequest="SearchRequest" Request=@this.Request
+    Title=@StringResource.GetStringByKey("General_CountrySummaryPage_Title") @bind-Take=@this.Request.Take
     @bind-SearchText=@this.Request.SearchText DisplayTakeInfo=@this.DisplayTakeInfo
     OnExecuteSearch=@this.ExecuteSearchAsync>
     <DataGridControl TItem="CountrySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
@@ -26,8 +27,7 @@
     protected override async Task<IEnumerable<CountrySummary>> FetchDataAsync()
     {
         var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<CountrySummary>>(
-        () => this.CountrySummaryClient.GetSummariesAsync(this.Request)
-        );
+            () => this.CountrySummaryClient.GetSummariesAsync(this.Request));
 
         return summariesResponse?.Summaries ?? Enumerable.Empty<CountrySummary>();
     }
@@ -62,6 +62,8 @@
             {
                 await this.HandleExceptionAsync(() => this.CountryClient.DeleteAsync(new DeleteRequest<Guid> { Id = selectedId }));
             }
+
+            await this.ExecuteSearchAsync();
         }
     }
 }
