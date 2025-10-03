@@ -10,13 +10,13 @@
                 </RadzenGravatar>
             </Template>
             <ChildContent>
-                <RadzenButton Text=@StringResource.GetStringByKey("Logout") Icon="logout"
+                <RadzenButton Text=@StringResource.GetStringByKey("Logout_Button_Text") Icon="logout"
                     ButtonStyle="ButtonStyle.Base" Click=@LogoutUser />
             </ChildContent>
         </RadzenProfileMenu>
     </Authorized>
     <NotAuthorized>
-        <RadzenButton Text=@StringResource.GetStringByKey("Login") Icon="login" ButtonStyle="ButtonStyle.Base"
+        <RadzenButton Text=@StringResource.GetStringByKey("Login_Button_Text") Icon="login" ButtonStyle="ButtonStyle.Base"
             Click=@LoginUser />
     </NotAuthorized>
 </AuthorizeView>

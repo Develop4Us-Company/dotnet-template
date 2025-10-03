@@ -35,7 +35,7 @@ public class SampleController(
     [HttpGet]
     public IActionResult GetCultureSample()
     {
-        return this.Ok(StringResource.GetStringByKey("Sample"));
+        return this.Ok(StringResource.GetStringByKey("Sample_Message_Text"));
     }
 
     [HttpGet]
