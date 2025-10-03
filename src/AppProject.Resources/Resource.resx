@@ -140,17 +140,17 @@
     <value>Advanced filters</value>
   </data>
 
-  <!--Frontend FormControl-->
-  <data name="FormControl_SaveButton_Text" xml:space="preserve">
+  <!--Frontend ModelFormControl-->
+  <data name="ModelFormControl_SaveButton_Text" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="FormControl_ExecuteButton_Text" xml:space="preserve">
+  <data name="ModelFormControl_ExecuteButton_Text" xml:space="preserve">
     <value>Execute</value>
   </data>
-  <data name="FormControl_CancelButton_Text" xml:space="preserve">
+  <data name="ModelFormControl_CancelButton_Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="FormControl_CloseButton_Text" xml:space="preserve">
+  <data name="ModelFormControl_CloseButton_Text" xml:space="preserve">
     <value>Close</value>
   </data>
 
