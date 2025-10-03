@@ -17,16 +17,16 @@
   </resheader>
 
   <!--Sample-->
-  <data name="Sample" xml:space="preserve">
+  <data name="Sample_Message_Text" xml:space="preserve">
     <value>Sample</value>
   </data>
-  <data name="SampleEmailTemplate_Introduction" xml:space="preserve">
+  <data name="SampleEmailTemplate_Introduction_Message" xml:space="preserve">
     <value>Hi, {0}!</value>
   </data>
-  <data name="SampleEmailTemplate_Message" xml:space="preserve">
+  <data name="SampleEmailTemplate_Body_Message" xml:space="preserve">
     <value>This is a sample message for you.</value>
   </data>
-  <data name="SampleEmailTemplate_Date" xml:space="preserve">
+  <data name="SampleEmailTemplate_Date_Message" xml:space="preserve">
     <value>Sent date: {0}</value>
   </data>
 
@@ -62,10 +62,10 @@
   </data>
 
   <!--Frontend Login-->
-  <data name="Login" xml:space="preserve">
+  <data name="Login_Button_Text" xml:space="preserve">
     <value>Login</value>
   </data>
-  <data name="Logout" xml:space="preserve">
+  <data name="Logout_Button_Text" xml:space="preserve">
     <value>Logout</value>
   </data>
 
@@ -91,7 +91,7 @@
   <data name="Dialog_Confirm_NoButton_Text" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="Dialog_Confirm_Delete" xml:space="preserve">
+  <data name="Dialog_Confirm_Delete_Message" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
   <data name="Dialog_Busy_Message" xml:space="preserve">
@@ -133,115 +133,115 @@
   <data name="SearchControl_TakeField_Label" xml:space="preserve">
     <value>Take</value>
   </data>
-  <data name="SearchControl_TakeInfo" xml:space="preserve">
+  <data name="SearchControl_TakeField_Info_Message" xml:space="preserve">
     <value>Only {0} results were shown. To see more results, change the Take field.</value>
   </data>
   <data name="SearchControl_AdvancedFiltersButton_Text" xml:space="preserve">
     <value>Advanced filters</value>
   </data>
 
-  <!--Frontend FormControl-->
-  <data name="FormControl_SaveButton_Text" xml:space="preserve">
+  <!--Frontend ModelFormControl-->
+  <data name="ModelFormControl_SaveButton_Text" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="FormControl_ExecuteButton_Text" xml:space="preserve">
+  <data name="ModelFormControl_ExecuteButton_Text" xml:space="preserve">
     <value>Execute</value>
   </data>
-  <data name="FormControl_CancelButton_Text" xml:space="preserve">
+  <data name="ModelFormControl_CancelButton_Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="FormControl_CloseButton_Text" xml:space="preserve">
+  <data name="ModelFormControl_CloseButton_Text" xml:space="preserve">
     <value>Close</value>
   </data>
 
   <!--Frontend Radzen-->
-  <data name="RadzenFieldset_CollapseTitle" xml:space="preserve">
+  <data name="RadzenFieldset_Collapse_Title" xml:space="preserve">
     <value>Collapse</value>
   </data>
-  <data name="RadzenFieldset_ExpandTitle" xml:space="preserve">
+  <data name="RadzenFieldset_Expand_Title" xml:space="preserve">
     <value>Expand</value>
   </data>
-  <data name="RadzenDataGrid_EmptyText" xml:space="preserve">
+  <data name="RadzenDataGrid_Empty_Text" xml:space="preserve">
     <value>No records to display.</value>
   </data>
-  <data name="RadzenDataGrid_GroupPanelText" xml:space="preserve">
+  <data name="RadzenDataGrid_GroupPanel_Text" xml:space="preserve">
     <value>Drag a column header here and drop it to group by that column</value>
   </data>
-  <data name="RadzenDataGrid_PageSizeText" xml:space="preserve">
+  <data name="RadzenDataGrid_PageSize_Text" xml:space="preserve">
     <value>items per page</value>
   </data>
-  <data name="RadzenDataGrid_FilterText" xml:space="preserve">
+  <data name="RadzenDataGrid_Filter_Text" xml:space="preserve">
     <value>Filter</value>
   </data>
-  <data name="RadzenDataGrid_EqualsText" xml:space="preserve">
+  <data name="RadzenDataGrid_Equals_Text" xml:space="preserve">
     <value>Equals</value>
   </data>
-  <data name="RadzenDataGrid_NotEqualsText" xml:space="preserve">
+  <data name="RadzenDataGrid_NotEquals_Text" xml:space="preserve">
     <value>Not equals</value>
   </data>
-  <data name="RadzenDataGrid_ContainsText" xml:space="preserve">
+  <data name="RadzenDataGrid_Contains_Text" xml:space="preserve">
     <value>Contains</value>
   </data>
-  <data name="RadzenDataGrid_StartsWithText" xml:space="preserve">
+  <data name="RadzenDataGrid_StartsWith_Text" xml:space="preserve">
     <value>Starts with</value>
   </data>
-  <data name="RadzenDataGrid_EndsWithText" xml:space="preserve">
+  <data name="RadzenDataGrid_EndsWith_Text" xml:space="preserve">
     <value>Ends with</value>
   </data>
-  <data name="RadzenDataGrid_DoesNotContainText" xml:space="preserve">
+  <data name="RadzenDataGrid_DoesNotContain_Text" xml:space="preserve">
     <value>Does not contain</value>
   </data>
-  <data name="RadzenDataGrid_IsNullText" xml:space="preserve">
+  <data name="RadzenDataGrid_IsNull_Text" xml:space="preserve">
     <value>Is null</value>
   </data>
-  <data name="RadzenDataGrid_IsEmptyText" xml:space="preserve">
+  <data name="RadzenDataGrid_IsEmpty_Text" xml:space="preserve">
     <value>Is empty</value>
   </data>
-  <data name="RadzenDataGrid_IsNotNullText" xml:space="preserve">
+  <data name="RadzenDataGrid_IsNotNull_Text" xml:space="preserve">
     <value>Is not null</value>
   </data>
-  <data name="RadzenDataGrid_IsNotEmptyText" xml:space="preserve">
+  <data name="RadzenDataGrid_IsNotEmpty_Text" xml:space="preserve">
     <value>Is not empty</value>
   </data>
-  <data name="RadzenDataGrid_ClearFilterText" xml:space="preserve">
+  <data name="RadzenDataGrid_ClearFilter_Text" xml:space="preserve">
     <value>Clear filter</value>
   </data>
-  <data name="RadzenDataGrid_ApplyFilterText" xml:space="preserve">
+  <data name="RadzenDataGrid_ApplyFilter_Text" xml:space="preserve">
     <value>Apply filter</value>
   </data>
-  <data name="RadzenDataGrid_AndOperatorText" xml:space="preserve">
+  <data name="RadzenDataGrid_AndOperator_Text" xml:space="preserve">
     <value>And</value>
   </data>
-  <data name="RadzenDataGrid_OrOperatorText" xml:space="preserve">
+  <data name="RadzenDataGrid_OrOperator_Text" xml:space="preserve">
     <value>Or</value>
   </data>
-  <data name="RadzenDataGrid_NextPageTitle" xml:space="preserve">
+  <data name="RadzenDataGrid_NextPage_Title" xml:space="preserve">
     <value>Next page</value>
   </data>
-  <data name="RadzenDataGrid_LastPageTitle" xml:space="preserve">
+  <data name="RadzenDataGrid_LastPage_Title" xml:space="preserve">
     <value>Last page</value>
   </data>
-  <data name="RadzenDataGrid_PrevPageTitle" xml:space="preserve">
+  <data name="RadzenDataGrid_PreviousPage_Title" xml:space="preserve">
     <value>Previous page</value>
   </data>
-  <data name="RadzenDataGrid_FirstPageTitle" xml:space="preserve">
+  <data name="RadzenDataGrid_FirstPage_Title" xml:space="preserve">
     <value>First page</value>
   </data>
-  <data name="RadzenDataGrid_PageTitleFormat" xml:space="preserve">
+  <data name="RadzenDataGrid_Page_TitleFormat" xml:space="preserve">
     <value>Page {{0}}</value>
   </data>
 
   <!--Frontend Menus-->
-  <data name="Menu_Home" xml:space="preserve">
+  <data name="Menu_Home_Item_Text" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="Menu_Countries" xml:space="preserve">
+  <data name="Menu_Countries_Item_Text" xml:space="preserve">
     <value>Countries</value>
   </data>
-  <data name="Menu_States" xml:space="preserve">
+  <data name="Menu_States_Item_Text" xml:space="preserve">
     <value>States</value>
   </data>
-  <data name="Menu_Cities" xml:space="preserve">
+  <data name="Menu_Cities_Item_Text" xml:space="preserve">
     <value>Cities</value>
   </data>
 

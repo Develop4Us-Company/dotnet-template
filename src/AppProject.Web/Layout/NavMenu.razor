@@ -5,15 +5,15 @@
 @inherits AppProjectComponentBase
 
 <RadzenPanelMenu>
-    <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Home") Icon="home" Path="/" />
+    <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Home_Item_Text") Icon="home" Path="/" />
     <AuthorizeView>
         <Authorized>
 
             @if(permissions?.Contains(PermissionType.System_ManageSettings) == true)
             {
-                <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Countries") Icon="globe" Path="general/countries" />
-                <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_States") Icon="globe_location_pin" />
-                <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Cities") Icon="location_city" />
+                <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Countries_Item_Text") Icon="globe" Path="general/countries" />
+                <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_States_Item_Text") Icon="globe_location_pin" />
+                <RadzenPanelMenuItem Text=@StringResource.GetStringByKey("Menu_Cities_Item_Text") Icon="location_city" />
             }
 
         </Authorized>

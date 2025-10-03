@@ -56,7 +56,7 @@
     {
         var selectedIds = this.SelectedItems.Select(x => x.Id);
 
-        if (selectedIds.Any() && await this.ConfirmAsync(StringResource.GetStringByKey("Dialog_Confirm_Delete")))
+        if (selectedIds.Any() && await this.ConfirmAsync(StringResource.GetStringByKey("Dialog_Confirm_Delete_Message")))
         {
             foreach (var selectedId in selectedIds)
             {
