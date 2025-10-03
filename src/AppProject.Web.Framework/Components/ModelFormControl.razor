@@ -11,13 +11,13 @@
             <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
                 <RadzenButton ButtonStyle="ButtonStyle.Primary"
                     Icon=@(this.PreferExecuteOverSave ? "start": "save")
-                    Text=@(this.PreferExecuteOverSave ? StringResource.GetStringByKey("FormControl_ExecuteButton_Text") : StringResource.GetStringByKey("FormControl_SaveButton_Text"))
+                    Text=@(this.PreferExecuteOverSave ? StringResource.GetStringByKey("ModelFormControl_ExecuteButton_Text") : StringResource.GetStringByKey("ModelFormControl_SaveButton_Text"))
                     Visible=@this.ShowSaveAction
                     ButtonType="ButtonType.Submit" />
                 @this.GlobalActions
                 <RadzenButton ButtonStyle="ButtonStyle.Base"
                     Icon=@(this.PreferCloseOverCancel ? "close" : "cancel")
-                    Text=@(this.PreferCloseOverCancel ? StringResource.GetStringByKey("FormControl_CloseButton_Text") : StringResource.GetStringByKey("FormControl_CancelButton_Text"))
+                    Text=@(this.PreferCloseOverCancel ? StringResource.GetStringByKey("ModelFormControl_CloseButton_Text") : StringResource.GetStringByKey("ModelFormControl_CancelButton_Text"))
                     Visible=@this.ShowCancelAction
                     Click=@this.OnCancel />
             </RadzenStack>
