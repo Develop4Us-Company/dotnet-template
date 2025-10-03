@@ -45,7 +45,7 @@
     private RenderFragment? TakeInfo =>
     this.DisplayTakeInfo && this.Take.HasValue
     ? @<RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Lighter">
-@StringResource.GetStringByKey("SearchControl_TakeInfo", this.Take.Value)
+@StringResource.GetStringByKey("SearchControl_TakeField_Info_Message", this.Take.Value)
 </RadzenAlert>
 : null;
 
