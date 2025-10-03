@@ -5,12 +5,12 @@ using AppProject.Web.Models;
 
 namespace AppProject.Web.Framework.Pages;
 
-public abstract class FormPage<TEntity> : AppProjectPageBase, IDisposable
-    where TEntity : ObservableModel, IEntity, new()
+public abstract class ModelFormPage<TModel> : AppProjectPageBase, IDisposable
+    where TModel : ObservableModel, new()
 {
     protected bool IsDisposed { get; set; }
 
-    protected virtual TEntity Entity { get; private set; } = default!;
+    protected virtual TModel Model { get; private set; } = default!;
 
     public virtual void Dispose()
     {
@@ -28,29 +28,29 @@ public abstract class FormPage<TEntity> : AppProjectPageBase, IDisposable
     {
         base.OnInitialized();
 
-        if (this.Entity is null)
+        if (this.Model is null)
         {
-            this.SetEntity(new TEntity());
+            this.SetModel(new TModel());
         }
     }
 
-    protected void SetEntity(TEntity entity)
+    protected void SetModel(TModel model)
     {
-        if (entity is null)
+        if (model is null)
         {
-            throw new ArgumentNullException(nameof(entity));
+            throw new ArgumentNullException(nameof(model));
         }
 
-        if (this.Entity == entity)
+        if (this.Model == model)
         {
             return;
         }
 
         this.UnsubscribeFromEntityChanges();
 
-        this.Entity = entity;
+        this.Model = model;
 
-        this.Entity.PropertyChanged += this.OnEntityPropertyChangedInternal;
+        this.Model.PropertyChanged += this.OnEntityPropertyChangedInternal;
     }
 
     protected virtual void OnEntityPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -64,11 +64,11 @@ public abstract class FormPage<TEntity> : AppProjectPageBase, IDisposable
 
     private void UnsubscribeFromEntityChanges()
     {
-        if (this.Entity is null)
+        if (this.Model is null)
         {
             return;
         }
 
-        this.Entity.PropertyChanged -= this.OnEntityPropertyChangedInternal;
+        this.Model.PropertyChanged -= this.OnEntityPropertyChangedInternal;
     }
 }

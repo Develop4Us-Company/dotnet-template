@@ -1,5 +1,4 @@
 using System;
-using System.Collections.ObjectModel;
 using AppProject.Models;
 
 namespace AppProject.Web.Framework.Pages;
@@ -8,7 +7,7 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
     where TRequest : IRequest, new()
     where TSummary : ISummary
 {
-    protected virtual TRequest Request { get; set; } = new TRequest();
+    protected TRequest Request { get; private set; } = new TRequest();
 
     protected IList<TSummary> Items { get; set; } = new List<TSummary>();
 
@@ -20,14 +19,12 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
 
     protected bool HasItemsSelected => this.SelectedItems.Any();
 
-    public async Task ExecuteSearchAsync()
+    protected async Task ExecuteSearchAsync()
     {
         if (!await this.ValidateRequestAsync())
         {
             return;
         }
-
-        await this.SetBusyAsync(true);
 
         this.SelectedItems = new List<TSummary>();
         this.Items = new List<TSummary>();
@@ -38,8 +35,12 @@ public abstract class SearchPage<TRequest, TSummary> : AppProjectPageBase
         {
             this.DisplayTakeInfo = this.Items.Count() >= searchRequest.Take.GetValueOrDefault();
         }
+    }
 
-        await this.SetBusyAsync(false);
+    protected void SetRequest(TRequest request)
+    {
+        this.Request = request;
+        this.StateHasChanged();
     }
 
     protected virtual Task<bool> ValidateRequestAsync()

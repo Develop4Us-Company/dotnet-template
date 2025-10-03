@@ -3,12 +3,12 @@
 
 @inherits AppProjectComponentBase
 
-@typeparam TItem
+@typeparam TRequest where TRequest : IRequest, new()
 
 <RadzenText TextStyle="TextStyle.DisplayH5">@this.Title</RadzenText>
 <RadzenCard>
-    <RadzenTemplateForm TItem="TItem" Submit=@this.ExecuteSearchAsync>
-        <RadzenCard class="rz-mb-3">
+    <RadzenCard class="rz-mb-3">
+        <RadzenTemplateForm TItem="TRequest" Data=@this.Request Submit=@this.ExecuteSearchAsync>
             <RadzenRow AlignItems="AlignItems.End">
                 <RadzenColumn Size="12" SizeSM="7">
                     <RadzenFormField class="rz-w-100"
@@ -23,33 +23,40 @@
             </RadzenRow>
             <RadzenRow class="rz-mt-3">
                 <RadzenColumn>
-                    <FieldsetControl AllowCollapse="true" Collapsed="true"
+                    <FieldsetControl AllowCollapse="true" Collapsed=@this.IsAdvancedFilterCollapsed
                         Title=@StringResource.GetStringByKey("SearchControl_AdvancedFiltersButton_Text")>
-                            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
-                                <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
-                                    <RadzenNumeric ShowUpDown="false" TValue="int?" Value=@this.Take ValueChanged=@this.OnTakeChangedAsync />
-                                </RadzenFormField>
-                                @FilterContent
-                            </RadzenStack>
+                        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
+                            <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
+                                <RadzenNumeric ShowUpDown="false" TValue="int?" Value=@this.Take
+                                    ValueChanged=@this.OnTakeChangedAsync />
+                            </RadzenFormField>
+                            @FilterContent
+                        </RadzenStack>
                     </FieldsetControl>
                 </RadzenColumn>
             </RadzenRow>
-        </RadzenCard>
-    </RadzenTemplateForm>
+        </RadzenTemplateForm>
+    </RadzenCard>
     @this.TakeInfo
     @this.ChildContent
 </RadzenCard>
 
 @code {
-    private RenderFragment? TakeInfo => 
-        this.DisplayTakeInfo && this.Take.HasValue
-            ? @<RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Lighter">
-                    @StringResource.GetStringByKey("SearchControl_TakeInfo", this.Take.Value)
-                </RadzenAlert>
-            : null;
+    private RenderFragment? TakeInfo =>
+    this.DisplayTakeInfo && this.Take.HasValue
+    ? @<RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Lighter">
+@StringResource.GetStringByKey("SearchControl_TakeInfo", this.Take.Value)
+</RadzenAlert>
+: null;
+
+[Parameter]
+    public string? Title { get; set; }
 
     [Parameter]
-    public string? Title { get; set; }
+    public TRequest? Request { get; set; }
+
+    [Parameter]
+    public bool IsAdvancedFilterCollapsed { get; set; } = true;
 
     [Parameter]
     public RenderFragment? FilterContent { get; set; }
@@ -58,10 +65,10 @@
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public string SearchText { get; set; } = string.Empty;
+    public string? SearchText { get; set; }
 
     [Parameter]
-    public EventCallback<string> SearchTextChanged { get; set; }
+    public EventCallback<string?> SearchTextChanged { get; set; }
 
     [Parameter]
     public int? Take { get; set; }

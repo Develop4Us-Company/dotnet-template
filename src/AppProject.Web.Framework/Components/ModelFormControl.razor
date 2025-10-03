@@ -1,10 +1,11 @@
 ﻿@using AppProject.Models
+@using AppProject.Web.Models
 
 @inherits AppProjectComponentBase
 
-@typeparam TItem
+@typeparam TModel where TModel : ObservableModel, new()
 
-<RadzenTemplateForm TItem="TItem" Submit=@this.OnSave>
+<RadzenTemplateForm TItem="TModel" Data=@this.Model Submit=@this.OnSave>
     <RadzenRow class="rz-mb-1" AlignItems="AlignItems.End">
         <RadzenColumn>
             <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
@@ -26,6 +27,9 @@
 </RadzenTemplateForm>
 
 @code {
+    [Parameter]
+    public TModel? Model { get; set; }
+
     [Parameter]
     public RenderFragment? GlobalActions { get; set; }
 
