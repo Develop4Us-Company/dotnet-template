@@ -224,7 +224,7 @@ public static class Bootstrap
 
         builder.Services.Configure<RequestLocalizationOptions>(options =>
         {
-            var supportedCultures = new[] { "en-US", "pt-BR" };
+            var supportedCultures = new[] { "en-US", "pt-BR", "es-ES" };
             options.DefaultRequestCulture = new RequestCulture("en-US");
             options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
             options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();

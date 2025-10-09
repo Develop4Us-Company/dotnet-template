@@ -11,7 +11,7 @@ public class CitySummaryService(
     IDatabaseRepository databaseRepository)
     : BaseService, ICitySummaryService
 {
-    public async Task<SummariesResponse<CitySummary>> GetSummariesAsync(SearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<SummariesResponse<CitySummary>> GetSummariesAsync(CitySearchRequest request, CancellationToken cancellationToken = default)
     {
         var searchText = request.SearchText?.Trim();
 
@@ -27,6 +27,11 @@ public class CitySummaryService(
                 {
                     query = query.Where(x =>
                         x.Id.ToString().Contains(searchText) || x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                }
+
+                if (request.StateId.HasValue)
+                {
+                    query = query.Where(x => x.StateId == request.StateId.Value);
                 }
 
                 return query;

@@ -12,14 +12,16 @@
         <RadzenRow>
             <RadzenColumn>
                 <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
-                
+
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Label")>
                         <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
                         <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Required")/>
+                        <RadzenLengthValidator Component="NameField" Max="200" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_InvalidLength") />
                     </RadzenFormField>
 
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_CodeField_Label")>
-                        <RadzenTextBox @bind-Value=@this.Model.Code />
+                        <RadzenTextBox Name="CodeField" @bind-Value=@this.Model.Code />
+                        <RadzenLengthValidator Component="CodeField" Max="200" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_CodeField_InvalidLength") />
                     </RadzenFormField>
 
                 </RadzenStack>
@@ -29,11 +31,11 @@
 </ModelFormControl>
 
 @code {
-    [Inject]
-    private ICountryClient CountryClient { get; set; } = default!;
-
     [Parameter]
     public Guid? Id { get; set; }
+
+    [Inject]
+    private ICountryClient CountryClient { get; set; } = default!;
 
     private Task OnCancelAsync() => this.CloseDialogAsync();
 

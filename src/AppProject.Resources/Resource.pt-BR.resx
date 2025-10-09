@@ -230,6 +230,12 @@
   <data name="RadzenDataGrid_Page_TitleFormat" xml:space="preserve">
     <value>Página {{0}}</value>
   </data>
+  <data name="RadzenDropDownDataGrid_EmptyText" xml:space="preserve">
+    <value>Nenhum registro encontrado.</value>
+  </data>
+  <data name="RadzenDropDownDataGrid_SearchTextPlaceholder" xml:space="preserve">
+      <value>Pesquisar...</value>
+  </data>
 
   <!--Frontend Menus-->
   <data name="Menu_Home_Item_Text" xml:space="preserve">
@@ -272,7 +278,21 @@
   <data name="General_CountryFormPage_GeneralFieldset_NameField_Required" xml:space="preserve">
     <value>Nome é obrigatório</value>
   </data>
+  <data name="General_CountryFormPage_GeneralFieldset_NameField_InvalidLength" xml:space="preserve">
+    <value>Comprimento máximo: 200</value>
+  </data>
   <data name="General_CountryFormPage_GeneralFieldset_CodeField_Label" xml:space="preserve">
     <value>Código</value>
+  </data>
+  <data name="General_CountryFormPage_GeneralFieldset_CodeField_InvalidLength" xml:space="preserve">
+    <value>Comprimento máximo: 200</value>
+  </data>
+
+  <!--Frontend General/CountryDropDownDataGridControl-->
+  <data name="General_CountryDropDownDataGridControl_IdColumn_Title" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="General_CountryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
+    <value>Nome</value>
   </data>
 </root>

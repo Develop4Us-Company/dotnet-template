@@ -122,6 +122,21 @@
               Looks up a localized string similar to This country name already exists..
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryDropDownDataGridControl_IdColumn_Title">
+            <summary>
+              Looks up a localized string similar to Id.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryDropDownDataGridControl_NameColumn_Title">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_CodeField_InvalidLength">
+            <summary>
+              Looks up a localized string similar to Max length: 200.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_CodeField_Label">
             <summary>
               Looks up a localized string similar to Code.
@@ -130,6 +145,11 @@
         <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_IdField_Text">
             <summary>
               Looks up a localized string similar to Id: {0}.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_NameField_InvalidLength">
+            <summary>
+              Looks up a localized string similar to Max length: 200.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.General_CountryFormPage_GeneralFieldset_NameField_Label">
@@ -170,6 +190,31 @@
         <member name="P:AppProject.Resources.Resource.General_State_DuplicateName">
             <summary>
               Looks up a localized string similar to This state name already exists for the same country..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_CountryNameColumn_Title">
+            <summary>
+              Looks up a localized string similar to Country.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_FilterContent_CountryField_Label">
+            <summary>
+              Looks up a localized string similar to Country.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_IdColumn_Title">
+            <summary>
+              Looks up a localized string similar to Id.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_NameColumn_Title">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_Title">
+            <summary>
+              Looks up a localized string similar to States.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.Home_Message">
@@ -355,6 +400,16 @@
         <member name="P:AppProject.Resources.Resource.RadzenDataGrid_StartsWith_Text">
             <summary>
               Looks up a localized string similar to Starts with.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDropDownDataGrid_EmptyText">
+            <summary>
+              Looks up a localized string similar to No records found..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDropDownDataGrid_SearchTextPlaceholder">
+            <summary>
+              Looks up a localized string similar to Search....
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.RadzenFieldset_Collapse_Title">

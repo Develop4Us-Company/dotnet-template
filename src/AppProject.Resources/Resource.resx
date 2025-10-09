@@ -230,6 +230,12 @@
   <data name="RadzenDataGrid_Page_TitleFormat" xml:space="preserve">
     <value>Page {{0}}</value>
   </data>
+  <data name="RadzenDropDownDataGrid_EmptyText" xml:space="preserve">
+    <value>No records found.</value>
+  </data>
+  <data name="RadzenDropDownDataGrid_SearchTextPlaceholder" xml:space="preserve">
+    <value>Search...</value>
+  </data>
 
   <!--Frontend Menus-->
   <data name="Menu_Home_Item_Text" xml:space="preserve">
@@ -272,7 +278,38 @@
   <data name="General_CountryFormPage_GeneralFieldset_NameField_Required" xml:space="preserve">
     <value>Name is required</value>
   </data>
+  <data name="General_CountryFormPage_GeneralFieldset_NameField_InvalidLength" xml:space="preserve">
+    <value>Max length: 200</value>
+  </data>
   <data name="General_CountryFormPage_GeneralFieldset_CodeField_Label" xml:space="preserve">
     <value>Code</value>
+  </data>
+  <data name="General_CountryFormPage_GeneralFieldset_CodeField_InvalidLength" xml:space="preserve">
+    <value>Max length: 200</value>
+  </data>
+
+  <!--Frontend General/CountryDropDownDataGridControl-->
+  <data name="General_CountryDropDownDataGridControl_IdColumn_Title" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="General_CountryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+
+  <!--Frontend General/StateSummaryPage-->
+  <data name="General_StateSummaryPage_Title" xml:space="preserve">
+    <value>States</value>
+  </data>
+  <data name="General_StateSummaryPage_FilterContent_CountryField_Label" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="General_StateSummaryPage_IdColumn_Title" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="General_StateSummaryPage_NameColumn_Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="General_StateSummaryPage_CountryNameColumn_Title" xml:space="preserve">
+    <value>Country</value>
   </data>
 </root>

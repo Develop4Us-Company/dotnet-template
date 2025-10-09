@@ -1,0 +1,48 @@
+﻿@using AppProject.Web.ApiClient.General
+@using AppProject.Web.Models.General
+
+@inherits AppProjectComponentBase
+
+<DropDownDataGridControl TValue="Guid?" Data=@this.CountrySummaries LoadData=@this.LoadCountriesAsync
+    Value=@this.Value ValueChanged=@this.OnValueChangedAsync
+    TextProperty=@nameof(CountrySummary.Name) ValueProperty=@nameof(CountrySummary.Id)>
+    <Columns>
+        <RadzenDropDownDataGridColumn Property=@nameof(CountrySummary.Id) Title=@StringResource.GetStringByKey("General_CountryDropDownDataGridControl_IdColumn_Title") />
+        <RadzenDropDownDataGridColumn Property=@nameof(CountrySummary.Name) Title=@StringResource.GetStringByKey("General_CountryDropDownDataGridControl_NameColumn_Title") />
+    </Columns>
+</DropDownDataGridControl>
+
+@code {
+    [Parameter]
+    public Guid? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid?> ValueChanged { get; set; }
+
+    [Inject]
+    private ICountrySummaryClient CountrySummaryClient { get; set; } = default!;
+
+    private IEnumerable<CountrySummary> CountrySummaries { get; set; } = default!;
+
+    private async Task LoadCountriesAsync(LoadDataArgs args)
+    {
+        var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<CountrySummary>>(
+            () => this.CountrySummaryClient.GetSummariesAsync(new SearchRequest() { SearchText = args.Filter, Take = 100 }),
+            showBusyIndicator: false);
+
+        this.CountrySummaries = summariesResponse?.Summaries ?? Enumerable.Empty<CountrySummary>();
+    }
+
+    private async Task OnValueChangedAsync(Guid? value)
+    {
+        if (this.Value != value)
+        {
+            this.Value = value;
+
+            if (this.ValueChanged.HasDelegate)
+            {
+                await this.ValueChanged.InvokeAsync(value);
+            }
+        }
+    }
+}

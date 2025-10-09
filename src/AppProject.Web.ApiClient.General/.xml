@@ -40,25 +40,37 @@
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountryClient.AppProject#Web#ApiClient#General#ICountryClient#DeleteAsync(AppProject.Models.DeleteRequest{System.Guid},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="T:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient">
+        <member name="T:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient">
             <inheritdoc />
         </member>
-        <member name="P:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.Client">
+        <member name="P:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.Client">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.GetSummariesAsync(AppProject.Models.SearchRequest,System.Threading.CancellationToken)">
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.GetAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.PostAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.State},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.AppProject#Web#ApiClient#General#ICountrySummaryClient#GetSummariesAsync(AppProject.Models.SearchRequest,System.Threading.CancellationToken)">
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.PutAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.State},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.AppProject#Web#ApiClient#General#ICountrySummaryClient#GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.DeleteAsync(AppProject.Models.DeleteRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.AppProject#Web#ApiClient#General#IStateClient#GetAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.AppProject#Web#ApiClient#General#IStateClient#PostAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.State},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.AppProject#Web#ApiClient#General#IStateClient#PutAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.State},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateClient.AppProject#Web#ApiClient#General#IStateClient#DeleteAsync(AppProject.Models.DeleteRequest{System.Guid},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
     </members>

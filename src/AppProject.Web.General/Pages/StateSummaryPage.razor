@@ -1,0 +1,85 @@
+﻿@page "/general/states"
+
+@using AppProject.Web.ApiClient.General
+
+@inherits SearchPage<StateSearchRequest, StateSummary>
+
+<SearchControl TRequest="StateSearchRequest" Request=@this.Request
+    Title=@StringResource.GetStringByKey("General_StateSummaryPage_Title") @bind-Take=@this.Request.Take
+    @bind-SearchText=@this.Request.SearchText DisplayTakeInfo=@this.DisplayTakeInfo
+    OnExecuteSearch=@this.ExecuteSearchAsync>
+    <FilterContent>
+        <RadzenFormField Text=@StringResource.GetStringByKey("General_StateSummaryPage_FilterContent_CountryField_Label")>
+            <CountryDropDownDataGridControl @bind-Value=@this.Request.CountryId />
+        </RadzenFormField>
+    </FilterContent>
+    <ChildContent>
+        <DataGridControl TItem="StateSummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
+            OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@this.OnDeleteItemAsync>
+            
+            <RadzenDataGridColumn TItem="StateSummary"
+                Title=@StringResource.GetStringByKey("General_StateSummaryPage_IdColumn_Title")
+                Property=@nameof(StateSummary.Id) />
+
+            <RadzenDataGridColumn TItem="StateSummary"
+                Title=@StringResource.GetStringByKey("General_StateSummaryPage_NameColumn_Title")
+                Property=@nameof(StateSummary.Name) />
+
+            <RadzenDataGridColumn TItem="StateSummary"
+                Title=@StringResource.GetStringByKey("General_StateSummaryPage_CountryNameColumn_Title")
+                Property=@nameof(StateSummary.CountryName) />
+
+        </DataGridControl>
+    </ChildContent>
+</SearchControl>
+
+@code {
+    [Inject]
+    private IStateSummaryClient StateSummaryClient { get; set; } = default!;
+
+    [Inject]
+    private IStateClient StateClient { get; set; } = default!;
+
+    protected override async Task<IEnumerable<StateSummary>> FetchDataAsync()
+    {
+        var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<StateSummary>>(
+            () => this.StateSummaryClient.GetSummariesAsync(this.Request));
+
+        return summariesResponse?.Summaries ?? Enumerable.Empty<StateSummary>();
+    }
+
+    private async Task OnNewItemAsync()
+    {
+        //await this.OpenDialogAsync<StateFormPage, State>(
+        //    title: StringResource.GetStringByKey("General_StateFormPage_Title"));
+        await this.ExecuteSearchAsync();
+    }
+
+    private async Task OnEditItemAsync()
+    {
+        var selectedId = this.SelectedItems.FirstOrDefault()?.Id;
+
+        if (selectedId.HasValue)
+        {
+            //await this.OpenDialogAsync<StateFormPage, State>(
+            //    title: StringResource.GetStringByKey("General_StateFormPage_Title"),
+            //    parameters: new Dictionary<string, object>() { { "Id", selectedId } });
+            await this.ExecuteSearchAsync();
+        }
+    }
+
+    private async Task OnDeleteItemAsync()
+    {
+        var selectedIds = this.SelectedItems.Select(x => x.Id);
+
+        if (selectedIds.Any() && await this.ConfirmAsync(StringResource.GetStringByKey("Dialog_Confirm_Delete_Message")))
+        {
+            foreach (var selectedId in selectedIds)
+            {
+                await this.HandleExceptionAsync(() => this.StateClient.DeleteAsync(new DeleteRequest<Guid> { Id = selectedId }));
+            }
+
+            await this.ExecuteSearchAsync();
+        }
+    }
+}

@@ -1,4 +1,5 @@
 using System;
+using AppProject.Core.Models.General;
 using AppProject.Core.Services.General;
 using AppProject.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,7 @@ public class CitySummaryController(ICitySummaryService citySummaryService)
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetSummariesAsync([FromQuery] SearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetSummariesAsync([FromQuery] CitySearchRequest request, CancellationToken cancellationToken = default)
     {
         return this.Ok(await citySummaryService.GetSummariesAsync(request, cancellationToken));
     }
