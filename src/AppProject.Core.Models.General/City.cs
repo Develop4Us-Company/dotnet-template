@@ -1,13 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using AppProject.Core.Models.CustomValidators;
 using AppProject.Models;
+using AppProject.Models.CustomValidators;
 
 namespace AppProject.Core.Models.General;
 
 public class City : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     [Required]
     [MaxLength(200)]
@@ -16,7 +16,7 @@ public class City : IEntity
     [MaxLength(200)]
     public string? Code { get; set; }
 
-    [Required]
+    [RequiredGuid]
     public Guid StateId { get; set; }
 
     public byte[]? RowVersion { get; set; }

@@ -6,7 +6,7 @@ namespace AppProject.Core.Models.General;
 
 public class Neighborhood : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     [Required]
     [MaxLength(200)]

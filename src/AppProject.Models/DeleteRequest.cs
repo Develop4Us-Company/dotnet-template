@@ -1,10 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using AppProject.Models.CustomValidators;
 
 namespace AppProject.Models;
 
 public class DeleteRequest<TIdType> : IRequest
 {
-    [Required]
+    [RequiredGuid]
     required public TIdType Id { get; set; }
 }

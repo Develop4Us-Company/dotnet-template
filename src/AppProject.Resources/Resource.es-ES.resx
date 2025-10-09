@@ -295,4 +295,53 @@
   <data name="General_CountryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
     <value>Nombre</value>
   </data>
+
+  <!--Frontend General/StateSummaryPage-->
+  <data name="General_StateSummaryPage_Title" xml:space="preserve">
+    <value>Estados</value>
+  </data>
+  <data name="General_StateSummaryPage_FilterContent_CountryField_Label" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="General_StateSummaryPage_IdColumn_Title" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="General_StateSummaryPage_NameColumn_Title" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="General_StateSummaryPage_CountryNameColumn_Title" xml:space="preserve">
+    <value>País</value>
+  </data>
+
+  <!--Frontend General/StateFormPage-->
+  <data name="General_StateFormPage_Title" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_Title" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_IdField_Text" xml:space="preserve">
+    <value>Id: {0}</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_NameField_Label" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_NameField_Required" xml:space="preserve">
+    <value>El nombre es obligatorio</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_NameField_InvalidLength" xml:space="preserve">
+    <value>Longitud máxima: 200</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_CodeField_Label" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_CodeField_InvalidLength" xml:space="preserve">
+    <value>Longitud máxima: 200</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_CountryField_Label" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_CountryField_Required" xml:space="preserve">
+    <value>El país es obligatorio</value>
+  </data>
 </root>

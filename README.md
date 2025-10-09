@@ -45,7 +45,7 @@ Para validar campos obrigatórios, tamanho máximo de campos strings ou ranges d
 #### Validações de entidades
 Ao validar uma entidade, a API retorna uma instância da classe ExceptionDetail, contendo o valor RequestValidation na propriedade ExceptionCode. Na propriedade AdditionalInfo, contém os erros encontrados nos campos escritos no idioma Inglês. Não traduzimos esses campos, pois o preferível é que normalmente os DTOs sejam validados do lado do client que consome a API.
 
-Foi criado uma pasta chamada CustomValidators no AppProject.Core.Models. Caso deseje criar atributos específicos para fazer validações, poderá colocar nela. Já existe uma classe chamada ValidateCollectionAttribute, que deverá ser colocado nas propriedades que são coleções. Essa classe faz com que a API valide também cada item da lista. Isso é necessário porque nativamente o .NET não faz essa validação em cascata.
+Foi criado uma pasta chamada CustomValidators no AppProject.Models. Caso deseje criar atributos específicos para fazer validações, poderá colocar nela. Já existe uma classe chamada ValidateCollectionAttribute, que deverá ser colocado nas propriedades que são coleções. Essa classe faz com que a API valide também cada item da lista. Isso é necessário porque nativamente o .NET não faz essa validação em cascata. Lá também tem uma classe chamada RequiredGuid que serve para validar Guids que possam vir vazios.
 
 Info: sobre as validações, veja o arquivo ExceptionMiddleware que intercepta todas as exceções da API e retorna o ExceptionDetail preenchido. Ao ocorrer uma exceção, é retornado também o HttpStatusCode correto, de acordo com a exceção encontrada. Também, no Bootstrap da API, temos o método ConfigureValidations, que faz com que seja lançada uma exceção nas validações que ocorrem nas requests dos endpoints.
 
@@ -63,7 +63,7 @@ namespace AppProject.Core.Models.General;
 
 public class Country : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     [Required]
     [MaxLength(200)]
@@ -83,12 +83,13 @@ public class Country : IEntity
 using System;
 using System.ComponentModel.DataAnnotations;
 using AppProject.Models;
+using AppProject.Models.CustomValidators;
 
 namespace AppProject.Core.Models.General;
 
 public class State : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     [Required]
     [MaxLength(200)]
@@ -97,7 +98,7 @@ public class State : IEntity
     [MaxLength(200)]
     public string? Code { get; set; }
 
-    [Required]
+    [RequiredGuid]
     public Guid CountryId { get; set; }
 
     public byte[]? RowVersion { get; set; }
@@ -110,14 +111,14 @@ public class State : IEntity
 ```csharp
 using System;
 using System.ComponentModel.DataAnnotations;
-using AppProject.Core.Models.CustomValidators;
 using AppProject.Models;
+using AppProject.Models.CustomValidators;
 
 namespace AppProject.Core.Models.General;
 
 public class City : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     [Required]
     [MaxLength(200)]
@@ -126,7 +127,7 @@ public class City : IEntity
     [MaxLength(200)]
     public string? Code { get; set; }
 
-    [Required]
+    [RequiredGuid]
     public Guid StateId { get; set; }
 
     public byte[]? RowVersion { get; set; }
@@ -151,7 +152,7 @@ namespace AppProject.Core.Models.General;
 
 public class Neighborhood : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     [Required]
     [MaxLength(200)]
@@ -165,7 +166,11 @@ public class Neighborhood : IEntity
 
 ```
 
-Note que usamos atributos para as principais validações. Nos relacionamentos, usamos apenas o nome dos campos mesmo, ao invés de adicionar também a classe DTO. Isso evita problemas ao converter o DTO para a entidade do banco de dados, como por exemplo, acabar inserindo/alterando um país só porque ele está referenciado numa outra tabela. Claro que, não há problemas em ter outras entidades nos DTOs, mas desde que o propósito seja inserir/alterar tudo junto. 
+Note que usamos atributos para as principais validações. Os campos "Id" estão com o "?", pelo fato de que usamos a entidade para inserir e alterar entidades. Quando inserimos, o Id é nulo, pois será o EF Core que colocará um Guid. 
+
+No caso de atributos Required em campos do tipo Guid, nós colocamos o atributo RequiredGuid. Ele forçará que o campo seja obrigatório e seja um guid válido (não aceita um valor empty, por exemplo).
+
+Nos relacionamentos, usamos apenas o nome dos campos mesmo, ao invés de adicionar também a classe DTO. Isso evita problemas ao converter o DTO para a entidade do banco de dados, como por exemplo, acabar inserindo/alterando um país só porque ele está referenciado numa outra tabela. Claro que, não há problemas em ter outras entidades nos DTOs, mas desde que o propósito seja inserir/alterar tudo junto. 
 
 Quando houver situações onde temos um DTO pai e DTOs filhos, como por exemplo no caso do DTO de Cidade que também insere, altera e exclui os DTOs de bairros, nós podemos adicionar no DTO pai coleções de requests, como fizemos no DTO chamado City. Perceba que nesse DTO nós temos as seguintes coleções:
 * Para inserir ou alterar registros filhos:
@@ -1022,11 +1027,6 @@ public class CityService(
             query => query.Where(x => x.CityId == request.ParentId),
             cancellationToken);
 
-        if (neighborhood == null)
-        {
-            throw new AppException(ExceptionCode.EntityNotFound);
-        }
-
         return new EntitiesResponse<Neighborhood>
         {
             Entities = neighborhood
@@ -1166,8 +1166,8 @@ public class CityService(
     private async Task ValidateNeighborhoodsBelongToCityAsync(City city, CancellationToken cancellationToken = default)
     {
         var neighborhoodIds = city.ChangedNeighborhoodRequests
-            .Where(x => x.Entity.Id != Guid.Empty)
-            .Select(x => x.Entity.Id)
+            .Where(x => x.Entity.Id.GetValueOrDefault() != Guid.Empty)
+            .Select(x => x.Entity.Id.GetValueOrDefault())
             .Union(city.DeletedNeighborhoodRequests.Select(x => x.Id));
 
         if (neighborhoodIds.Any())
@@ -1185,6 +1185,7 @@ public class CityService(
         }
     }
 }
+
 ```
 
 Conforme vimos, todos os métodos do CRUD chamam o `permissionService.ValidateCurrentUserPermissionAsync` para validar se o usuário tem permissão para executar aquela operação. Essa validação analisa se o usuário corrente tem o tipo de permissão informado. Isso é importante para a segurança da aplicação.

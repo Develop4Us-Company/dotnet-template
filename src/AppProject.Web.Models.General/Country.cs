@@ -5,12 +5,12 @@ namespace AppProject.Web.Models.General;
 
 public class Country : ObservableModel, IEntity
 {
-    private Guid id;
+    private Guid? id;
     private string name = default!;
     private string? code;
     private byte[]? rowVersion;
 
-    public Guid Id { get => this.id; set => this.Set(ref this.id, value); }
+    public Guid? Id { get => this.id; set => this.Set(ref this.id, value); }
 
     public string Name { get => this.name; set => this.Set(ref this.name, value); }
 

@@ -181,8 +181,8 @@ public class CityService(
     private async Task ValidateNeighborhoodsBelongToCityAsync(City city, CancellationToken cancellationToken = default)
     {
         var neighborhoodIds = city.ChangedNeighborhoodRequests
-            .Where(x => x.Entity.Id != Guid.Empty)
-            .Select(x => x.Entity.Id)
+            .Where(x => x.Entity.Id.GetValueOrDefault() != Guid.Empty)
+            .Select(x => x.Entity.Id.GetValueOrDefault())
             .Union(city.DeletedNeighborhoodRequests.Select(x => x.Id));
 
         if (neighborhoodIds.Any())

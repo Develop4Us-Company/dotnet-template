@@ -44,7 +44,7 @@
         var keyResponse = await this.GetResultOrHandleExceptionAsync<KeyResponse<Guid>>(
             async () => 
             {
-                if (this.Model.Id != Guid.Empty)
+                if (this.Model.Id.GetValueOrDefault() != Guid.Empty)
                 {
                     return await this.CountryClient.PutAsync(new CreateOrUpdateRequest<Country> { Entity = this.Model });
                 }

@@ -26,7 +26,7 @@
 
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_CountryField_Label")>
                         <CountryDropDownDataGridControl Name="CountryField" TValue="Guid" @bind-Value=@this.Model.CountryId />
-                        <RadzenRequiredValidator Component="CountryField" Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_CountryField_Required")/>
+                        <RadzenCustomValidator Component="CountryField" Validator="() => this.Model.CountryId != Guid.Empty" Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_CountryField_Required")/>
                     </RadzenFormField>
 
                 </RadzenStack>
@@ -49,7 +49,7 @@
         var keyResponse = await this.GetResultOrHandleExceptionAsync<KeyResponse<Guid>>(
             async () => 
             {
-                if (this.Model.Id != Guid.Empty)
+                if (this.Model.Id.GetValueOrDefault() != Guid.Empty)
                 {
                     return await this.StateClient.PutAsync(new CreateOrUpdateRequest<State> { Entity = this.Model });
                 }
