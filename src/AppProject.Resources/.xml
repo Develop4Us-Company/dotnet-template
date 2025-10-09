@@ -122,11 +122,6 @@
               Looks up a localized string similar to This country name already exists..
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.General_CountryDropDownDataGridControl_IdColumn_Title">
-            <summary>
-              Looks up a localized string similar to Id.
-            </summary>
-        </member>
         <member name="P:AppProject.Resources.Resource.General_CountryDropDownDataGridControl_NameColumn_Title">
             <summary>
               Looks up a localized string similar to Name.
@@ -170,11 +165,6 @@
         <member name="P:AppProject.Resources.Resource.General_CountryFormPage_Title">
             <summary>
               Looks up a localized string similar to Country.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.General_CountrySummaryPage_IdColumn_Title">
-            <summary>
-              Looks up a localized string similar to Id.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.General_CountrySummaryPage_NameColumn_Title">
@@ -250,11 +240,6 @@
         <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_FilterContent_CountryField_Label">
             <summary>
               Looks up a localized string similar to Country.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_IdColumn_Title">
-            <summary>
-              Looks up a localized string similar to Id.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_NameColumn_Title">

@@ -18,10 +18,6 @@
             OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@this.OnDeleteItemAsync>
             
             <RadzenDataGridColumn TItem="StateSummary"
-                Title=@StringResource.GetStringByKey("General_StateSummaryPage_IdColumn_Title")
-                Property=@nameof(StateSummary.Id) />
-
-            <RadzenDataGridColumn TItem="StateSummary"
                 Title=@StringResource.GetStringByKey("General_StateSummaryPage_NameColumn_Title")
                 Property=@nameof(StateSummary.Name) />
 

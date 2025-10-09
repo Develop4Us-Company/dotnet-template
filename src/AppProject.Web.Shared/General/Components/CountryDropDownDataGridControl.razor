@@ -10,7 +10,6 @@
     Value=@this.Value ValueChanged=@this.OnValueChangedAsync
     TextProperty=@nameof(CountrySummary.Name) ValueProperty=@nameof(CountrySummary.Id)>
     <Columns>
-        <RadzenDropDownDataGridColumn Property=@nameof(CountrySummary.Id) Title=@StringResource.GetStringByKey("General_CountryDropDownDataGridControl_IdColumn_Title") />
         <RadzenDropDownDataGridColumn Property=@nameof(CountrySummary.Name) Title=@StringResource.GetStringByKey("General_CountryDropDownDataGridControl_NameColumn_Title") />
     </Columns>
 </DropDownDataGridControl>
@@ -48,7 +47,9 @@
                     {
                         return new SummariesResponse<CountrySummary>
                         { 
-                            Summaries = summariesResponse.Summaries.Concat([selectedSummaryResponse.Summary]).ToArray() 
+                            Summaries = summariesResponse.Summaries.Concat([selectedSummaryResponse.Summary])
+                                .OrderBy(x => x.Name)
+                                .ToArray() 
                         };
                     }
                 }

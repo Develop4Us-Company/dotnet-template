@@ -12,10 +12,6 @@
         OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@this.OnDeleteItemAsync>
         
         <RadzenDataGridColumn TItem="CountrySummary"
-            Title=@StringResource.GetStringByKey("General_CountrySummaryPage_IdColumn_Title")
-            Property=@nameof(CountrySummary.Id) />
-
-        <RadzenDataGridColumn TItem="CountrySummary"
             Title=@StringResource.GetStringByKey("General_CountrySummaryPage_NameColumn_Title")
             Property=@nameof(CountrySummary.Name) />
 

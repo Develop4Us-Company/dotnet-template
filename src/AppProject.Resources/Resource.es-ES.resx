@@ -255,14 +255,11 @@
   <data name="General_CountrySummaryPage_Title" xml:space="preserve">
     <value>Países</value>
   </data>
-  <data name="General_CountrySummaryPage_IdColumn_Title" xml:space="preserve">
-    <value>Id</value>
-  </data>
   <data name="General_CountrySummaryPage_NameColumn_Title" xml:space="preserve">
     <value>Nombre</value>
   </data>
 
-  <!--Frontend General/CountrySummaryPage-->
+  <!--Frontend General/CountryFormPage-->
   <data name="General_CountryFormPage_Title" xml:space="preserve">
     <value>País</value>
   </data>
@@ -289,9 +286,6 @@
   </data>
 
   <!--Frontend General/CountryDropDownDataGridControl-->
-  <data name="General_CountryDropDownDataGridControl_IdColumn_Title" xml:space="preserve">
-    <value>Id</value>
-  </data>
   <data name="General_CountryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
     <value>Nombre</value>
   </data>
@@ -302,9 +296,6 @@
   </data>
   <data name="General_StateSummaryPage_FilterContent_CountryField_Label" xml:space="preserve">
     <value>País</value>
-  </data>
-  <data name="General_StateSummaryPage_IdColumn_Title" xml:space="preserve">
-    <value>Id</value>
   </data>
   <data name="General_StateSummaryPage_NameColumn_Title" xml:space="preserve">
     <value>Nombre</value>
