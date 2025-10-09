@@ -18,11 +18,6 @@ public class StateSummaryService(
         var stateSummaries = await databaseRepository.GetByConditionAsync<TbState, StateSummary>(
             query =>
             {
-                if (request.Take.HasValue)
-                {
-                    query = query.Take(request.Take.Value);
-                }
-
                 if (!string.IsNullOrWhiteSpace(searchText))
                 {
                     query = query.Where(x =>
@@ -32,6 +27,13 @@ public class StateSummaryService(
                 if (request.CountryId.HasValue)
                 {
                     query = query.Where(x => x.CountryId == request.CountryId.Value);
+                }
+
+                query = query.OrderBy(x => x.Name);
+
+                if (request.Take.HasValue)
+                {
+                    query = query.Take(request.Take.Value);
                 }
 
                 return query;

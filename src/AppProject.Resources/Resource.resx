@@ -312,4 +312,36 @@
   <data name="General_StateSummaryPage_CountryNameColumn_Title" xml:space="preserve">
     <value>Country</value>
   </data>
+
+  <!--Frontend General/StateSummaryPage-->
+  <data name="General_StateFormPage_Title" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_Title" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_IdField_Text" xml:space="preserve">
+    <value>Id: {0}</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_NameField_Label" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_NameField_Required" xml:space="preserve">
+    <value>Name is required</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_NameField_InvalidLength" xml:space="preserve">
+    <value>Max length: 200</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_CodeField_Label" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_CodeField_InvalidLength" xml:space="preserve">
+    <value>Max length: 200</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_CountryField_Label" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="General_StateFormPage_GeneralFieldset_CountryField_Required" xml:space="preserve">
+    <value>Country is required</value>
+  </data>
 </root>

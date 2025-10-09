@@ -60,9 +60,9 @@
         }
     }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
-        await base.OnParametersSetAsync();
+        await base.OnInitializedAsync();
 
         if (this.Id.HasValue)
         {

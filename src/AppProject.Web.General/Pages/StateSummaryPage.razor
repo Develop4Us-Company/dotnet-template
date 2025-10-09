@@ -10,7 +10,7 @@
     OnExecuteSearch=@this.ExecuteSearchAsync>
     <FilterContent>
         <RadzenFormField Text=@StringResource.GetStringByKey("General_StateSummaryPage_FilterContent_CountryField_Label")>
-            <CountryDropDownDataGridControl @bind-Value=@this.Request.CountryId />
+            <CountryDropDownDataGridControl TValue="Guid?" @bind-Value=@this.Request.CountryId />
         </RadzenFormField>
     </FilterContent>
     <ChildContent>
@@ -50,8 +50,8 @@
 
     private async Task OnNewItemAsync()
     {
-        //await this.OpenDialogAsync<StateFormPage, State>(
-        //    title: StringResource.GetStringByKey("General_StateFormPage_Title"));
+        await this.OpenDialogAsync<StateFormPage, State>(
+            title: StringResource.GetStringByKey("General_StateFormPage_Title"));
         await this.ExecuteSearchAsync();
     }
 
@@ -61,9 +61,9 @@
 
         if (selectedId.HasValue)
         {
-            //await this.OpenDialogAsync<StateFormPage, State>(
-            //    title: StringResource.GetStringByKey("General_StateFormPage_Title"),
-            //    parameters: new Dictionary<string, object>() { { "Id", selectedId } });
+            await this.OpenDialogAsync<StateFormPage, State>(
+                title: StringResource.GetStringByKey("General_StateFormPage_Title"),
+                parameters: new Dictionary<string, object>() { { "Id", selectedId } });
             await this.ExecuteSearchAsync();
         }
     }

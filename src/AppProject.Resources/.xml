@@ -192,6 +192,56 @@
               Looks up a localized string similar to This state name already exists for the same country..
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_CodeField_InvalidLength">
+            <summary>
+              Looks up a localized string similar to Max length: 200.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_CodeField_Label">
+            <summary>
+              Looks up a localized string similar to Code.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_CountryField_Label">
+            <summary>
+              Looks up a localized string similar to Country.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_CountryField_Required">
+            <summary>
+              Looks up a localized string similar to Country is required.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_IdField_Text">
+            <summary>
+              Looks up a localized string similar to Id: {0}.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_NameField_InvalidLength">
+            <summary>
+              Looks up a localized string similar to Max length: 200.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_NameField_Label">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_NameField_Required">
+            <summary>
+              Looks up a localized string similar to Name is required.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_GeneralFieldset_Title">
+            <summary>
+              Looks up a localized string similar to General.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_StateFormPage_Title">
+            <summary>
+              Looks up a localized string similar to State.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.General_StateSummaryPage_CountryNameColumn_Title">
             <summary>
               Looks up a localized string similar to Country.

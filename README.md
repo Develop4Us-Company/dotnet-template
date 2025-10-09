@@ -204,7 +204,7 @@ Importante: não há validações nos DTOs do tipo summary (visto que eles não 
 #### Exemplo de DTOs do tipo summary
 A seguir, veja os DTOs dos summaries CountrySummary, StateSummary e CitySummary. 
 
-[`CountrySummary.cs`](./src/AppProject.Core.Models.General/CountrySummary.cs):
+[`CountrySummary.cs`](./src/AppProject.Core.Models/General/CountrySummary.cs):
 
 ```csharp
 using System;
@@ -221,7 +221,7 @@ public class CountrySummary : ISummary
 
 ```
 
-[`StateSummary.cs`](./src/AppProject.Core.Models.General/StateSummary.cs):
+[`StateSummary.cs`](./src/AppProject.Core.Models/General/StateSummary.cs):
 
 ```csharp
 using System;
@@ -242,7 +242,7 @@ public class StateSummary : ISummary
 
 ```
 
-[`CitySummary.cs`](./src/AppProject.Core.Models.General/CitySummary.cs):
+[`CitySummary.cs`](./src/AppProject.Core.Models/General/CitySummary.cs):
 
 ```csharp
 using System;
@@ -268,6 +268,38 @@ public class CitySummary : ISummary
 ```
 
 Perceba que o Summary herda de ISummary. Note também que, no caso do StateSummary, nós trouxemos o CountryId e, ao invés de carregarmos o CountrySummary, trouxemos o CountryName, que é o campo que vamos utilizar. No entanto, não há objeções para que nos Summaries tragamos outros summaries aninhados, apenas tomando os devidos cuidados para que não tenha referências circulares infinitas entre eles.
+
+No caso do StateSummary e do CitySummary, nós também criamos duas Search Requests que herdam da classe SearchRequest. Fizemos isso para podermos adicionar mais opções de filtros para essas pesquisas. Veja o código dessas classes abaixo:
+
+[`StateSearchRequest.cs`](./src/AppProject.Core.Models/General/StateSearchRequest.cs):
+
+```csharp
+using System;
+using AppProject.Models;
+
+namespace AppProject.Core.Models.General;
+
+public class StateSearchRequest : SearchRequest
+{
+    public Guid? CountryId { get; set; }
+}
+
+```
+
+[`CitySearchRequest.cs`](./src/AppProject.Core.Models/General/CitySearchRequest.cs):
+
+```csharp
+using System;
+using AppProject.Models;
+
+namespace AppProject.Core.Models.General;
+
+public class CitySearchRequest : SearchRequest
+{
+    public Guid? StateId { get; set; }
+}
+
+```
 
 ## Adicionando as entidades de banco
 No projeto, utilizamos o EF (no estilo code first) para podermos manipular um banco de dados SQL Server. 
@@ -697,7 +729,7 @@ namespace AppProject.Core.Services.General;
 
 public interface IStateSummaryService
     : ITransientService,
-    IGetSummaries<SearchRequest, SummariesResponse<StateSummary>>,
+    IGetSummaries<StateSearchRequest, SummariesResponse<StateSummary>>,
     IGetSummary<GetByIdRequest<Guid>, SummaryResponse<StateSummary>>
 {
 }
@@ -714,7 +746,7 @@ namespace AppProject.Core.Services.General;
 
 public interface ICitySummaryService
     : ITransientService,
-    IGetSummaries<SearchRequest, SummariesResponse<CitySummary>>,
+    IGetSummaries<CitySearchRequest, SummariesResponse<CitySummary>>,
     IGetSummary<GetByIdRequest<Guid>, SummaryResponse<CitySummary>>
 {
 }
@@ -1312,7 +1344,7 @@ No caso dos summaries, as classes de serviços delas também herdam da classe ba
 
 Note nos exemplos a seguir, como podemos escrever o código dessas classes.
 
-[`CountrySummaryService.cs`](./src/AppProject.Core.Services.General/CountrySummaryService.cs):
+[`CountrySummaryService.cs`](./src/AppProject.Core.Services/General/CountrySummaryService.cs):
 
 ```csharp
 using System;
@@ -1335,15 +1367,17 @@ public class CountrySummaryService(
         var countrySummaries = await databaseRepository.GetByConditionAsync<TbCountry, CountrySummary>(
             query =>
             {
-                if (request.Take.HasValue)
-                {
-                    query = query.Take(request.Take.Value);
-                }
-
                 if (!string.IsNullOrWhiteSpace(searchText))
                 {
                     query = query.Where(x =>
-                        x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                        x.Id.ToString().Contains(searchText) || x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                }
+
+                query = query.OrderBy(x => x.Name);
+
+                if (request.Take.HasValue)
+                {
+                    query = query.Take(request.Take.Value);
                 }
 
                 return query;
@@ -1375,7 +1409,7 @@ public class CountrySummaryService(
 }
 ```
 
-[`StateSummaryService.cs`](./src/AppProject.Core.Services.General/StateSummaryService.cs):
+[`StateSummaryService.cs`](./src/AppProject.Core.Services/General/StateSummaryService.cs):
 
 ```csharp
 using System;
@@ -1391,22 +1425,29 @@ public class StateSummaryService(
     IDatabaseRepository databaseRepository)
     : BaseService, IStateSummaryService
 {
-    public async Task<SummariesResponse<StateSummary>> GetSummariesAsync(SearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<SummariesResponse<StateSummary>> GetSummariesAsync(StateSearchRequest request, CancellationToken cancellationToken = default)
     {
         var searchText = request.SearchText?.Trim();
 
         var stateSummaries = await databaseRepository.GetByConditionAsync<TbState, StateSummary>(
             query =>
             {
-                if (request.Take.HasValue)
-                {
-                    query = query.Take(request.Take.Value);
-                }
-
                 if (!string.IsNullOrWhiteSpace(searchText))
                 {
                     query = query.Where(x =>
-                        x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                        x.Id.ToString().Contains(searchText) || x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                }
+
+                if (request.CountryId.HasValue)
+                {
+                    query = query.Where(x => x.CountryId == request.CountryId.Value);
+                }
+
+                query = query.OrderBy(x => x.Name);
+
+                if (request.Take.HasValue)
+                {
+                    query = query.Take(request.Take.Value);
                 }
 
                 return query;
@@ -1438,7 +1479,7 @@ public class StateSummaryService(
 }
 ```
 
-[`CitySummaryService.cs`](./src/AppProject.Core.Services.General/CitySummaryService.cs):
+[`CitySummaryService.cs`](./src/AppProject.Core.Services/General/CitySummaryService.cs):
 
 ```csharp
 using System;
@@ -1454,22 +1495,29 @@ public class CitySummaryService(
     IDatabaseRepository databaseRepository)
     : BaseService, ICitySummaryService
 {
-    public async Task<SummariesResponse<CitySummary>> GetSummariesAsync(SearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<SummariesResponse<CitySummary>> GetSummariesAsync(CitySearchRequest request, CancellationToken cancellationToken = default)
     {
         var searchText = request.SearchText?.Trim();
 
         var citySummaries = await databaseRepository.GetByConditionAsync<TbCity, CitySummary>(
             query =>
             {
-                if (request.Take.HasValue)
-                {
-                    query = query.Take(request.Take.Value);
-                }
-
                 if (!string.IsNullOrWhiteSpace(searchText))
                 {
                     query = query.Where(x =>
-                        x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                        x.Id.ToString().Contains(searchText) || x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                }
+
+                if (request.StateId.HasValue)
+                {
+                    query = query.Where(x => x.StateId == request.StateId.Value);
+                }
+
+                query = query.OrderBy(x => x.Name);
+
+                if (request.Take.HasValue)
+                {
+                    query = query.Take(request.Take.Value);
                 }
 
                 return query;
@@ -1774,3 +1822,4 @@ Perceba alguns detalhes importantes nos controllers:
 * O nome dos métodos também ficaram padronizados. 
 
 ## Frontend
+

@@ -1,9 +1,12 @@
-﻿@using AppProject.Web.ApiClient.General
+﻿@using System.Collections.Generic
+@using AppProject.Web.ApiClient.General
 @using AppProject.Web.Models.General
 
 @inherits AppProjectComponentBase
 
-<DropDownDataGridControl TValue="Guid?" Data=@this.CountrySummaries LoadData=@this.LoadCountriesAsync
+@typeparam TValue
+
+<DropDownDataGridControl TValue="TValue" Name=@this.Name Data=@this.CountrySummaries LoadData=@this.LoadCountriesAsync
     Value=@this.Value ValueChanged=@this.OnValueChangedAsync
     TextProperty=@nameof(CountrySummary.Name) ValueProperty=@nameof(CountrySummary.Id)>
     <Columns>
@@ -14,10 +17,13 @@
 
 @code {
     [Parameter]
-    public Guid? Value { get; set; }
+    public string? Name { get; set; }
 
     [Parameter]
-    public EventCallback<Guid?> ValueChanged { get; set; }
+    public TValue Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TValue> ValueChanged { get; set; }
 
     [Inject]
     private ICountrySummaryClient CountrySummaryClient { get; set; } = default!;
@@ -27,15 +33,36 @@
     private async Task LoadCountriesAsync(LoadDataArgs args)
     {
         var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<CountrySummary>>(
-            () => this.CountrySummaryClient.GetSummariesAsync(new SearchRequest() { SearchText = args.Filter, Take = 100 }),
+            async () =>
+            {
+                var summariesResponse = await this.CountrySummaryClient.GetSummariesAsync(new SearchRequest() { SearchText = args.Filter, Take = 100 });
+
+                if (string.IsNullOrWhiteSpace(args.Filter)
+                    && this.Value is Guid selectedGuid
+                    && selectedGuid != Guid.Empty
+                    && summariesResponse?.Summaries.Any(x => x.Id == selectedGuid) == false)
+                {
+                    var selectedSummaryResponse = await this.CountrySummaryClient.GetSummaryAsync(new GetByIdRequest<Guid>{ Id = selectedGuid });
+
+                    if (selectedSummaryResponse?.Summary != null)
+                    {
+                        return new SummariesResponse<CountrySummary>
+                        { 
+                            Summaries = summariesResponse.Summaries.Concat([selectedSummaryResponse.Summary]).ToArray() 
+                        };
+                    }
+                }
+
+                return summariesResponse;
+            },
             showBusyIndicator: false);
 
         this.CountrySummaries = summariesResponse?.Summaries ?? Enumerable.Empty<CountrySummary>();
     }
 
-    private async Task OnValueChangedAsync(Guid? value)
+    private async Task OnValueChangedAsync(TValue value)
     {
-        if (this.Value != value)
+        if (!EqualityComparer<TValue>.Default.Equals(this.Value, value))
         {
             this.Value = value;
 

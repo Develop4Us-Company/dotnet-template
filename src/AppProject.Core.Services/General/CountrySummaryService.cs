@@ -18,15 +18,17 @@ public class CountrySummaryService(
         var countrySummaries = await databaseRepository.GetByConditionAsync<TbCountry, CountrySummary>(
             query =>
             {
-                if (request.Take.HasValue)
-                {
-                    query = query.Take(request.Take.Value);
-                }
-
                 if (!string.IsNullOrWhiteSpace(searchText))
                 {
                     query = query.Where(x =>
                         x.Id.ToString().Contains(searchText) || x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                }
+
+                query = query.OrderBy(x => x.Name);
+
+                if (request.Take.HasValue)
+                {
+                    query = query.Take(request.Take.Value);
                 }
 
                 return query;
