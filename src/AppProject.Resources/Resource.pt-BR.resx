@@ -249,6 +249,9 @@
   <data name="General_CountrySummaryPage_Title" xml:space="preserve">
     <value>Países</value>
   </data>
+  <data name="General_CountrySummaryPage_IdColumn_Title" xml:space="preserve">
+    <value>Id</value>
+  </data>
   <data name="General_CountrySummaryPage_NameColumn_Title" xml:space="preserve">
     <value>Nome</value>
   </data>

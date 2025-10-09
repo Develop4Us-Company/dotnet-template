@@ -26,7 +26,7 @@ public class CitySummaryService(
                 if (!string.IsNullOrWhiteSpace(searchText))
                 {
                     query = query.Where(x =>
-                        x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
+                        x.Id.ToString().Contains(searchText) || x.Name.Contains(searchText) || (x.Code ?? string.Empty).Contains(searchText));
                 }
 
                 return query;

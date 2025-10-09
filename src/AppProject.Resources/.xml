@@ -52,7 +52,7 @@
               Looks up a localized string similar to Working on it....
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.Dialog_Confirm_Delete">
+        <member name="P:AppProject.Resources.Resource.Dialog_Confirm_Delete_Message">
             <summary>
               Looks up a localized string similar to Are you sure you want to delete?.
             </summary>
@@ -107,26 +107,6 @@
               Looks up a localized string similar to Copyright © Your Company Name. All rights reserved..
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.FormControl_CancelButton_Text">
-            <summary>
-              Looks up a localized string similar to Cancel.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.FormControl_CloseButton_Text">
-            <summary>
-              Looks up a localized string similar to Close.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.FormControl_ExecuteButton_Text">
-            <summary>
-              Looks up a localized string similar to Execute.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.FormControl_SaveButton_Text">
-            <summary>
-              Looks up a localized string similar to Save.
-            </summary>
-        </member>
         <member name="P:AppProject.Resources.Resource.General_City_DuplicateName">
             <summary>
               Looks up a localized string similar to This city name already exists for the same state..
@@ -172,6 +152,11 @@
               Looks up a localized string similar to Country.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.General_CountrySummaryPage_IdColumn_Title">
+            <summary>
+              Looks up a localized string similar to Id.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.General_CountrySummaryPage_NameColumn_Title">
             <summary>
               Looks up a localized string similar to Name.
@@ -197,34 +182,54 @@
               Looks up a localized string similar to Home.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.Login">
+        <member name="P:AppProject.Resources.Resource.Login_Button_Text">
             <summary>
               Looks up a localized string similar to Login.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.Logout">
+        <member name="P:AppProject.Resources.Resource.Logout_Button_Text">
             <summary>
               Looks up a localized string similar to Logout.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.Menu_Cities">
+        <member name="P:AppProject.Resources.Resource.Menu_Cities_Item_Text">
             <summary>
               Looks up a localized string similar to Cities.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.Menu_Countries">
+        <member name="P:AppProject.Resources.Resource.Menu_Countries_Item_Text">
             <summary>
               Looks up a localized string similar to Countries.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.Menu_Home">
+        <member name="P:AppProject.Resources.Resource.Menu_Home_Item_Text">
             <summary>
               Looks up a localized string similar to Home.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.Menu_States">
+        <member name="P:AppProject.Resources.Resource.Menu_States_Item_Text">
             <summary>
               Looks up a localized string similar to States.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.ModelFormControl_CancelButton_Text">
+            <summary>
+              Looks up a localized string similar to Cancel.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.ModelFormControl_CloseButton_Text">
+            <summary>
+              Looks up a localized string similar to Close.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.ModelFormControl_ExecuteButton_Text">
+            <summary>
+              Looks up a localized string similar to Execute.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.ModelFormControl_SaveButton_Text">
+            <summary>
+              Looks up a localized string similar to Save.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.NotFound_Message">
@@ -237,149 +242,149 @@
               Looks up a localized string similar to Not found.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_AndOperatorText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_AndOperator_Text">
             <summary>
               Looks up a localized string similar to And.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_ApplyFilterText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_ApplyFilter_Text">
             <summary>
               Looks up a localized string similar to Apply filter.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_ClearFilterText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_ClearFilter_Text">
             <summary>
               Looks up a localized string similar to Clear filter.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_ContainsText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_Contains_Text">
             <summary>
               Looks up a localized string similar to Contains.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_DoesNotContainText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_DoesNotContain_Text">
             <summary>
               Looks up a localized string similar to Does not contain.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_EmptyText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_Empty_Text">
             <summary>
               Looks up a localized string similar to No records to display..
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_EndsWithText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_EndsWith_Text">
             <summary>
               Looks up a localized string similar to Ends with.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_EqualsText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_Equals_Text">
             <summary>
               Looks up a localized string similar to Equals.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_FilterText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_Filter_Text">
             <summary>
               Looks up a localized string similar to Filter.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_FirstPageTitle">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_FirstPage_Title">
             <summary>
               Looks up a localized string similar to First page.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_GroupPanelText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_GroupPanel_Text">
             <summary>
               Looks up a localized string similar to Drag a column header here and drop it to group by that column.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsEmptyText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsEmpty_Text">
             <summary>
               Looks up a localized string similar to Is empty.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNotEmptyText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNotEmpty_Text">
             <summary>
               Looks up a localized string similar to Is not empty.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNotNullText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNotNull_Text">
             <summary>
               Looks up a localized string similar to Is not null.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNullText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_IsNull_Text">
             <summary>
               Looks up a localized string similar to Is null.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_LastPageTitle">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_LastPage_Title">
             <summary>
               Looks up a localized string similar to Last page.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_NextPageTitle">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_NextPage_Title">
             <summary>
               Looks up a localized string similar to Next page.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_NotEqualsText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_NotEquals_Text">
             <summary>
               Looks up a localized string similar to Not equals.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_OrOperatorText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_OrOperator_Text">
             <summary>
               Looks up a localized string similar to Or.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_PageSizeText">
-            <summary>
-              Looks up a localized string similar to items per page.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_PageTitleFormat">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_Page_TitleFormat">
             <summary>
               Looks up a localized string similar to Page {{0}}.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_PrevPageTitle">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_PageSize_Text">
+            <summary>
+              Looks up a localized string similar to items per page.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_PreviousPage_Title">
             <summary>
               Looks up a localized string similar to Previous page.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_StartsWithText">
+        <member name="P:AppProject.Resources.Resource.RadzenDataGrid_StartsWith_Text">
             <summary>
               Looks up a localized string similar to Starts with.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenFieldset_CollapseTitle">
+        <member name="P:AppProject.Resources.Resource.RadzenFieldset_Collapse_Title">
             <summary>
               Looks up a localized string similar to Collapse.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.RadzenFieldset_ExpandTitle">
+        <member name="P:AppProject.Resources.Resource.RadzenFieldset_Expand_Title">
             <summary>
               Looks up a localized string similar to Expand.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.Sample">
+        <member name="P:AppProject.Resources.Resource.Sample_Message_Text">
             <summary>
               Looks up a localized string similar to Sample.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Date">
+        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Body_Message">
+            <summary>
+              Looks up a localized string similar to This is a sample message for you..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Date_Message">
             <summary>
               Looks up a localized string similar to Sent date: {0}.
             </summary>
         </member>
-        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Introduction">
+        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Introduction_Message">
             <summary>
               Looks up a localized string similar to Hi, {0}!.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.SampleEmailTemplate_Message">
-            <summary>
-              Looks up a localized string similar to This is a sample message for you..
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.SearchControl_AdvancedFiltersButton_Text">
@@ -397,14 +402,14 @@
               Looks up a localized string similar to Search.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.SearchControl_TakeField_Info_Message">
+            <summary>
+              Looks up a localized string similar to Only {0} results were shown. To see more results, change the Take field..
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.SearchControl_TakeField_Label">
             <summary>
               Looks up a localized string similar to Take.
-            </summary>
-        </member>
-        <member name="P:AppProject.Resources.Resource.SearchControl_TakeInfo">
-            <summary>
-              Looks up a localized string similar to Only {0} results were shown. To see more results, change the Take field..
             </summary>
         </member>
     </members>

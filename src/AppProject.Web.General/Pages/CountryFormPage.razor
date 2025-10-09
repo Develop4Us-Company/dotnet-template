@@ -12,13 +12,16 @@
         <RadzenRow>
             <RadzenColumn>
                 <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
+                
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Label")>
                         <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
                         <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Required")/>
                     </RadzenFormField>
+
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_CodeField_Label")>
                         <RadzenTextBox @bind-Value=@this.Model.Code />
                     </RadzenFormField>
+
                 </RadzenStack>
             </RadzenColumn>
         </RadzenRow>

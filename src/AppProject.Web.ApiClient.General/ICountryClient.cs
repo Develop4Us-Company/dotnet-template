@@ -16,6 +16,6 @@ public interface ICountryClient
     [Put("/api/general/Country/Put")]
     public Task<KeyResponse<Guid>> PutAsync([Body] CreateOrUpdateRequest<Country> request, CancellationToken cancellationToken = default);
 
-    [Get("/api/general/Country/Delete")]
+    [Delete("/api/general/Country/Delete")]
     public Task<EmptyResponse> DeleteAsync([Query] DeleteRequest<Guid> request, CancellationToken cancellationToken = default);
 }
