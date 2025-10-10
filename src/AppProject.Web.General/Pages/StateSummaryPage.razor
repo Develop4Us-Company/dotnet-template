@@ -2,15 +2,15 @@
 
 @using AppProject.Web.ApiClient.General
 
-@inherits SearchPage<StateSearchRequest, StateSummary>
+@inherits SearchPage<StateSummarySearchRequest, StateSummary>
 
-<SearchControl TRequest="StateSearchRequest" Request=@this.Request
+<SearchControl TRequest="StateSummarySearchRequest" Request=@this.Request
     Title=@StringResource.GetStringByKey("General_StateSummaryPage_Title") @bind-Take=@this.Request.Take
     @bind-SearchText=@this.Request.SearchText DisplayTakeInfo=@this.DisplayTakeInfo
     OnExecuteSearch=@this.ExecuteSearchAsync>
     <FilterContent>
         <RadzenFormField Text=@StringResource.GetStringByKey("General_StateSummaryPage_FilterContent_CountryField_Label")>
-            <CountryDropDownDataGridControl TValue="Guid?" @bind-Value=@this.Request.CountryId />
+            <CountrySummaryDropDownDataGridControl TValue="Guid?" @bind-Value=@this.Request.CountryId />
         </RadzenFormField>
     </FilterContent>
     <ChildContent>

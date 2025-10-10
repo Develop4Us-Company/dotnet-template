@@ -14,7 +14,7 @@ public class CitySummaryController(ICitySummaryService citySummaryService)
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetSummariesAsync([FromQuery] CitySearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetSummariesAsync([FromQuery] CitySummarySearchRequest request, CancellationToken cancellationToken = default)
     {
         return this.Ok(await citySummaryService.GetSummariesAsync(request, cancellationToken));
     }

@@ -6,7 +6,7 @@ namespace AppProject.Resources;
 
 public static class StringResource
 {
-    public static string GetStringByKey(string key, params object[] args)
+    public static string GetStringByKey(string key, params object?[] args)
     {
         var message = Resource.ResourceManager.GetString(key, CultureInfo.CurrentUICulture) ?? string.Empty;
 

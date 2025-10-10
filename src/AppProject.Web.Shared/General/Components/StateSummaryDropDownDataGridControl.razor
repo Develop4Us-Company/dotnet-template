@@ -6,11 +6,12 @@
 
 @typeparam TValue
 
-<DropDownDataGridControl TValue="TValue" Name=@this.Name Data=@this.CountrySummaries LoadData=@this.LoadCountriesAsync
+<DropDownDataGridControl TValue="TValue" Name=@this.Name Data=@this.StateSummaries LoadData=@this.LoadStatesAsync
     Value=@this.Value ValueChanged=@this.OnValueChangedAsync
-    TextProperty=@nameof(CountrySummary.Name) ValueProperty=@nameof(CountrySummary.Id)>
+    TextProperty=@nameof(StateSummary.Name) ValueProperty=@nameof(StateSummary.Id)>
     <Columns>
-        <RadzenDropDownDataGridColumn Property=@nameof(CountrySummary.Name) Title=@StringResource.GetStringByKey("General_CountryDropDownDataGridControl_NameColumn_Title") />
+        <RadzenDropDownDataGridColumn Property=@nameof(StateSummary.Name) Title=@StringResource.GetStringByKey("General_StateSummaryDropDownDataGridControl_NameColumn_Title") />
+        <RadzenDropDownDataGridColumn Property=@nameof(StateSummary.CountryName) Title=@StringResource.GetStringByKey("General_StateSummaryDropDownDataGridControl_CountryNameColumn_Title") />
     </Columns>
 </DropDownDataGridControl>
 
@@ -19,33 +20,33 @@
     public string? Name { get; set; }
 
     [Parameter]
-    public TValue Value { get; set; }
+    public TValue? Value { get; set; }
 
     [Parameter]
     public EventCallback<TValue> ValueChanged { get; set; }
 
     [Inject]
-    private ICountrySummaryClient CountrySummaryClient { get; set; } = default!;
+    private IStateSummaryClient StateSummaryClient { get; set; } = default!;
 
-    private IEnumerable<CountrySummary> CountrySummaries { get; set; } = default!;
+    private IEnumerable<StateSummary> StateSummaries { get; set; } = default!;
 
-    private async Task LoadCountriesAsync(LoadDataArgs args)
+    private async Task LoadStatesAsync(LoadDataArgs args)
     {
-        var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<CountrySummary>>(
+        var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<StateSummary>>(
             async () =>
             {
-                var summariesResponse = await this.CountrySummaryClient.GetSummariesAsync(new SearchRequest() { SearchText = args.Filter, Take = 100 });
+                var summariesResponse = await this.StateSummaryClient.GetSummariesAsync(new StateSummarySearchRequest() { SearchText = args.Filter, Take = 100 });
 
                 if (string.IsNullOrWhiteSpace(args.Filter)
                     && this.Value is Guid selectedGuid
                     && selectedGuid != Guid.Empty
                     && summariesResponse?.Summaries.Any(x => x.Id == selectedGuid) == false)
                 {
-                    var selectedSummaryResponse = await this.CountrySummaryClient.GetSummaryAsync(new GetByIdRequest<Guid>{ Id = selectedGuid });
+                    var selectedSummaryResponse = await this.StateSummaryClient.GetSummaryAsync(new GetByIdRequest<Guid>{ Id = selectedGuid });
 
                     if (selectedSummaryResponse?.Summary != null)
                     {
-                        return new SummariesResponse<CountrySummary>
+                        return new SummariesResponse<StateSummary>
                         { 
                             Summaries = summariesResponse.Summaries.Concat([selectedSummaryResponse.Summary])
                                 .OrderBy(x => x.Name)
@@ -54,11 +55,11 @@
                     }
                 }
 
-                return summariesResponse;
+                return summariesResponse!;
             },
             showBusyIndicator: false);
 
-        this.CountrySummaries = summariesResponse?.Summaries ?? Enumerable.Empty<CountrySummary>();
+        this.StateSummaries = summariesResponse?.Summaries ?? Enumerable.Empty<StateSummary>();
     }
 
     private async Task OnValueChangedAsync(TValue value)

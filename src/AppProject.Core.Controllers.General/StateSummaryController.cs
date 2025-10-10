@@ -14,7 +14,7 @@ public class StateSummaryController(IStateSummaryService stateSummaryService)
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetSummariesAsync([FromQuery] StateSearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetSummariesAsync([FromQuery] StateSummarySearchRequest request, CancellationToken cancellationToken = default)
     {
         return this.Ok(await stateSummaryService.GetSummariesAsync(request, cancellationToken));
     }

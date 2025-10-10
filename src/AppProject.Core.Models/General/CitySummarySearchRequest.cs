@@ -3,7 +3,7 @@ using AppProject.Models;
 
 namespace AppProject.Core.Models.General;
 
-public class CitySearchRequest : SearchRequest
+public class CitySummarySearchRequest : SearchRequest
 {
     public Guid? StateId { get; set; }
 }

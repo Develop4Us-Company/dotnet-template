@@ -1,0 +1,76 @@
+﻿@using System.Collections.Generic
+@using AppProject.Web.ApiClient.General
+@using AppProject.Web.Models.General
+
+@inherits AppProjectComponentBase
+
+@typeparam TValue
+
+<DropDownDataGridControl TValue="TValue" Name=@this.Name Data=@this.CountrySummaries LoadData=@this.LoadCountriesAsync
+    Value=@this.Value ValueChanged=@this.OnValueChangedAsync
+    TextProperty=@nameof(CountrySummary.Name) ValueProperty=@nameof(CountrySummary.Id)>
+    <Columns>
+        <RadzenDropDownDataGridColumn Property=@nameof(CountrySummary.Name) Title=@StringResource.GetStringByKey("General_CountrySummaryDropDownDataGridControl_NameColumn_Title") />
+    </Columns>
+</DropDownDataGridControl>
+
+@code {
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public TValue? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TValue> ValueChanged { get; set; }
+
+    [Inject]
+    private ICountrySummaryClient CountrySummaryClient { get; set; } = default!;
+
+    private IEnumerable<CountrySummary> CountrySummaries { get; set; } = default!;
+
+    private async Task LoadCountriesAsync(LoadDataArgs args)
+    {
+        var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<CountrySummary>>(
+            async () =>
+            {
+                var summariesResponse = await this.CountrySummaryClient.GetSummariesAsync(new SearchRequest() { SearchText = args.Filter, Take = 100 });
+
+                if (string.IsNullOrWhiteSpace(args.Filter)
+                    && this.Value is Guid selectedGuid
+                    && selectedGuid != Guid.Empty
+                    && summariesResponse?.Summaries.Any(x => x.Id == selectedGuid) == false)
+                {
+                    var selectedSummaryResponse = await this.CountrySummaryClient.GetSummaryAsync(new GetByIdRequest<Guid>{ Id = selectedGuid });
+
+                    if (selectedSummaryResponse?.Summary != null)
+                    {
+                        return new SummariesResponse<CountrySummary>
+                        { 
+                            Summaries = summariesResponse.Summaries.Concat([selectedSummaryResponse.Summary])
+                                .OrderBy(x => x.Name)
+                                .ToArray() 
+                        };
+                    }
+                }
+
+                return summariesResponse!;
+            },
+            showBusyIndicator: false);
+
+        this.CountrySummaries = summariesResponse?.Summaries ?? Enumerable.Empty<CountrySummary>();
+    }
+
+    private async Task OnValueChangedAsync(TValue value)
+    {
+        if (!EqualityComparer<TValue>.Default.Equals(this.Value, value))
+        {
+            this.Value = value;
+
+            if (this.ValueChanged.HasDelegate)
+            {
+                await this.ValueChanged.InvokeAsync(value);
+            }
+        }
+    }
+}

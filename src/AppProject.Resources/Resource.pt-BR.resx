@@ -285,8 +285,8 @@
     <value>Comprimento máximo: 200</value>
   </data>
 
-  <!--Frontend General/CountryDropDownDataGridControl-->
-  <data name="General_CountryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
+  <!--Frontend General/CountrySummaryDropDownDataGridControl-->
+  <data name="General_CountrySummaryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
     <value>Nome</value>
   </data>
 

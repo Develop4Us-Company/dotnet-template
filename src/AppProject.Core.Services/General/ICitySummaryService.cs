@@ -6,7 +6,7 @@ namespace AppProject.Core.Services.General;
 
 public interface ICitySummaryService
     : ITransientService,
-    IGetSummaries<CitySearchRequest, SummariesResponse<CitySummary>>,
+    IGetSummaries<CitySummarySearchRequest, SummariesResponse<CitySummary>>,
     IGetSummary<GetByIdRequest<Guid>, SummaryResponse<CitySummary>>
 {
 }

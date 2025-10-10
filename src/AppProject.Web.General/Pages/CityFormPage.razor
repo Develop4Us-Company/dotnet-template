@@ -1,0 +1,84 @@
+﻿@using AppProject.Web.ApiClient.General
+
+@inherits ModelFormPage<City>
+
+<ModelFormControl TModel="City" Model=@this.Model OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>
+    <FieldsetControl Title=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_Title")>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenText TextStyle="TextStyle.Subtitle2">@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_IdField_Text", this.Model.Id)</RadzenText>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
+
+                    <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Label")>
+                        <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
+                        <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Required")/>
+                        <RadzenLengthValidator Component="NameField" Max="200" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_InvalidLength") />
+                    </RadzenFormField>
+
+                    <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_CodeField_Label")>
+                        <RadzenTextBox Name="CodeField" @bind-Value=@this.Model.Code />
+                        <RadzenLengthValidator Component="CodeField" Max="200" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_CodeField_InvalidLength") />
+                    </RadzenFormField>
+
+                    <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Label")>
+                        <StateSummaryDropDownDataGridControl Name="StateField" TValue="Guid" @bind-Value=@this.Model.StateId />
+                        <RadzenCustomValidator Component="StateField" Validator="() => this.Model.StateId != Guid.Empty" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Required")/>
+                    </RadzenFormField>
+
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </FieldsetControl>
+</ModelFormControl>
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    [Inject]
+    private ICityClient CityClient { get; set; } = default!;
+
+    private Task OnCancelAsync() => this.CloseDialogAsync();
+
+    private async Task OnSaveAsync()
+    {
+        var keyResponse = await this.GetResultOrHandleExceptionAsync<KeyResponse<Guid>>(
+            async () => 
+            {
+                if (this.Model.Id.GetValueOrDefault() != Guid.Empty)
+                {
+                    return await this.CityClient.PutAsync(new CreateOrUpdateRequest<City> { Entity = this.Model });
+                }
+                
+                return await this.CityClient.PostAsync(new CreateOrUpdateRequest<City> { Entity = this.Model });
+            }
+        );
+
+        if (keyResponse is not null)
+        {
+            this.Model.Id = keyResponse.Id;
+            await this.CloseDialogAsync(this.Model);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (this.Id.HasValue)
+        {
+            var entityResponse = await this.GetResultOrHandleExceptionAsync<EntityResponse<City>>(
+                () => this.CityClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value })
+            );
+
+            if (entityResponse is not null)
+            {
+                this.SetModel(entityResponse.Entity);
+            }
+        }
+    }
+}

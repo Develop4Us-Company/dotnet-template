@@ -25,7 +25,7 @@
                     </RadzenFormField>
 
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_CountryField_Label")>
-                        <CountryDropDownDataGridControl Name="CountryField" TValue="Guid" @bind-Value=@this.Model.CountryId />
+                        <CountrySummaryDropDownDataGridControl Name="CountryField" TValue="Guid" @bind-Value=@this.Model.CountryId />
                         <RadzenCustomValidator Component="CountryField" Validator="() => this.Model.CountryId != Guid.Empty" Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_CountryField_Required")/>
                     </RadzenFormField>
 

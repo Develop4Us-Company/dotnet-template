@@ -11,7 +11,7 @@ public class StateSummaryService(
     IDatabaseRepository databaseRepository)
     : BaseService, IStateSummaryService
 {
-    public async Task<SummariesResponse<StateSummary>> GetSummariesAsync(StateSearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<SummariesResponse<StateSummary>> GetSummariesAsync(StateSummarySearchRequest request, CancellationToken cancellationToken = default)
     {
         var searchText = request.SearchText?.Trim();
 

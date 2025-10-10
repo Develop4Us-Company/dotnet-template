@@ -6,7 +6,7 @@ namespace AppProject.Core.Services.General;
 
 public interface IStateSummaryService
     : ITransientService,
-    IGetSummaries<StateSearchRequest, SummariesResponse<StateSummary>>,
+    IGetSummaries<StateSummarySearchRequest, SummariesResponse<StateSummary>>,
     IGetSummary<GetByIdRequest<Guid>, SummaryResponse<StateSummary>>
 {
 }

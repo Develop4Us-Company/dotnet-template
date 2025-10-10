@@ -276,7 +276,7 @@ Perceba que o Summary herda de ISummary. Note também que, no caso do StateSumma
 
 No caso do StateSummary e do CitySummary, nós também criamos duas Search Requests que herdam da classe SearchRequest. Fizemos isso para podermos adicionar mais opções de filtros para essas pesquisas. Veja o código dessas classes abaixo:
 
-[`StateSearchRequest.cs`](./src/AppProject.Core.Models/General/StateSearchRequest.cs):
+[`StateSummarySearchRequest.cs`](./src/AppProject.Core.Models/General/StateSummarySearchRequest.cs):
 
 ```csharp
 using System;
@@ -284,14 +284,14 @@ using AppProject.Models;
 
 namespace AppProject.Core.Models.General;
 
-public class StateSearchRequest : SearchRequest
+public class StateSummarySearchRequest : SearchRequest
 {
     public Guid? CountryId { get; set; }
 }
 
 ```
 
-[`CitySearchRequest.cs`](./src/AppProject.Core.Models/General/CitySearchRequest.cs):
+[`CitySummarySearchRequest.cs`](./src/AppProject.Core.Models/General/CitySummarySearchRequest.cs):
 
 ```csharp
 using System;
@@ -299,7 +299,7 @@ using AppProject.Models;
 
 namespace AppProject.Core.Models.General;
 
-public class CitySearchRequest : SearchRequest
+public class CitySummarySearchRequest : SearchRequest
 {
     public Guid? StateId { get; set; }
 }
@@ -734,7 +734,7 @@ namespace AppProject.Core.Services.General;
 
 public interface IStateSummaryService
     : ITransientService,
-    IGetSummaries<StateSearchRequest, SummariesResponse<StateSummary>>,
+    IGetSummaries<StateSummarySearchRequest, SummariesResponse<StateSummary>>,
     IGetSummary<GetByIdRequest<Guid>, SummaryResponse<StateSummary>>
 {
 }
@@ -751,7 +751,7 @@ namespace AppProject.Core.Services.General;
 
 public interface ICitySummaryService
     : ITransientService,
-    IGetSummaries<CitySearchRequest, SummariesResponse<CitySummary>>,
+    IGetSummaries<CitySummarySearchRequest, SummariesResponse<CitySummary>>,
     IGetSummary<GetByIdRequest<Guid>, SummaryResponse<CitySummary>>
 {
 }
@@ -1426,7 +1426,7 @@ public class StateSummaryService(
     IDatabaseRepository databaseRepository)
     : BaseService, IStateSummaryService
 {
-    public async Task<SummariesResponse<StateSummary>> GetSummariesAsync(StateSearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<SummariesResponse<StateSummary>> GetSummariesAsync(StateSummarySearchRequest request, CancellationToken cancellationToken = default)
     {
         var searchText = request.SearchText?.Trim();
 
@@ -1496,7 +1496,7 @@ public class CitySummaryService(
     IDatabaseRepository databaseRepository)
     : BaseService, ICitySummaryService
 {
-    public async Task<SummariesResponse<CitySummary>> GetSummariesAsync(CitySearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<SummariesResponse<CitySummary>> GetSummariesAsync(CitySummarySearchRequest request, CancellationToken cancellationToken = default)
     {
         var searchText = request.SearchText?.Trim();
 

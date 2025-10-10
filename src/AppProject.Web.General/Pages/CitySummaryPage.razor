@@ -1,0 +1,85 @@
+﻿@page "/general/cities"
+
+@using AppProject.Web.ApiClient.General
+
+@inherits SearchPage<CitySummarySearchRequest, CitySummary>
+
+<SearchControl TRequest="CitySummarySearchRequest" Request=@this.Request
+    Title=@StringResource.GetStringByKey("General_CitySummaryPage_Title") @bind-Take=@this.Request.Take
+    @bind-SearchText=@this.Request.SearchText DisplayTakeInfo=@this.DisplayTakeInfo
+    OnExecuteSearch=@this.ExecuteSearchAsync>
+    <FilterContent>
+        <RadzenFormField Text=@StringResource.GetStringByKey("General_CitySummaryPage_FilterContent_StateField_Label")>
+            <StateSummaryDropDownDataGridControl TValue="Guid?" @bind-Value=@this.Request.StateId />
+        </RadzenFormField>
+    </FilterContent>
+    <ChildContent>
+        <DataGridControl TItem="CitySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
+            OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@this.OnDeleteItemAsync>
+            
+            <RadzenDataGridColumn TItem="CitySummary"
+                Title=@StringResource.GetStringByKey("General_CitySummaryPage_NameColumn_Title")
+                Property=@nameof(CitySummary.Name) />
+
+            <RadzenDataGridColumn TItem="CitySummary"
+                Title=@StringResource.GetStringByKey("General_CitySummaryPage_StateNameColumn_Title")
+                Property=@nameof(CitySummary.StateName) />
+
+            <RadzenDataGridColumn TItem="CitySummary"
+                Title=@StringResource.GetStringByKey("General_CitySummaryPage_CountryNameColumn_Title")
+                Property=@nameof(CitySummary.CountryName) />
+
+        </DataGridControl>
+    </ChildContent>
+</SearchControl>
+
+@code {
+    [Inject]
+    private ICitySummaryClient CitySummaryClient { get; set; } = default!;
+
+    [Inject]
+    private ICityClient CityClient { get; set; } = default!;
+
+    protected override async Task<IEnumerable<CitySummary>> FetchDataAsync()
+    {
+        var summariesResponse = await this.GetResultOrHandleExceptionAsync<SummariesResponse<CitySummary>>(
+            () => this.CitySummaryClient.GetSummariesAsync(this.Request));
+
+        return summariesResponse?.Summaries ?? Enumerable.Empty<CitySummary>();
+    }
+
+    private async Task OnNewItemAsync()
+    {
+        await this.OpenDialogAsync<CityFormPage, City>(
+            title: StringResource.GetStringByKey("General_CityFormPage_Title"));
+        await this.ExecuteSearchAsync();
+    }
+
+    private async Task OnEditItemAsync()
+    {
+        var selectedId = this.SelectedItems.FirstOrDefault()?.Id;
+
+        if (selectedId.HasValue)
+        {
+            await this.OpenDialogAsync<CityFormPage, City>(
+                title: StringResource.GetStringByKey("General_CityFormPage_Title"),
+                parameters: new Dictionary<string, object>() { { "Id", selectedId } });
+            await this.ExecuteSearchAsync();
+        }
+    }
+
+    private async Task OnDeleteItemAsync()
+    {
+        var selectedIds = this.SelectedItems.Select(x => x.Id);
+
+        if (selectedIds.Any() && await this.ConfirmAsync(StringResource.GetStringByKey("Dialog_Confirm_Delete_Message")))
+        {
+            foreach (var selectedId in selectedIds)
+            {
+                await this.HandleExceptionAsync(() => this.CityClient.DeleteAsync(new DeleteRequest<Guid> { Id = selectedId }));
+            }
+
+            await this.ExecuteSearchAsync();
+        }
+    }
+}

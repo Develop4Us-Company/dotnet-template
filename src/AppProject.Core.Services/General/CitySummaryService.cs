@@ -11,7 +11,7 @@ public class CitySummaryService(
     IDatabaseRepository databaseRepository)
     : BaseService, ICitySummaryService
 {
-    public async Task<SummariesResponse<CitySummary>> GetSummariesAsync(CitySearchRequest request, CancellationToken cancellationToken = default)
+    public async Task<SummariesResponse<CitySummary>> GetSummariesAsync(CitySummarySearchRequest request, CancellationToken cancellationToken = default)
     {
         var searchText = request.SearchText?.Trim();
 
