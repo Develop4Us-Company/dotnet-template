@@ -45,7 +45,9 @@
     <Project Path="AppProject.Web/AppProject.Web.csproj" />
   </Folder>
   <Folder Name="/3 - Tests/">
+    <Project Path="AppProject.Core.Tests.General/AppProject.Core.Tests.General.csproj" />
     <Project Path="AppProject.Core.Tests/AppProject.Core.Tests.csproj" />
+    <Project Path="AppProject.Web.Tests.General/AppProject.Web.Tests.General.csproj" />
     <Project Path="AppProject.Web.Tests/AppProject.Web.Tests.csproj" />
   </Folder>
 </Solution>
