@@ -335,4 +335,93 @@
   <data name="General_StateFormPage_GeneralFieldset_CountryField_Required" xml:space="preserve">
     <value>País é obrigatório</value>
   </data>
+
+  <!--Frontend General/CitySummaryPage-->
+  <data name="General_CitySummaryPage_Title" xml:space="preserve">
+    <value>Cidades</value>
+  </data>
+  <data name="General_CitySummaryPage_FilterContent_StateField_Label" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="General_CitySummaryPage_NameColumn_Title" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="General_CitySummaryPage_StateNameColumn_Title" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="General_CitySummaryPage_CountryNameColumn_Title" xml:space="preserve">
+    <value>País</value>
+  </data>
+
+  <!--Frontend General/StateSummaryDropDownDataGridControl-->
+  <data name="General_StateSummaryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="General_StateSummaryDropDownDataGridControl_CountryNameColumn_Title" xml:space="preserve">
+    <value>País</value>
+  </data>
+
+  <!--Frontend General/CityFormPage-->
+  <data name="General_CityFormPage_Title" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_Title" xml:space="preserve">
+    <value>Geral</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_IdField_Text" xml:space="preserve">
+    <value>Id: {0}</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_NameField_Label" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_NameField_Required" xml:space="preserve">
+    <value>Nome é obrigatório</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_NameField_InvalidLength" xml:space="preserve">
+    <value>Comprimento máximo: 200</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_CodeField_Label" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_CodeField_InvalidLength" xml:space="preserve">
+    <value>Comprimento máximo: 200</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_StateField_Label" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="General_CityFormPage_GeneralFieldset_StateField_Required" xml:space="preserve">
+    <value>Estado é obrigatório</value>
+  </data>
+  <data name="General_CityFormPage_NeighborhoodFieldset_Title" xml:space="preserve">
+    <value>Bairros</value>
+  </data>
+  <data name="General_CityFormPage_NeighborhoodFieldset_NameColumn_Title" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+
+  <!--Frontend General/NeighborhoodFormPage-->
+  <data name="General_NeighborhoodFormPage_Title" xml:space="preserve">
+    <value>Bairro</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_Title" xml:space="preserve">
+    <value>Geral</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_IdField_Text" xml:space="preserve">
+    <value>Id: {0}</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_NameField_Label" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_NameField_Required" xml:space="preserve">
+    <value>Nome é obrigatório</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_NameField_InvalidLength" xml:space="preserve">
+    <value>Comprimento máximo: 200</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_CodeField_Label" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_CodeField_InvalidLength" xml:space="preserve">
+    <value>Comprimento máximo: 200</value>
+  </data>
 </root>

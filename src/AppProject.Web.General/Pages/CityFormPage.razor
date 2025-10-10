@@ -3,36 +3,53 @@
 @inherits ModelFormPage<City>
 
 <ModelFormControl TModel="City" Model=@this.Model OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>
-    <FieldsetControl Title=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_Title")>
-        <RadzenRow>
-            <RadzenColumn>
-                <RadzenText TextStyle="TextStyle.Subtitle2">@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_IdField_Text", this.Model.Id)</RadzenText>
-            </RadzenColumn>
-        </RadzenRow>
-        <RadzenRow>
-            <RadzenColumn>
-                <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
+    <RadzenRow>
+        <RadzenColumn>
+            <FieldsetControl Title=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_Title")>
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenText TextStyle="TextStyle.Subtitle2">@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_IdField_Text", this.Model.Id)</RadzenText>
+                    </RadzenColumn>
+                </RadzenRow>
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
 
-                    <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Label")>
-                        <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
-                        <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Required")/>
-                        <RadzenLengthValidator Component="NameField" Max="200" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_InvalidLength") />
-                    </RadzenFormField>
+                            <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Label")>
+                                <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
+                                <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Required")/>
+                                <RadzenLengthValidator Component="NameField" Max="200" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_InvalidLength") />
+                            </RadzenFormField>
 
-                    <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_CodeField_Label")>
-                        <RadzenTextBox Name="CodeField" @bind-Value=@this.Model.Code />
-                        <RadzenLengthValidator Component="CodeField" Max="200" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_CodeField_InvalidLength") />
-                    </RadzenFormField>
+                            <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_CodeField_Label")>
+                                <RadzenTextBox Name="CodeField" @bind-Value=@this.Model.Code />
+                                <RadzenLengthValidator Component="CodeField" Max="200" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_CodeField_InvalidLength") />
+                            </RadzenFormField>
 
-                    <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Label")>
-                        <StateSummaryDropDownDataGridControl Name="StateField" TValue="Guid" @bind-Value=@this.Model.StateId />
-                        <RadzenCustomValidator Component="StateField" Validator="() => this.Model.StateId != Guid.Empty" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Required")/>
-                    </RadzenFormField>
+                            <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Label")>
+                                <StateSummaryDropDownDataGridControl Name="StateField" TValue="Guid" @bind-Value=@this.Model.StateId />
+                                <RadzenCustomValidator Component="StateField" Validator="() => this.Model.StateId != Guid.Empty" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Required")/>
+                            </RadzenFormField>
 
-                </RadzenStack>
-            </RadzenColumn>
-        </RadzenRow>
-    </FieldsetControl>
+                        </RadzenStack>
+                    </RadzenColumn>
+                </RadzenRow>
+            </FieldsetControl>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow class="rz-mt-3">
+        <RadzenColumn>
+            <DataGridControl TItem="Neighborhood" Items=@this.Neighborhoods @bind-SelectedItems=@this.SelectedNeighborhoods
+                AllowCollapse="true" Title=@StringResource.GetStringByKey("General_CityFormPage_NeighborhoodFieldset_Title")
+                OnNewItem=@this.OnNewNeighborhoodItemAsync OnEditItem=@this.OnEditNeighborhoodItemAsync OnDeleteItem=@this.OnDeleteNeighborhoodItemAsync>
+                
+                <RadzenDataGridColumn TItem="Neighborhood"
+                    Title=@StringResource.GetStringByKey("General_CityFormPage_NeighborhoodFieldset_NameColumn_Title")
+                    Property=@nameof(Neighborhood.Name) />
+                    
+            </DataGridControl>
+        </RadzenColumn>
+    </RadzenRow>
 </ModelFormControl>
 
 @code {
@@ -42,7 +59,32 @@
     [Inject]
     private ICityClient CityClient { get; set; } = default!;
 
-    private Task OnCancelAsync() => this.CloseDialogAsync();
+    private IList<Neighborhood> Neighborhoods { get; set; } = new List<Neighborhood>();
+
+    private IList<Neighborhood> SelectedNeighborhoods { get; set; } = new List<Neighborhood>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (this.Id.HasValue)
+        {
+            var entityResponse = await this.GetResultOrHandleExceptionAsync<EntityResponse<City>>(
+                () => this.CityClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value })
+            );
+
+            if (entityResponse is not null)
+            {
+                this.SetModel(entityResponse.Entity);
+            }
+
+            var neighborhoodsResponse = await this.GetResultOrHandleExceptionAsync<EntitiesResponse<Neighborhood>>(
+                () => this.CityClient.GetNeighborhoodsAsync(new GetByParentIdRequest<Guid>{ ParentId = this.Id.Value })
+            );
+
+            this.Neighborhoods = neighborhoodsResponse?.Entities?.ToList() ?? new List<Neighborhood>();
+        }
+    }
 
     private async Task OnSaveAsync()
     {
@@ -65,20 +107,68 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
+    private Task OnCancelAsync() => this.CloseDialogAsync();
+
+    private async Task OnNewNeighborhoodItemAsync()
     {
-        await base.OnInitializedAsync();
-
-        if (this.Id.HasValue)
+        var neighborhood = await this.OpenDialogAsync<NeighborhoodFormPage, Neighborhood>(
+            title: StringResource.GetStringByKey("General_NeighborhoodFormPage_Title"));
+        
+        if (neighborhood is not null)
         {
-            var entityResponse = await this.GetResultOrHandleExceptionAsync<EntityResponse<City>>(
-                () => this.CityClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value })
-            );
+            var neighborhoods = this.Neighborhoods.ToList();
+            neighborhoods.Add(neighborhood);
+            this.Neighborhoods = neighborhoods;
+            this.SelectedNeighborhoods = new List<Neighborhood>();
+            this.Model.ChangedNeighborhoodRequests.Add(new CreateOrUpdateRequest<Neighborhood>{ Entity = neighborhood });
+            this.StateHasChanged();
+        }
+    }
 
-            if (entityResponse is not null)
+    private async Task OnEditNeighborhoodItemAsync()
+    {
+        var selectedNeighborhood = this.SelectedNeighborhoods.FirstOrDefault();
+
+        if (selectedNeighborhood is not null)
+        {
+            selectedNeighborhood = await this.OpenDialogAsync<NeighborhoodFormPage, Neighborhood>(
+                title: StringResource.GetStringByKey("General_NeighborhoodFormPage_Title"),
+                parameters: new Dictionary<string, object>() { { "Neighborhood", selectedNeighborhood } });
+
+            if (!this.Model.ChangedNeighborhoodRequests.Any(x => x.Entity == selectedNeighborhood))
             {
-                this.SetModel(entityResponse.Entity);
+                this.Model.ChangedNeighborhoodRequests.Add(new CreateOrUpdateRequest<Neighborhood>{ Entity = selectedNeighborhood });
             }
+
+            this.StateHasChanged();
+        }
+    }
+
+    private async Task OnDeleteNeighborhoodItemAsync()
+    {
+        if (this.SelectedNeighborhoods.Any() && await this.ConfirmAsync(StringResource.GetStringByKey("Dialog_Confirm_Delete_Message")))
+        {
+            var neighborhoods = this.Neighborhoods.ToList();
+
+            foreach (var selectedNeighborhood in this.SelectedNeighborhoods)
+            {
+                if (selectedNeighborhood.Id.HasValue && selectedNeighborhood.Id != Guid.Empty)
+                {
+                    this.Model.DeletedNeighborhoodRequests.Add(new DeleteRequest<Guid> { Id = selectedNeighborhood.Id.Value });
+                }
+                
+                if (this.Model.ChangedNeighborhoodRequests.FirstOrDefault(x => x.Entity == selectedNeighborhood)
+                    is CreateOrUpdateRequest<Neighborhood> changedNeighborhoodRequest)
+                {
+                    this.Model.ChangedNeighborhoodRequests.Remove(changedNeighborhoodRequest);
+                }
+
+                neighborhoods.Remove(selectedNeighborhood);
+            }
+
+            this.Neighborhoods = neighborhoods;
+            this.SelectedNeighborhoods = new List<Neighborhood>();
+            this.StateHasChanged();
         }
     }
 }

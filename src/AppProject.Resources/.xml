@@ -162,6 +162,16 @@
               Looks up a localized string similar to General.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.General_CityFormPage_NeighborhoodFieldset_NameColumn_Title">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_CityFormPage_NeighborhoodFieldset_Title">
+            <summary>
+              Looks up a localized string similar to Neighborhoods.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.General_CityFormPage_Title">
             <summary>
               Looks up a localized string similar to City.
@@ -250,6 +260,46 @@
         <member name="P:AppProject.Resources.Resource.General_CountrySummaryPage_Title">
             <summary>
               Looks up a localized string similar to Countries.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_NeighborhoodFormPage_GeneralFieldset_CodeField_InvalidLength">
+            <summary>
+              Looks up a localized string similar to Max length: 200.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_NeighborhoodFormPage_GeneralFieldset_CodeField_Label">
+            <summary>
+              Looks up a localized string similar to Code.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_NeighborhoodFormPage_GeneralFieldset_IdField_Text">
+            <summary>
+              Looks up a localized string similar to Id: {0}.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_NeighborhoodFormPage_GeneralFieldset_NameField_InvalidLength">
+            <summary>
+              Looks up a localized string similar to Max length: 200.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_NeighborhoodFormPage_GeneralFieldset_NameField_Label">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_NeighborhoodFormPage_GeneralFieldset_NameField_Required">
+            <summary>
+              Looks up a localized string similar to Name is required.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_NeighborhoodFormPage_GeneralFieldset_Title">
+            <summary>
+              Looks up a localized string similar to General.
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.General_NeighborhoodFormPage_Title">
+            <summary>
+              Looks up a localized string similar to Neighborhood.
             </summary>
         </member>
         <member name="P:AppProject.Resources.Resource.General_State_DuplicateName">

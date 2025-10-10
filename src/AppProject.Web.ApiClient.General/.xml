@@ -19,6 +19,9 @@
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICityClient.GetAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICityClient.GetNeighborhoodsAsync(AppProject.Models.GetByParentIdRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICityClient.PostAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.City},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -29,6 +32,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICityClient.AppProject#Web#ApiClient#General#ICityClient#GetAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICityClient.AppProject#Web#ApiClient#General#ICityClient#GetNeighborhoodsAsync(AppProject.Models.GetByParentIdRequest{System.Guid},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICityClient.AppProject#Web#ApiClient#General#ICityClient#PostAsync(AppProject.Models.CreateOrUpdateRequest{AppProject.Web.Models.General.City},System.Threading.CancellationToken)">

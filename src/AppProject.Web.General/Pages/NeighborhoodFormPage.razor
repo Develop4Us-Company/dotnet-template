@@ -1,0 +1,50 @@
+﻿@using AppProject.Web.ApiClient.General
+
+@inherits ModelFormPage<Neighborhood>
+
+<ModelFormControl TModel="Neighborhood" Model=@this.Model OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>
+    <FieldsetControl Title=@StringResource.GetStringByKey("General_NeighborhoodFormPage_GeneralFieldset_Title")>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenText TextStyle="TextStyle.Subtitle2">@StringResource.GetStringByKey("General_NeighborhoodFormPage_GeneralFieldset_IdField_Text", this.Model.Id)</RadzenText>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
+
+                    <RadzenFormField Text=@StringResource.GetStringByKey("General_NeighborhoodFormPage_GeneralFieldset_NameField_Label")>
+                        <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
+                        <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_NeighborhoodFormPage_GeneralFieldset_NameField_Required")/>
+                        <RadzenLengthValidator Component="NameField" Max="200" Text=@StringResource.GetStringByKey("General_NeighborhoodFormPage_GeneralFieldset_NameField_InvalidLength") />
+                    </RadzenFormField>
+
+                    <RadzenFormField Text=@StringResource.GetStringByKey("General_NeighborhoodFormPage_GeneralFieldset_CodeField_Label")>
+                        <RadzenTextBox Name="CodeField" @bind-Value=@this.Model.Code />
+                        <RadzenLengthValidator Component="CodeField" Max="200" Text=@StringResource.GetStringByKey("General_NeighborhoodFormPage_GeneralFieldset_CodeField_InvalidLength") />
+                    </RadzenFormField>
+
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </FieldsetControl>
+</ModelFormControl>
+
+@code {
+    [Parameter]
+    public Neighborhood? Neighborhood { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (this.Neighborhood is not null)
+        {
+            this.SetModel(this.Neighborhood);
+        }
+    }
+
+    private Task OnSaveAsync() => this.CloseDialogAsync(this.Model);
+
+    private Task OnCancelAsync() => this.CloseDialogAsync();
+}

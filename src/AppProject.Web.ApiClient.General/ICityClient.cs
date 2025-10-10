@@ -10,6 +10,9 @@ public interface ICityClient
     [Get("/api/general/City/Get")]
     public Task<EntityResponse<City>> GetAsync([Query] GetByIdRequest<Guid> request, CancellationToken cancellationToken = default);
 
+    [Get("/api/general/City/GetNeighborhoods")]
+    public Task<EntitiesResponse<Neighborhood>> GetNeighborhoodsAsync([Query] GetByParentIdRequest<Guid> request, CancellationToken cancellationToken = default);
+
     [Post("/api/general/City/Post")]
     public Task<KeyResponse<Guid>> PostAsync([Body] CreateOrUpdateRequest<City> request, CancellationToken cancellationToken = default);
 

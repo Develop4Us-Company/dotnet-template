@@ -42,7 +42,22 @@
     [Inject]
     private IStateClient StateClient { get; set; } = default!;
 
-    private Task OnCancelAsync() => this.CloseDialogAsync();
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (this.Id.HasValue)
+        {
+            var entityResponse = await this.GetResultOrHandleExceptionAsync<EntityResponse<State>>(
+                () => this.StateClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value })
+            );
+
+            if (entityResponse is not null)
+            {
+                this.SetModel(entityResponse.Entity);
+            }
+        }
+    }
 
     private async Task OnSaveAsync()
     {
@@ -65,20 +80,5 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        if (this.Id.HasValue)
-        {
-            var entityResponse = await this.GetResultOrHandleExceptionAsync<EntityResponse<State>>(
-                () => this.StateClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value })
-            );
-
-            if (entityResponse is not null)
-            {
-                this.SetModel(entityResponse.Entity);
-            }
-        }
-    }
+    private Task OnCancelAsync() => this.CloseDialogAsync();
 }

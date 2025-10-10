@@ -304,7 +304,7 @@
     <value>Country</value>
   </data>
 
-  <!--Frontend General/StateSummaryPage-->
+  <!--Frontend General/StateFormPage-->
   <data name="General_StateFormPage_Title" xml:space="preserve">
     <value>State</value>
   </data>
@@ -361,7 +361,7 @@
     <value>Country</value>
   </data>
 
-  <!--Frontend General/CitySummaryPage-->
+  <!--Frontend General/CityFormPage-->
   <data name="General_CityFormPage_Title" xml:space="preserve">
     <value>City</value>
   </data>
@@ -391,5 +391,37 @@
   </data>
   <data name="General_CityFormPage_GeneralFieldset_StateField_Required" xml:space="preserve">
     <value>State is required</value>
+  </data>
+  <data name="General_CityFormPage_NeighborhoodFieldset_Title" xml:space="preserve">
+    <value>Neighborhoods</value>
+  </data>
+  <data name="General_CityFormPage_NeighborhoodFieldset_NameColumn_Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+
+  <!--Frontend General/NeighborhoodFormPage-->
+  <data name="General_NeighborhoodFormPage_Title" xml:space="preserve">
+    <value>Neighborhood</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_Title" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_IdField_Text" xml:space="preserve">
+    <value>Id: {0}</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_NameField_Label" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_NameField_Required" xml:space="preserve">
+    <value>Name is required</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_NameField_InvalidLength" xml:space="preserve">
+    <value>Max length: 200</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_CodeField_Label" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="General_NeighborhoodFormPage_GeneralFieldset_CodeField_InvalidLength" xml:space="preserve">
+    <value>Max length: 200</value>
   </data>
 </root>
