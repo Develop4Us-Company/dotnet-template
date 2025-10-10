@@ -23,7 +23,7 @@
                 <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
                     <RadzenButton ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined" 
                         Icon=@(this.PreferOpenOverEdit ? "arrow_right_alt" : "edit")
-                        Text=@StringResource.GetStringByKey(this.PreferAddOverNew ? "DataGridControl_OpenButton_Text" : "DataGridControl_EditButton_Text")
+                        Text=@StringResource.GetStringByKey(this.PreferOpenOverEdit ? "DataGridControl_OpenButton_Text" : "DataGridControl_EditButton_Text")
                         Visible=@this.ShowEditAction
                         Disabled=@(!this.IsSingleItemSelected)
                         Click=@this.OnEditItem />

@@ -40,13 +40,13 @@
     <RadzenRow class="rz-mt-3">
         <RadzenColumn>
             <DataGridControl TItem="Neighborhood" Items=@this.Neighborhoods @bind-SelectedItems=@this.SelectedNeighborhoods
-                AllowCollapse="true" Title=@StringResource.GetStringByKey("General_CityFormPage_NeighborhoodFieldset_Title")
+                AllowCollapse="true" Title=@StringResource.GetStringByKey("General_CityFormPage_NeighborhoodFieldset_Title") PreferAddOverNew="true"
                 OnNewItem=@this.OnNewNeighborhoodItemAsync OnEditItem=@this.OnEditNeighborhoodItemAsync OnDeleteItem=@this.OnDeleteNeighborhoodItemAsync>
                 
                 <RadzenDataGridColumn TItem="Neighborhood"
                     Title=@StringResource.GetStringByKey("General_CityFormPage_NeighborhoodFieldset_NameColumn_Title")
                     Property=@nameof(Neighborhood.Name) />
-                    
+
             </DataGridControl>
         </RadzenColumn>
     </RadzenRow>
