@@ -115,7 +115,6 @@ The sections below describe the registrations required for all integrations to w
          api.accessToken.setCustomClaim("name", event.user.name);
        }
 
-       // Adds roles if they exist
        if (event.authorization && event.authorization.roles) {
          api.accessToken.setCustomClaim("roles", event.authorization.roles);
        }
@@ -536,7 +535,6 @@ As seções abaixo descrevem os cadastros necessários para que todas as integra
          api.accessToken.setCustomClaim("name", event.user.name);
        }
 
-       // Adiciona roles se existirem
        if (event.authorization && event.authorization.roles) {
          api.accessToken.setCustomClaim("roles", event.authorization.roles);
        }

@@ -22,7 +22,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using SendGrid.Extensions.DependencyInjection;
 using Serilog;
@@ -230,9 +229,9 @@ public static class Bootstrap
             options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
             options.RequestCultureProviders = new List<IRequestCultureProvider>
             {
-                    new QueryStringRequestCultureProvider(),
-                    new CookieRequestCultureProvider(),
-                    new AcceptLanguageHeaderRequestCultureProvider()
+                new QueryStringRequestCultureProvider(),
+                new CookieRequestCultureProvider(),
+                new AcceptLanguageHeaderRequestCultureProvider()
             };
         });
     }
