@@ -90,7 +90,7 @@ Here are some project specifications.
 * The template already supports localization (`en-US`, `pt-BR`, and `es-ES`) in both the API and the frontend.
 * The frontend uses Radzen for UI components, Refit for HTTP clients, and OIDC authentication with Auth0.
 * Code style is validated with StyleCop (see `Stylecop.json`) and the shared settings in `Directory.Build.props`.
-* The backend and frontend projects target `net9.0` and have `implicit usings` and `nullable` enabled.
+* The backend and frontend projects target the .NET version and have `implicit usings` and `nullable` enabled.
 
 ## External integrations
 The sections below describe the registrations required for all integrations to work. After completing each step, copy the values into the `appsettings` files.
@@ -504,7 +504,7 @@ Seguem algumas especificações do projeto.
 * O template já suporta localização (`en-US`, `pt-BR` e `es-ES`) tanto na API quanto no frontend.
 * O frontend usa Radzen para os componentes UI, Refit para os clientes HTTP e autenticação OIDC com Auth0.
 * O estilo de código é validado com StyleCop (veja `Stylecop.json`) e com as configurações compartilhadas em `Directory.Build.props`.
-* Os projetos backend e frontend executam com o `TargetFramework` `net9.0` e utilizam `implicit usings` e `nullable` habilitados.
+* Os projetos backend e frontend executam com o `TargetFramework` e utilizam `implicit usings` e `nullable` habilitados.
 
 ## Integrações externas
 As seções abaixo descrevem os cadastros necessários para que todas as integrações funcionem. Após concluir cada etapa, copie os valores para os arquivos `appsettings`.
