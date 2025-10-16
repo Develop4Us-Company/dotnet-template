@@ -103,7 +103,7 @@ The sections below describe the registrations required for all integrations to w
    - **Allowed Callback URLs**: `https://localhost:7035/authentication/login-callback`, `https://localhost:7121/swagger/oauth2-redirect.html`
    - **Allowed Logout URLs**: `https://localhost:7035`, `https://localhost:7121/swagger/`
    - **Allowed Web Origins**: `https://localhost:7035`, `https://localhost:7121`
-4. Create an **API** in Auth0 and use the same value you set for `Auth0:Audience` (`https://appproject.api` by default) as the identifier.
+4. Create an **API** in Auth0 and use the same value you set for `Auth0:Audience` (`https://appproject.api` by default) as the identifier, then open **Access Settings** and check **Allow Offline Access**.
 5. To include `email`, `name`, and `roles` in the JWT, create a `post_login` Action with the script below:
    ```javascript
    if (api.accessToken) {
@@ -122,6 +122,7 @@ The sections below describe the registrations required for all integrations to w
      }
    ```
 6. Copy `Authority`, `ClientId`, and `Audience` into the `appsettings`.
+> Note: When launching Swagger, clear the browser cache so it does not reuse parameters from other projects.
 
 ### SendGrid
 1. Create an account on the [SendGrid website](https://sendgrid.com/).
@@ -518,7 +519,7 @@ As seções abaixo descrevem os cadastros necessários para que todas as integra
    - **Allowed Callback URLs**: `https://localhost:7035/authentication/login-callback`, `https://localhost:7121/swagger/oauth2-redirect.html`
    - **Allowed Logout URLs**: `https://localhost:7035`, `https://localhost:7121/swagger/`
    - **Allowed Web Origins**: `https://localhost:7035`, `https://localhost:7121`
-4. Crie uma **API** no Auth0 e use como *Identifier* o mesmo valor configurado em `Auth0:Audience` (`https://appproject.api` por padrão).
+4. Crie uma **API** no Auth0 e use como *Identifier* o mesmo valor configurado em `Auth0:Audience` (`https://appproject.api` por padrão). Em seguida, acesse **Access Settings** e marque a opção **Allow Offline Access**.
 5. Para incluir `email`, `name` e `roles` no JWT, crie uma Action do tipo `post_login` com o script abaixo:
    ```javascript
    if (api.accessToken) {
@@ -537,6 +538,7 @@ As seções abaixo descrevem os cadastros necessários para que todas as integra
      }
    ```
 6. Copie `Authority`, `ClientId` e `Audience` para os `appsettings`.
+> Observação: Ao subir o Swagger, limpe o cache do navegador para evitar que ele reutilize parâmetros de outros projetos.
 
 ### SendGrid
 1. Crie uma conta no [site do SendGrid](https://sendgrid.com/).
