@@ -4,7 +4,7 @@
 
 @inherits AppProjectComponentBase
 
-<RadzenToggleButton @bind-Value=@this.IsDarkTheme Change=@OnThemeChangedAsync Icon="@DarkIconName"
+<RadzenToggleButton @bind-Value=@this.IsDarkTheme Change=@this.OnThemeChangedAsync Icon="@DarkIconName"
     ToggleIcon="@LightIconName" ButtonStyle="ButtonStyle.Base" ToggleButtonStyle="ButtonStyle.Base"
     ToggleShade="Shade.Default" />
 

@@ -1,5 +1,7 @@
 ﻿@using AppProject.Web.ApiClient.General
 
+@attribute [Authorize]
+
 @inherits ModelFormPage<Country>
 
 <ModelFormControl TModel="Country" Model=@this.Model OnSave=@this.OnSaveAsync OnCancel=@this.OnCancelAsync>

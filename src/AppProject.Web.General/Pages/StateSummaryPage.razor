@@ -2,6 +2,8 @@
 
 @using AppProject.Web.ApiClient.General
 
+@attribute [Authorize]
+
 @inherits SearchPage<StateSummarySearchRequest, StateSummary>
 
 <SearchControl TRequest="StateSummarySearchRequest" Request=@this.Request

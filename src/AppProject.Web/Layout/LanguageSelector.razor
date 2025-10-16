@@ -20,10 +20,10 @@
 </style>
 
 <RadzenButton @ref="button" Icon="language" ButtonStyle="ButtonStyle.Base"
-    Click="@ToggleLanguagePopupAsync" />
+    Click="@this.ToggleLanguagePopupAsync" />
 
 <Popup @ref=popup Lazy=true class="language-popup">
-    <RadzenDropDown TValue="CultureInfo" @bind-Value=Culture Change=@OnLanguageChangedAsync Data=@SupportedCultures
+    <RadzenDropDown TValue="CultureInfo" @bind-Value=Culture Change=@this.OnLanguageChangedAsync Data=@this.SupportedCultures
         TextProperty="DisplayName" />
 </Popup>
 
@@ -40,9 +40,6 @@
 
     [Inject]
     private ILocalStorageService LocalStorageService { get; set; } = default!;
-
-    [Inject]
-    private NavigationManager NavigationManager { get; set; } = default!;
 
     private CultureInfo Culture { get; set; } = CultureInfo.CurrentCulture;
 
