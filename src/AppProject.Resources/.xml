@@ -447,6 +447,16 @@
               Looks up a localized string similar to Save.
             </summary>
         </member>
+        <member name="P:AppProject.Resources.Resource.NotAuthorized_Message">
+            <summary>
+              Looks up a localized string similar to Sorry, you are not logged in..
+            </summary>
+        </member>
+        <member name="P:AppProject.Resources.Resource.NotAuthorized_Title">
+            <summary>
+              Looks up a localized string similar to Not authorized.
+            </summary>
+        </member>
         <member name="P:AppProject.Resources.Resource.NotFound_Message">
             <summary>
               Looks up a localized string similar to Sorry, there&apos;s nothing at this address..

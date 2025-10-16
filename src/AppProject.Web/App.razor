@@ -7,10 +7,14 @@
 <RadzenTheme Theme="@ThemeConstants.DefaultLightTheme" @rendermode="RenderMode.InteractiveAuto" />
 
 <CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(App).Assembly" OnNavigateAsync="OnNavigateAsync" AdditionalAssemblies="lazyAssemblies">
+    <Router AppAssembly=@typeof(App).Assembly OnNavigateAsync="this.OnNavigateAsync" AdditionalAssemblies=@this.lazyAssemblies>
         <Found Context="routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <PageTitle>@StringResource.GetStringByKey("NotAuthorized_Title")</PageTitle>
+                    <RadzenText TextStyle="TextStyle.DisplayH3" Text=@StringResource.GetStringByKey("NotAuthorized_Message") />
+                </NotAuthorized>
+            </AuthorizeRouteView>
         </Found>
         <NotFound>
             <PageTitle>@StringResource.GetStringByKey("NotFound_Title")</PageTitle>
@@ -56,6 +60,15 @@
             {
                 var assemblies = await AssemblyLoader.LoadAssembliesAsync(
                     new[] { "AppProject.Web.General.dll" });
+                lazyAssemblies.AddRange(assemblies);
+            }
+        }
+        else if (args.Path.StartsWith("inventory", StringComparison.OrdinalIgnoreCase))
+        {
+            if (!lazyAssemblies.Any(a => a.GetName().Name == "AppProject.Web.Inventory"))
+            {
+                var assemblies = await AssemblyLoader.LoadAssembliesAsync(
+                    new[] { "AppProject.Web.Inventory.dll" });
                 lazyAssemblies.AddRange(assemblies);
             }
         }

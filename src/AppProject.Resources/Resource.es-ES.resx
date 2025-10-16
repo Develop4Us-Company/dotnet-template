@@ -54,6 +54,12 @@
   <data name="Home_Message" xml:space="preserve">
     <value>¡Bienvenido a tu nueva aplicación!</value>
   </data>
+  <data name="NotAuthorized_Title" xml:space="preserve">
+    <value>No autorizado</value>
+  </data>
+  <data name="NotAuthorized_Message" xml:space="preserve">
+    <value>Lo siento, no has iniciado sesión.</value>
+  </data>
   <data name="NotFound_Title" xml:space="preserve">
     <value>No encontrado</value>
   </data>
