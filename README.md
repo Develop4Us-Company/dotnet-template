@@ -121,7 +121,12 @@ The sections below describe the registrations required for all integrations to w
        }
      }
    ```
-6. Copy `Authority`, `ClientId`, and `Audience` into the `appsettings`.
+6. Copy `Authority` and `ClientId` from the Single Page Application you created and copy the API `Audience` into the `appsettings`, keeping the `https://` prefix for both `Authority` and `Audience`. For example:
+   ```json
+   "Authority": "https://yourauth0domain.us.auth0.com",
+   "ClientId": "yourclientid",
+   "Audience": "https://youraudience.com"
+   ```
 > Note: When launching Swagger, clear the browser cache so it does not reuse parameters from other projects.
 
 ### SendGrid
@@ -537,7 +542,12 @@ As seções abaixo descrevem os cadastros necessários para que todas as integra
        }
      }
    ```
-6. Copie `Authority`, `ClientId` e `Audience` para os `appsettings`.
+6. Copie `Authority` e `ClientId` da aplicação Single Page Application que você criou e copie o `Audience` da API para os `appsettings`, mantendo o prefixo `https://` tanto para o `Authority` quanto para o `Audience`. Por exemplo:
+   ```json
+   "Authority": "https://seuauth0domain.us.auth0.com",
+   "ClientId": "seuclientid",
+   "Audience": "https://seuaudience.com"
+   ```
 > Observação: Ao subir o Swagger, limpe o cache do navegador para evitar que ele reutilize parâmetros de outros projetos.
 
 ### SendGrid
