@@ -26,6 +26,7 @@ Template for creating projects in .NET
   ```
 - Active accounts in Auth0, SendGrid, and GitHub (with access to GitHub Models) to configure the integrations described below.
 - Optional: install the global tool `dotnet-ef` to run migration commands (`dotnet tool install --global dotnet-ef`).
+- Important: do not let Copilot, Codex, or any generator auto-create EF Core snapshot or migration files. Always run the migration command/script manually (for example, `dotnet ef migrations add ...`) so the generated code stays correct.
 
 ### Step-by-step to set up the environment
 1. Clone the repository and restore the dependencies with `dotnet restore AppProject.slnx`.
@@ -440,6 +441,7 @@ Template para criar projetos em .NET
   ```
 - Contas ativas no Auth0, SendGrid e GitHub (com acesso aos GitHub Models) para preencher as integrações descritas a seguir.
 - Opcional: instale a ferramenta global `dotnet-ef` para rodar comandos de migração (`dotnet tool install --global dotnet-ef`).
+- Importante: não permita que Copilot, Codex ou outro gerador crie automaticamente os arquivos de snapshot ou migration do EF Core. Execute manualmente o script/comando de migração (por exemplo, `dotnet ef migrations add ...`) para garantir que o código seja gerado corretamente.
 
 ### Passo a passo para configurar o ambiente
 1. Clone o repositório e restaure as dependências com `dotnet restore AppProject.slnx`.
