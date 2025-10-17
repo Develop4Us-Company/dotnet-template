@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using System.Security.Claims
 
 @inherits AppProjectComponentBase
 
@@ -6,25 +7,26 @@
     <Authorized>
         <RadzenProfileMenu>
             <Template>
-                <RadzenGravatar Email=@context.User.Identity?.Name>
+                <RadzenGravatar Email=@GetUserEmail(context.User)>
                 </RadzenGravatar>
             </Template>
             <ChildContent>
-                <RadzenButton Text=@StringResource.GetStringByKey("Logout_Button_Text") Icon="logout"
-                    ButtonStyle="ButtonStyle.Base" Click=@LogoutUser />
+                <RadzenStack class="rz-m-3" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center">
+                    <RadzenText TextStyle="TextStyle.Subtitle1" Text=@context.User.Identity?.Name/>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" Text=@GetUserEmail(context.User)/>
+                    <RadzenButton class="rz-mt-3" Text=@StringResource.GetStringByKey("Logout_Button_Text") Icon="logout"
+                        ButtonStyle="ButtonStyle.Base" Click=@this.LogoutUser />
+                </RadzenStack>
             </ChildContent>
         </RadzenProfileMenu>
     </Authorized>
     <NotAuthorized>
         <RadzenButton Text=@StringResource.GetStringByKey("Login_Button_Text") Icon="login" ButtonStyle="ButtonStyle.Base"
-            Click=@LoginUser />
+            Click=@this.LoginUser />
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
-    [Inject]
-    private NavigationManager NavigationManager { get; set; } = default!;
-
     private void LoginUser()
     {
         this.NavigationManager.NavigateTo("authentication/login");
@@ -33,5 +35,21 @@
     private void LogoutUser()
     {
         this.NavigationManager.NavigateToLogout("authentication/logout");
+    }
+
+    private static string? GetUserEmail(ClaimsPrincipal? user)
+    {
+        var email = user?.Claims?.FirstOrDefault(x =>
+            x.Type == "email" ||
+            x.Type == ClaimTypes.Email ||
+            x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+        )?.Value ?? string.Empty;
+
+        if (user?.Identity?.Name == email)
+        {
+            return string.Empty;
+        }
+
+        return email;
     }
 }
