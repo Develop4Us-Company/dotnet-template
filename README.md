@@ -137,7 +137,7 @@ The sections below describe the registrations required for all integrations to w
 
 ### GitHub AI Models
 1. Follow the official documentation: <https://docs.github.com/en/github-models/use-github-models/prototyping-with-ai-models>.
-2. Generate a token with permission to use the GitHub-hosted models.
+2. Generate a token with permission to use the GitHub-hosted models at [https://github.com/settings/tokens](https://github.com/settings/tokens).
 3. Fill in `AI:Endpoint` (default `https://models.github.ai/inference`) and `AI:Token` in the `appsettings`.
 
 ### Administrator user
@@ -557,7 +557,7 @@ As seções abaixo descrevem os cadastros necessários para que todas as integra
 
 ### GitHub AI Models
 1. Siga a documentação oficial: <https://docs.github.com/en/github-models/use-github-models/prototyping-with-ai-models>.
-2. Gere um token com permissão para usar os modelos hospedados pelo GitHub.
+2. Gere um token com permissão para usar os modelos hospedados pelo GitHub em [https://github.com/settings/tokens](https://github.com/settings/tokens).
 3. Preencha `AI:Endpoint` (padrão `https://models.github.ai/inference`) e `AI:Token` nos `appsettings`.
 
 ### Usuário administrador
