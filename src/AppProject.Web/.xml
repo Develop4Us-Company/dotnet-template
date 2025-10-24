@@ -4,29 +4,5 @@
         <name>AppProject.Web</name>
     </assembly>
     <members>
-        <member name="T:Refit.Implementation.Generated">
-            <inheritdoc />
-        </member>
-        <member name="T:Refit.Implementation.Generated.AppProjectWebPagesISampleClient">
-            <inheritdoc />
-        </member>
-        <member name="P:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.Client">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.GetProtectedData">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.GetLogSample">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.AppProject#Web#Pages#ISampleClient#GetProtectedData">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebPagesISampleClient.AppProject#Web#Pages#ISampleClient#GetLogSample">
-            <inheritdoc />
-        </member>
     </members>
 </doc>

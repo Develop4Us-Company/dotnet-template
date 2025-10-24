@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Reflection;
 using AppProject.Web.Constants;
+using AppProject.Web.Handlers;
 using AppProject.Web.Options;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
@@ -78,6 +79,8 @@ public static class WebBootstrap
 
     private static void ConfigureRefit(WebAssemblyHostBuilder builder)
     {
+        builder.Services.AddTransient<CultureHandler>();
+
         var refitInterfaces = GetApiClientAssemblies()
             .SelectMany(x => x.GetTypes())
             .Where(x => x.IsInterface);
@@ -103,6 +106,7 @@ public static class WebBootstrap
                 {
                     c.BaseAddress = baseUri;
                 })
+                .AddHttpMessageHandler<CultureHandler>()
                 .AddHttpMessageHandler(sp => sp.GetRequiredService<AuthorizationMessageHandler>()
                     .ConfigureHandler(authorizedUrls: authorizedUrls));
         }
