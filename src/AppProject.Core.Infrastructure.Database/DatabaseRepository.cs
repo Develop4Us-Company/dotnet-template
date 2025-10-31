@@ -20,14 +20,14 @@ public class DatabaseRepository(
     }
 
     public async Task InsertAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
-    where TEntity : BaseEntity
+        where TEntity : BaseEntity
     {
-        await this.SetAuditFieldsAsync(entity, isInsert: true);
+        await this.SetAuditFieldsAsync(entity, isInsert: true, cancellationToken: cancellationToken);
         await applicationDbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
     }
 
     public async Task InsertAndSaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
-    where TEntity : BaseEntity
+        where TEntity : BaseEntity
     {
         await this.InsertAsync(entity, cancellationToken);
         await this.SaveAsync(cancellationToken);
@@ -36,7 +36,7 @@ public class DatabaseRepository(
     public async Task UpdateAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
         where TEntity : BaseEntity
     {
-        await this.SetAuditFieldsAsync(entity, isInsert: false, cancellationToken);
+        await this.SetAuditFieldsAsync(entity, isInsert: false, cancellationToken: cancellationToken);
         applicationDbContext.Set<TEntity>().Update(entity);
     }
 
@@ -137,6 +137,6 @@ public class DatabaseRepository(
 
         entity.UpdatedAt = now;
         entity.UpdatedByUserName = currentUser.UserName;
-        entity.CreatedByUserId = currentUser.UserId;
+        entity.UpdatedByUserId = currentUser.UserId;
     }
 }
