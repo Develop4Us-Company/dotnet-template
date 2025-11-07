@@ -92,6 +92,13 @@ public class UserContext(
                 applicationDbContext.Users.Add(user);
                 await applicationDbContext.SaveChangesAsync();
             }
+            else if (user.Name != name)
+            {
+                user.Name = name;
+
+                applicationDbContext.Users.Update(user);
+                await applicationDbContext.SaveChangesAsync();
+            }
 
             this.currentUser = new UserInfo
             {

@@ -389,7 +389,7 @@ public static class Bootstrap
                 {
                     AuthorizationCode = new OpenApiOAuthFlow
                     {
-                        AuthorizationUrl = new Uri($"{authority}/authorize"),
+                        AuthorizationUrl = new Uri($"{authority}/authorize?prompt=login"),
                         TokenUrl = new Uri($"{authority}/oauth/token"),
                         Scopes = new Dictionary<string, string>
                         {
