@@ -133,7 +133,7 @@ public class SampleController(
     public IActionResult ExecuteSampleJob()
     {
         jobDispatcher.Enqueue<SampleJob>();
-        return this.Ok("Sample job executed successfully.");
+        return this.Ok("Sample job was enqueued successfully.");
     }
 }
 #endif
