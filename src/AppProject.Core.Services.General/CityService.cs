@@ -185,7 +185,7 @@ public class CityService(
             .Select(x => x.Entity.Id.GetValueOrDefault())
             .Union(city.DeletedNeighborhoodRequests.Select(x => x.Id));
 
-        if (neighborhoodIds.Any())
+        if (!neighborhoodIds.Any())
         {
             return;
         }

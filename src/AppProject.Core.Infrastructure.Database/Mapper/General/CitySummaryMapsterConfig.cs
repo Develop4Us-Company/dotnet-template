@@ -11,6 +11,7 @@ public class CitySummaryMapsterConfig : IRegisterMapsterConfig
     {
         config.NewConfig<TbCity, CitySummary>()
             .Map(dest => dest.StateName, src => src.State.Name)
-            .Map(dest => dest.CountryName, src => src.State.Country.Name);
+            .Map(dest => dest.CountryName, src => src.State.Country.Name)
+            .Map(dest => dest.CountryId, src => src.State.CountryId);
     }
 }
