@@ -34,8 +34,8 @@
     {
         var theme = value ? ThemeConstants.DefaultDarkTheme : ThemeConstants.DefaultLightTheme;
 
-        await LocalStorageService.SetItemAsync(ThemeConstants.ThemeLocalStorageKey, theme);
-        ThemeService.SetTheme(theme);
+        await this.LocalStorageService.SetItemAsync(ThemeConstants.ThemeLocalStorageKey, theme);
+        this.ThemeService.SetTheme(theme);
 
         this.StateHasChanged();
     }
