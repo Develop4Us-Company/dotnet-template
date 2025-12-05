@@ -49,12 +49,12 @@
             ? selectedCulture
             : new CultureInfo(AppProjectConstants.DefaultLanguage);
 
-        await LocalStorageService.SetItemAsync(AppProjectConstants.LanguageLocalStorageKey, culture.Name);
+        await this.LocalStorageService.SetItemAsync(AppProjectConstants.LanguageLocalStorageKey, culture.Name);
 
         CultureInfo.DefaultThreadCurrentCulture = culture;
         CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        this.NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
     }
 
     private async Task ToggleLanguagePopupAsync()

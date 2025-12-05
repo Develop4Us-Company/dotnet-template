@@ -44,7 +44,7 @@
 
     private void OnAuthenticationStateChanged(Task<AuthenticationState> task)
     {
-        _ = this.InvokeAsync(() => LoadPermissionsAsync(task));
+        _ = this.InvokeAsync(() => this.LoadPermissionsAsync(task));
     }
 
     private async Task LoadPermissionsAsync(Task<AuthenticationState>? authenticationStateTask)
@@ -58,7 +58,7 @@
 
         if (user.Identity?.IsAuthenticated == true)
         {
-            permissions = await PermissionClient.GetCurrentUserPermissionsAsync();
+            permissions = await this.PermissionClient.GetCurrentUserPermissionsAsync();
         }
 
         await this.InvokeAsync(StateHasChanged);
