@@ -6,8 +6,6 @@
 
 @inherits AppProjectPageBase
 
-@inject NavigationManager Navigation
-
 @inject IOptions<WebAuth0Options> Auth0Options
 
 <RemoteAuthenticatorView Action="@Action">
@@ -33,6 +31,6 @@
             throw new InvalidOperationException("Auth0 options are not configured properly.");
         }
 
-        Navigation.NavigateTo($"{authority}/v2/logout?client_id={clientId}");
+        this.NavigationManager.NavigateTo($"{authority}/v2/logout?client_id={clientId}");
     }
 }
