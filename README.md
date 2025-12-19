@@ -57,7 +57,7 @@ Template para criar projetos em .NET
 - `src/AppProject.Web/App.razor` — registre assemblies adicionais no método `OnNavigateAsync` para habilitar o lazy loading de novos módulos.
 - `src/AppProject.Web/AppProject.Web.csproj` — adicione novos `ProjectReference` e entradas `BlazorWebAssemblyLazyLoad` quando criar módulos adicionais.
 - `src/AppProject.Web/Layout/NavMenu.razor` — inclua itens de menu e permissões para os novos módulos.
-- `src/AppProject.Resources/Resource*.resx` — mantenha as traduções sincronizadas ao adicionar novos textos.
+- `src/AppProject.Resources/Resource*.resx` — mantenha as traduções sincronizadas ao adicionar novos textos. Preserve os comentários que nomeiam cada grupo/logical key, continue quebrando as entradas por formulário (validações e menu permanecem agrupadas) e, quando precisar reservar placeholders futuros, use `{{}}` em vez de `{}` para que o parser mantenha o texto literal.
 
 ## Estrutura de projetos
 - **Backend**
@@ -85,7 +85,7 @@ Seguem algumas especificações do projeto.
 * Usamos o idioma Inglês nos códigos e nos nomes de arquivos.
 * O template já suporta localização (`en-US`, `pt-BR` e `es-ES`) tanto na API quanto no frontend.
 * O frontend usa Radzen para os componentes UI, Refit para os clientes HTTP e autenticação OIDC com Auth0.
-* O estilo de código é validado com StyleCop (veja `Stylecop.json`) e com as configurações compartilhadas em `Directory.Build.props`.
+* O estilo de código é validado com StyleCop (veja `Stylecop.json`) e com as configurações compartilhadas em `Directory.Build.props`; rode o analisador localmente e mantenha os `using` apenas quando necessários e ordenados para evitar violações (evitando assim usings não utilizados).
 * Os projetos backend e frontend executam com o `TargetFramework` e utilizam `implicit usings` e `nullable` habilitados.
 
 ## Integrações externas
@@ -129,6 +129,7 @@ As seções abaixo descrevem os cadastros necessários para que todas as integra
 3. No menu **Email API > Integration Guide**, gere uma API Key.
 4. Envie o primeiro e-mail de teste e confirme o envio no painel.
 5. Copie a key e o remetente configurado (`SendEmail:ApiKey`, `SendEmail:FromEmailAddress`, `SendEmail:FromName`).
+6. Quando criar novos e-mails, modele o corpo em um template Razor (`SampleEmailTemplate.cshtml` e `SampleEmailModel` servem de exemplo em `AppProject.Core.Infrastructure.Email`) e apenas preencha o modelo na service, evitando strings inline.
 
 ### GitHub AI Models
 1. Siga a documentação oficial: <https://docs.github.com/en/github-models/use-github-models/prototyping-with-ai-models>.
@@ -174,11 +175,13 @@ Também será preciso editar os seguintes arquivos para registrar o assembly do 
 - `src/AppProject.Web/Layout/NavMenu.razor` — inclua o item de menu e as permissões relacionadas.
 - `src/AppProject.Resources/Resource*.resx` — adicione as novas chaves de tradução, seguindo a mesma estrutura existente, mantendo os comentários e replicando as tabulações e características das existentes.
 
+Antes de adicionar um `ProjectReference`, valide se a dependência já está acessível via assemblies compartilhados (por exemplo, `AppProject.Core.Services` já referencia os projetos de Jobs, portanto um novo módulo não precisa referenciar Jobs diretamente). Isso evita ciclos e compilações desnecessárias.
+
 #### 2. Conteúdos compartilhados entre módulos
 Caso você esteja adicionando arquivos que são compartilhados entre os módulos, será necessário colocar esses arquivos no projeto raiz em vez do projeto que leva o nome do módulo. Por exemplo, imagine que você esteja adicionando a tabela Customer. Customer é uma tabela que pode ser usada em vários módulos (invoice, financial, etc.). Nesse caso, em vez de ter um módulo General ou Customer, o ideal seria colocar no projeto raiz, dentro de uma pasta que leva o nome do módulo.
 
 Veja a seguir uma lista dos projetos raíz onde podemos criar pastas que representam parte dos módulos que serão compartilhados:
-* `AppProject.Core.Models` — DTOs e requests compartilhados.
+* `AppProject.Core.Models` — DTOs e requests compartilhados. Analise sempre se os arquivos deverão ser compartilhados entre outros módulos ou não. A preferência é que os arquivos fiquem no projeto do próprio módulo ao invés de ficarem nos compartilhados.
 * `AppProject.Core.Services` — serviços comuns, como por exemplo, summaries visíveis em vários módulos. No entanto, não significa que qualquer summary deva ser colocado aqui. Apenas summaries que serão compartilhados entre os módulos.
 * `AppProject.Web` — componentes de layout, autenticação, bootstrap e navegação.
 * `AppProject.Web.ApiClient` — interfaces Refit reutilizadas em mais de um módulo.
@@ -221,6 +224,7 @@ Use DTOs de summary para alimentar grids, combos e demais consultas de leitura. 
 Para pesquisas avançadas, utilize `SearchRequest` como classe base e adicione propriedades específicas:
 - `AppProject.Core.Models/General/StateSummarySearchRequest.cs` — permite filtrar estados por `CountryId`.
 - `AppProject.Core.Models/General/CitySummarySearchRequest.cs` — filtra cidades por `StateId`.
+Mas, evite criar `SearchRequest` derivadas vazias. Só crie uma classe derivada de SearchRequest caso tenha filtros adicionais. Por exemplo, não temos uma CountrySummarySearchRequest, porque na pesquisa de countries não adicionamos filtros adicionais igual fizemos com o StateSummarySearchRequest e o CitySummarySearchRequest.
 
 Sempre avalie se o summary deve trazer nomes agregados em vez de objetos completos. Isso facilita a serialização e evita cargas desnecessárias ou ciclos de referência.
 
@@ -291,6 +295,7 @@ As services centralizam regras de negócio, validações e orquestração do rep
 - `CountrySummaryService.cs`, `StateSummaryService.cs` e `CitySummaryService.cs` tratam consultas de leitura. Eles chamam `GetByConditionAsync` com filtros (`SearchText`, `Take`, `CountryId`, `StateId`) e utilizam `SummariesResponse<T>` para devolver coleções imutáveis.
 - Quando `GetSummaryAsync` não encontra o registro, as classes lançam `AppException(ExceptionCode.EntityNotFound)` para manter consistência com as services de escrita.
 - Ao expandir o template, siga este padrão: mantenha serviços de leitura livres de validações de permissão custosas (a não ser que haja requisitos específicos) e centralize filtros em objetos de request para reutilização no frontend.
+- Evite `Include` redundantes nas queries de summary quando as colunas já são projetadas pela view/adapter.
 
 #### 7. Criando as classes de controller
 Os controllers ficam em projetos específicos de cada módulo, como `AppProject.Core.Controllers.<Módulo>` (ex.: `AppProject.Core.Controllers.General`). Eles expõem apenas a lógica necessária para receber as requests, chamar as services e retornar o resultado padronizado (`Ok(...)`). Exemplos:
@@ -328,6 +333,8 @@ O frontend é um aplicativo **Blazor WebAssembly** que consome a API via Refit e
 
 #### Páginas de formulário e itens aninhados
 - Formulários herdam de [`ModelFormPage<TModel>`](./src/AppProject.Web.Framework/Pages/ModelFormPage.cs) e utilizam o componente [`ModelFormControl.razor`](./src/AppProject.Web.Framework/Components/ModelFormControl.razor).
+- Reutilize diretamente as propriedades do modelo (`TModel`) para binds e seleções em vez de criar propriedades duplicadas (por exemplo, evite `SelectedId`/`SelectedAnotherField`). 
+- Componentes DropDowns devem herdar do `DropDownDataGridControl`. Ao usar esses componentes atente-se para que o `TValue` fique correto (`Guid` para campos obrigatórios no DTO e `Guid?` se o campo não for obrigatório).
 - `ModelFormControl` permite customizações importantes:
   - `ShowNewAction`, `ShowEditAction` e `ShowDeleteAction` em `DataGridControl` controlam quais botões são exibidos.
   - `PreferAddOverNew` troca o texto padrão do botão para “Add” (caso de [`CityFormPage.razor`](./src/AppProject.Web.General/Pages/CityFormPage.razor) ao gerenciar bairros).
@@ -339,6 +346,7 @@ O frontend é um aplicativo **Blazor WebAssembly** que consome a API via Refit e
   - Ao inserir/alterar um item, adicione-o em `ChangedNeighborhoodRequests`.
   - Ao excluir, mova o identificador para `DeletedNeighborhoodRequests`.
   - Use diálogos especializados (como [`NeighborhoodFormPage.razor`](./src/AppProject.Web.General/Pages/NeighborhoodFormPage.razor)) para editar os itens filhos.
+- Consulte sempre a documentação dos componentes Radzen antes de configurar atributos como `Min`/`Max`. Para valores decimais use expressões `@(0.01m)` em `RadzenNumeric`, garantindo que o valor seja tratado como `decimal`, e evite validadores redundantes quando a propriedade já possui `[Required]` no modelo.
 
 #### Fluxo completo dos cadastros General
 1. **País**
@@ -368,6 +376,8 @@ O frontend é um aplicativo **Blazor WebAssembly** que consome a API via Refit e
 #### Localização e resources
 - Tanto a API quanto o frontend consomem os resources definidos em `AppProject.Resources`. O helper [`StringResource.cs`](./src/AppProject.Resources/StringResource.cs) lê os arquivos [`Resource.resx`](./src/AppProject.Resources/Resource.resx), [`Resource.pt-BR.resx`](./src/AppProject.Resources/Resource.pt-BR.resx) e [`Resource.es-ES.resx`](./src/AppProject.Resources/Resource.es-ES.resx).
 - Ao adicionar novas telas ou mensagens, inclua as chaves nos três arquivos para manter o suporte multilíngue.
+- Preserve os comentários e a organização por grupos (formulários separados, validações e menus juntos) ao editar os `.resx`; cada nova key deve estar em sua própria linha seguindo o padrão existente para facilitar o diff.
+- Quando precisar reservar placeholders para valores interpolados posteriormente use `{{Value}}` ao invés de `{Value}` para que o parser dos resources trate o texto como literal até que o template faça o replace.
 - Os componentes reutilizáveis consomem chaves específicas (`DataGridControl_NewButton_Text`, `DataGridControl_AddButton_Text`, `ModelFormControl_SaveButton_Text`, `ModelFormControl_ExecuteButton_Text`, entre outras). Ajuste essas chaves para personalizar rótulos sem alterar o código.
 
 #### Lazy loading, navegação e bootstrap
