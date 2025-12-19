@@ -11,7 +11,7 @@ namespace AppProject.Core.API.Auth;
 public class UserContext(
     IHttpContextAccessor httpContextAccessor,
     ApplicationDbContext applicationDbContext,
-    HybridCache hybridCache) 
+    HybridCache hybridCache)
     : IUserContext
 {
     private UserInfo? currentUser;
@@ -93,7 +93,7 @@ public class UserContext(
                 applicationDbContext.Users.Add(user);
                 await applicationDbContext.SaveChangesAsync();
             }
-            else if (user.Name == name)
+            else if (user.Name != name)
             {
                 user.Name = name;
 

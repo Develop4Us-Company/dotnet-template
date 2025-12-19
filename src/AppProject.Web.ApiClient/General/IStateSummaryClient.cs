@@ -12,5 +12,4 @@ public interface IStateSummaryClient
 
     [Get("/api/general/StateSummary/GetSummary")]
     public Task<SummaryResponse<StateSummary>> GetSummaryAsync([Query] GetByIdRequest<Guid> request, CancellationToken cancellationToken = default);
-
 }

@@ -266,6 +266,7 @@ public abstract class AppProjectComponentBase : ComponentBase
         {
             Severity = severity,
             Summary = title,
+            Duration = duration,
             Detail = message,
             Click = notificationClick,
             Payload = payload

@@ -21,7 +21,7 @@
     Click="@this.ToggleLanguagePopupAsync" />
 
 <Popup @ref="popup" Lazy=true class="language-popup">
-    <RadzenDropDown TValue="CultureInfo" @bind-Value=Culture Change=@this.OnLanguageChangedAsync Data=@this.SupportedCultures
+    <RadzenDropDown TValue="CultureInfo" @bind-Value=@this.Culture Change=@this.OnLanguageChangedAsync Data=@this.SupportedCultures
         TextProperty="DisplayName" />
 </Popup>
 

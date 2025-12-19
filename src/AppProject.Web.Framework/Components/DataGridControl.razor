@@ -37,7 +37,7 @@
         </RadzenRow>
         <RadzenRow class="rz-mt-1">
             <RadzenColumn>
-                <RadzenDataGrid TItem="TItem" @ref=@this.dataGrid Data=@Items
+                <RadzenDataGrid TItem="TItem" @ref=@this.dataGrid Data=@this.Items
                     GroupPanelText=@StringResource.GetStringByKey("RadzenDataGrid_GroupPanel_Text")
                     PageSizeText=@StringResource.GetStringByKey("RadzenDataGrid_PageSize_Text")
                     EmptyText=@StringResource.GetStringByKey("RadzenDataGrid_Empty_Text")
@@ -62,7 +62,7 @@
                     FirstPageTitle=@StringResource.GetStringByKey("RadzenDataGrid_FirstPage_Title")
                     PageTitleFormat=@StringResource.GetStringByKey("RadzenDataGrid_Page_TitleFormat")
                     AllowRowSelectOnRowClick="true" SelectionMode="DataGridSelectionMode.Multiple" 
-                    Value=@this.SelectedItems ValueChanged=@OnSelectedItemsChangedAsync
+                    Value=@this.SelectedItems ValueChanged=@this.OnSelectedItemsChangedAsync
                     AllowPaging="true" PageSizeOptions=@this.PageSizeOptions
                     AllowColumnReorder="true" AllowMultiColumnSorting="true"
                     AllowAlternatingRows="true" AllowFiltering="true" AllowSorting="true" AllowColumnResize="true"
