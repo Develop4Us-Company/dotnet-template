@@ -1,6 +1,4 @@
-﻿@using AppProject.Models
-
-@inherits AppProjectComponentBase
+﻿@inherits AppProjectComponentBase
 
 @typeparam TItem
 
@@ -10,8 +8,8 @@
             <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
                 <RadzenButton ButtonStyle="ButtonStyle.Success" 
                     Icon=@(this.PreferAddOverNew ? "add_ad" : "add_circle")
-                    Text=@StringResource.GetStringByKey(this.PreferAddOverNew ? "DataGridControl_AddButton_Text" : "DataGridControl_NewButton_Text")
-                    Visible=@this.ShowNewAction
+                    Text=@StringResource.GetStringByKey(this.PreferAddOverNew ? "DataGridControl_AddButton_Text" : "DataGridControl_NewButton_Text") 
+                    Visible=@this.ShowNewAction 
                     Click=@this.OnNewItem />
                 @this.GlobalActions
             </RadzenStack>
@@ -21,18 +19,18 @@
         <RadzenRow AlignItems="AlignItems.End">
             <RadzenColumn>
                 <RadzenStack Orientation="Orientation.Horizontal" Gap="3" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Right">
-                    <RadzenButton ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined" 
+                    <RadzenButton ButtonStyle="ButtonStyle.Base" Variant="Variant.Outlined"
                         Icon=@(this.PreferOpenOverEdit ? "arrow_right_alt" : "edit")
-                        Text=@StringResource.GetStringByKey(this.PreferOpenOverEdit ? "DataGridControl_OpenButton_Text" : "DataGridControl_EditButton_Text")
-                        Visible=@this.ShowEditAction
+                        Text=@StringResource.GetStringByKey(this.PreferOpenOverEdit ? "DataGridControl_OpenButton_Text"  : "DataGridControl_EditButton_Text")
+                        Visible=@this.ShowEditAction 
                         Disabled=@(!this.IsSingleItemSelected)
                         Click=@this.OnEditItem />
                     @this.ContextActions
                     <RadzenButton ButtonStyle="ButtonStyle.Danger" Variant="Variant.Outlined" 
                         Icon="delete"
                         Text=@StringResource.GetStringByKey("DataGridControl_DeleteButton_Text")
-                        Visible=@this.ShowEditAction
-                        Disabled=@(!this.HasItemsSelected)
+                        Visible=@this.ShowDeleteAction
+                        Disabled=@(!this.HasItemsSelected) 
                         Click=@this.OnDeleteItem />
                 </RadzenStack>
             </RadzenColumn>
@@ -63,7 +61,7 @@
                     PrevPageTitle=@StringResource.GetStringByKey("RadzenDataGrid_PreviousPage_Title")
                     FirstPageTitle=@StringResource.GetStringByKey("RadzenDataGrid_FirstPage_Title")
                     PageTitleFormat=@StringResource.GetStringByKey("RadzenDataGrid_Page_TitleFormat")
-                    AllowRowSelectOnRowClick="true" SelectionMode="DataGridSelectionMode.Multiple"
+                    AllowRowSelectOnRowClick="true" SelectionMode="DataGridSelectionMode.Multiple" 
                     Value=@this.SelectedItems ValueChanged=@OnSelectedItemsChangedAsync
                     AllowPaging="true" PageSizeOptions=@this.PageSizeOptions
                     AllowColumnReorder="true" AllowMultiColumnSorting="true"
@@ -91,7 +89,7 @@
 
 @code {
     private RadzenDataGrid<TItem> dataGrid = default!;
-    
+
     [Parameter]
     public bool AllowCollapse { get; set; }
 
@@ -145,10 +143,6 @@
 
     private IEnumerable<int> PageSizeOptions => new int[] { 10, 20, 50, 100, 1000 };
 
-    private bool IsSingleItemSelected => this.SelectedItems.Count() == 1;
-
-    private bool HasItemsSelected => this.SelectedItems.Any();
-
     private bool? AreAllItemsSelected
     {
         get
@@ -166,6 +160,10 @@
             return true;
         }
     }
+
+    private bool IsSingleItemSelected => this.SelectedItems.Count() == 1;
+
+    private bool HasItemsSelected => this.SelectedItems.Any();
 
     private async Task SetAllItemsSelectionAsync(bool? isSelected)
     {

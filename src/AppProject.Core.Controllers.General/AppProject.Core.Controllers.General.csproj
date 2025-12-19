@@ -1,14 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Core.Contracts/AppProject.Core.Contracts.csproj" />
-    <ProjectReference Include="../AppProject.Core.Models.General/AppProject.Core.Models.General.csproj" />
-    <ProjectReference Include="../AppProject.Core.Services.General/AppProject.Core.Services.General.csproj" />
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Contracts\AppProject.Core.Contracts.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Models.General\AppProject.Core.Models.General.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Services.General\AppProject.Core.Services.General.csproj" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
 </Project>

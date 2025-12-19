@@ -5,14 +5,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.11" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
-    <ProjectReference Include="../AppProject.Web.ApiClient/AppProject.Web.ApiClient.csproj" />
-    <ProjectReference Include="../AppProject.Web.Framework/AppProject.Web.Framework.csproj" />
-    <ProjectReference Include="../AppProject.Web.Models/AppProject.Web.Models.csproj" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
+    <ProjectReference Include="..\AppProject.Web.ApiClient\AppProject.Web.ApiClient.csproj" />
+    <ProjectReference Include="..\AppProject.Web.Framework\AppProject.Web.Framework.csproj" />
+    <ProjectReference Include="..\AppProject.Web.Models\AppProject.Web.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="General\" />
+    <Folder Include="General\Components\" />
   </ItemGroup>
 
 </Project>

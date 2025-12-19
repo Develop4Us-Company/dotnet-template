@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="NUnit.Framework" />
+    <ProjectReference Include="..\AppProject.Core.API\AppProject.Core.API.csproj" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Core.API/AppProject.Core.API.csproj" />
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
+    <Using Include="NUnit.Framework" />
   </ItemGroup>
 
 </Project>

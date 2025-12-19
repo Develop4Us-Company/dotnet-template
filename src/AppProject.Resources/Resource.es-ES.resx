@@ -240,7 +240,7 @@
     <value>No se encontraron registros.</value>
   </data>
   <data name="RadzenDropDownDataGrid_SearchTextPlaceholder" xml:space="preserve" xml:lang="es-ES">
-      <value>Buscar...</value>
+    <value>Buscar...</value>
   </data>
 
   <!--Frontend Menus-->
@@ -342,6 +342,14 @@
     <value>El país es obligatorio</value>
   </data>
 
+  <!--Frontend General/StateSummaryDropDownDataGridControl-->
+  <data name="General_StateSummaryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="General_StateSummaryDropDownDataGridControl_CountryNameColumn_Title" xml:space="preserve">
+    <value>País</value>
+  </data>
+
   <!--Frontend General/CitySummaryPage-->
   <data name="General_CitySummaryPage_Title" xml:space="preserve">
     <value>Ciudades</value>
@@ -356,14 +364,6 @@
     <value>Estado</value>
   </data>
   <data name="General_CitySummaryPage_CountryNameColumn_Title" xml:space="preserve">
-    <value>País</value>
-  </data>
-
-  <!--Frontend General/StateSummaryDropDownDataGridControl-->
-  <data name="General_StateSummaryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
-    <value>Nombre</value>
-  </data>
-  <data name="General_StateSummaryDropDownDataGridControl_CountryNameColumn_Title" xml:space="preserve">
     <value>País</value>
   </data>
 

@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
 
 namespace AppProject.Resources;
 

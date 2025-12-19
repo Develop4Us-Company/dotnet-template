@@ -30,7 +30,7 @@
     <value>Sent date: {0}</value>
   </data>
 
-  <!--Validations-->
+   <!--Validations-->
   <data name="General_Country_DuplicateName" xml:space="preserve">
     <value>This country name already exists.</value>
   </data>
@@ -342,6 +342,14 @@
     <value>Country is required</value>
   </data>
 
+  <!--Frontend General/StateSummaryDropDownDataGridControl-->
+  <data name="General_StateSummaryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="General_StateSummaryDropDownDataGridControl_CountryNameColumn_Title" xml:space="preserve">
+    <value>Country</value>
+  </data>
+
   <!--Frontend General/CitySummaryPage-->
   <data name="General_CitySummaryPage_Title" xml:space="preserve">
     <value>Cities</value>
@@ -359,15 +367,7 @@
     <value>Country</value>
   </data>
 
-  <!--Frontend General/StateSummaryDropDownDataGridControl-->
-  <data name="General_StateSummaryDropDownDataGridControl_NameColumn_Title" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="General_StateSummaryDropDownDataGridControl_CountryNameColumn_Title" xml:space="preserve">
-    <value>Country</value>
-  </data>
-
-  <!--Frontend General/CityFormPage-->
+   <!--Frontend General/CityFormPage-->
   <data name="General_CityFormPage_Title" xml:space="preserve">
     <value>City</value>
   </data>

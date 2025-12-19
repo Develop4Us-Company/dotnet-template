@@ -1,5 +1,3 @@
-using System;
-
 namespace AppProject.Models.Auth;
 
 public enum PermissionType

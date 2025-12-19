@@ -1,5 +1,4 @@
-﻿@using System.Collections.Generic
-@using AppProject.Web.ApiClient.General
+﻿@using AppProject.Web.ApiClient.General
 @using AppProject.Web.Models.General
 
 @inherits AppProjectComponentBase
@@ -41,15 +40,15 @@
                     && selectedGuid != Guid.Empty
                     && summariesResponse?.Summaries.Any(x => x.Id == selectedGuid) == false)
                 {
-                    var selectedSummaryResponse = await this.CountrySummaryClient.GetSummaryAsync(new GetByIdRequest<Guid>{ Id = selectedGuid });
-
+                    var selectedSummaryResponse = await this.CountrySummaryClient.GetSummaryAsync(new GetByIdRequest<Guid> { Id = selectedGuid});
+                    
                     if (selectedSummaryResponse?.Summary != null)
                     {
                         return new SummariesResponse<CountrySummary>
-                        { 
+                        {
                             Summaries = summariesResponse.Summaries.Concat([selectedSummaryResponse.Summary])
                                 .OrderBy(x => x.Name)
-                                .ToArray() 
+                                .ToArray()
                         };
                     }
                 }

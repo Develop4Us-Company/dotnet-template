@@ -33,7 +33,7 @@ public class PermissionService(IUserContext userContext)
 
             // Add more cases for other permissions as needed
             default:
-                return false; // Permission not recognized
+                return false;
         }
     }
 

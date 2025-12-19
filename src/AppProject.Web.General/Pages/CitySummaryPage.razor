@@ -1,7 +1,5 @@
 ﻿@page "/general/cities"
 
-@using AppProject.Web.ApiClient.General
-
 @attribute [Authorize]
 
 @inherits SearchPage<CitySummarySearchRequest, CitySummary>
@@ -18,7 +16,7 @@
     <ChildContent>
         <DataGridControl TItem="CitySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
             OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@this.OnDeleteItemAsync>
-            
+
             <RadzenDataGridColumn TItem="CitySummary"
                 Title=@StringResource.GetStringByKey("General_CitySummaryPage_NameColumn_Title")
                 Property=@nameof(CitySummary.Name) />

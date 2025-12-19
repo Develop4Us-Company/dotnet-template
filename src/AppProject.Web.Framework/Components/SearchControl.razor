@@ -1,5 +1,4 @@
 ﻿@using AppProject.Models
-@using System.Collections.ObjectModel
 
 @inherits AppProjectComponentBase
 
@@ -27,7 +26,7 @@
                         Title=@StringResource.GetStringByKey("SearchControl_AdvancedFiltersButton_Text")>
                         <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Wrap="FlexWrap.Wrap">
                             <RadzenFormField Text=@StringResource.GetStringByKey("SearchControl_TakeField_Label")>
-                                <RadzenNumeric ShowUpDown="false" TValue="int?" Value=@this.Take
+                                <RadzenNumeric ShowUpDown="false" TValue="int?" Value=@this.Take 
                                     ValueChanged=@this.OnTakeChangedAsync />
                             </RadzenFormField>
                             @FilterContent
@@ -44,9 +43,9 @@
 @code {
     private RenderFragment? TakeInfo =>
         this.DisplayTakeInfo && this.Take.HasValue
-            ?   @<RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Lighter">
-                    @StringResource.GetStringByKey("SearchControl_TakeField_Info_Message", this.Take.Value)
-                </RadzenAlert>
+            ? @<RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Lighter">
+                @StringResource.GetStringByKey("SearchControl_TakeField_Info_Message", this.Take.Value)
+            </RadzenAlert>
             : null;
 
     [Parameter]
@@ -88,7 +87,7 @@
     protected override async Task OnInitializedAsync()
     {
         const int DefaultTakeValue = 100;
-        
+
         await base.OnInitializedAsync();
 
         if (this.UseDefaultTakeValue && this.Take is null)

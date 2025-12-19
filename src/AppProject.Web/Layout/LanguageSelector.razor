@@ -1,7 +1,5 @@
-@using AppProject.Web.Constants
+﻿@using AppProject.Web.Constants
 @using Blazored.LocalStorage
-@using Microsoft.AspNetCore.Components
-@using Radzen
 @using Radzen.Blazor.Rendering
 @using System.Globalization
 
@@ -15,14 +13,14 @@
         border: var(--rz-panel-border);
         background-color: var(--rz-panel-background-color);
         box-shadow: var(--rz-panel-shadow);
-        border-radius: var(--rz-border-radius)
+        border-radius: var(--rz-border-radius);
     }
 </style>
 
 <RadzenButton @ref="button" Icon="language" ButtonStyle="ButtonStyle.Base"
     Click="@this.ToggleLanguagePopupAsync" />
 
-<Popup @ref=popup Lazy=true class="language-popup">
+<Popup @ref="popup" Lazy=true class="language-popup">
     <RadzenDropDown TValue="CultureInfo" @bind-Value=Culture Change=@this.OnLanguageChangedAsync Data=@this.SupportedCultures
         TextProperty="DisplayName" />
 </Popup>
@@ -35,7 +33,7 @@
     {
         new CultureInfo("en-US"),
         new CultureInfo("pt-BR"),
-        new CultureInfo("es-ES"),
+        new CultureInfo("es-ES")
     };
 
     [Inject]

@@ -1,16 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Core.Contracts/AppProject.Core.Contracts.csproj" />
-    <ProjectReference Include="../AppProject.Core.Models.General/AppProject.Core.Models.General.csproj" />
-    <ProjectReference Include="../AppProject.Core.Models/AppProject.Core.Models.csproj" />
-    <ProjectReference Include="../AppProject.Exceptions/AppProject.Exceptions.csproj" />
-    <ProjectReference Include="../AppProject.Resources/AppProject.Resources.csproj" />
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Contracts\AppProject.Core.Contracts.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Models.General\AppProject.Core.Models.General.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Models\AppProject.Core.Models.csproj" />
+    <ProjectReference Include="..\AppProject.Exceptions\AppProject.Exceptions.csproj" />
+    <ProjectReference Include="..\AppProject.Resources\AppProject.Resources.csproj" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
   </ItemGroup>
-
 </Project>

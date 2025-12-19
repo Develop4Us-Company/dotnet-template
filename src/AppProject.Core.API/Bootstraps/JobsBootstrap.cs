@@ -27,6 +27,6 @@ public static class JobsBootstrap
             {
                 TimeZone = TimeZoneInfo.Local
             });
-    }
 #endif
+    }
 }

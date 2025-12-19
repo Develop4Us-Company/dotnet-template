@@ -6,17 +6,22 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.9" />
-    <PackageReference Include="Radzen.Blazor" Version="7.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.0" />
+    <PackageReference Include="Radzen.Blazor" Version="8.3.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Exceptions/AppProject.Exceptions.csproj" />
-    <ProjectReference Include="../AppProject.Resources/AppProject.Resources.csproj" />
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
-    <ProjectReference Include="../AppProject.Web.ApiClient/AppProject.Web.ApiClient.csproj" />
-    <ProjectReference Include="../AppProject.Web.Models/AppProject.Web.Models.csproj" />
+    <ProjectReference Include="..\AppProject.Exceptions\AppProject.Exceptions.csproj" />
+    <ProjectReference Include="..\AppProject.Resources\AppProject.Resources.csproj" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
+    <ProjectReference Include="..\AppProject.Web.ApiClient\AppProject.Web.ApiClient.csproj" />
+    <ProjectReference Include="..\AppProject.Web.Models\AppProject.Web.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>

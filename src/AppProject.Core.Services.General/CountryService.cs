@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using AppProject.Core.Infrastructure.Database;
 using AppProject.Core.Infrastructure.Database.Entities.General;
 using AppProject.Core.Models.General;

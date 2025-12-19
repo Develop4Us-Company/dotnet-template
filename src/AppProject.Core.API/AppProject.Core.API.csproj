@@ -2,9 +2,9 @@
 
   <ItemGroup>
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -12,26 +12,22 @@
     <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="9.0.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="9.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Core.Contracts/AppProject.Core.Contracts.csproj" />
-    <ProjectReference Include="../AppProject.Core.Controllers.General/AppProject.Core.Controllers.General.csproj" />
-    <ProjectReference Include="../AppProject.Core.Infrastructure.AI/AppProject.Core.Infrastructure.AI.csproj" />
-    <ProjectReference Include="../AppProject.Core.Infrastructure.Database/AppProject.Core.Infrastructure.Database.csproj" />
-    <ProjectReference Include="../AppProject.Core.Infrastructure.Email/AppProject.Core.Infrastructure.Email.csproj" />
-    <ProjectReference Include="../AppProject.Core.Infrastructure.Jobs/AppProject.Core.Infrastructure.Jobs.csproj" />
-    <ProjectReference Include="../AppProject.Core.Services.General/AppProject.Core.Services.General.csproj" />
-    <ProjectReference Include="../AppProject.Core.Services/AppProject.Core.Services.csproj" />
-    <ProjectReference Include="../AppProject.Resources/AppProject.Resources.csproj" />
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="logs/" />
+    <ProjectReference Include="..\AppProject.Core.Contracts\AppProject.Core.Contracts.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Controllers.General\AppProject.Core.Controllers.General.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Infrastructure.AI\AppProject.Core.Infrastructure.AI.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Infrastructure.Database\AppProject.Core.Infrastructure.Database.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Infrastructure.Email\AppProject.Core.Infrastructure.Email.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Infrastructure.Jobs\AppProject.Core.Infrastructure.Jobs.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Services.General\AppProject.Core.Services.General.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Services\AppProject.Core.Services.csproj" />
+    <ProjectReference Include="..\AppProject.Resources\AppProject.Resources.csproj" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

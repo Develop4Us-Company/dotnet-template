@@ -1,7 +1,5 @@
 ﻿@page "/general/countries"
 
-@using AppProject.Web.ApiClient.General
-
 @attribute [Authorize]
 
 @inherits SearchPage<SearchRequest, CountrySummary>
@@ -11,8 +9,8 @@
     @bind-SearchText=@this.Request.SearchText DisplayTakeInfo=@this.DisplayTakeInfo
     OnExecuteSearch=@this.ExecuteSearchAsync>
     <DataGridControl TItem="CountrySummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
-        OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@this.OnDeleteItemAsync>
-        
+        OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@OnDeleteItemAsync>
+
         <RadzenDataGridColumn TItem="CountrySummary"
             Title=@StringResource.GetStringByKey("General_CountrySummaryPage_NameColumn_Title")
             Property=@nameof(CountrySummary.Name) />

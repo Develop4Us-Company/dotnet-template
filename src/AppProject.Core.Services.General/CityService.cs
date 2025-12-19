@@ -38,13 +38,13 @@ public class CityService(
     {
         await permissionService.ValidateCurrentUserPermissionAsync(PermissionType.System_ManageSettings, cancellationToken: cancellationToken);
 
-        var neighborhood = await databaseRepository.GetByConditionAsync<TbNeighborhood, Neighborhood>(
+        var neighborhoods = await databaseRepository.GetByConditionAsync<TbNeighborhood, Neighborhood>(
             query => query.Where(x => x.CityId == request.ParentId),
             cancellationToken);
 
         return new EntitiesResponse<Neighborhood>
         {
-            Entities = neighborhood
+            Entities = neighborhoods
         };
     }
 

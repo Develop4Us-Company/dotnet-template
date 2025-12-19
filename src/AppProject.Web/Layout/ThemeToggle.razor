@@ -1,6 +1,5 @@
 ﻿@using AppProject.Web.Constants
 @using Blazored.LocalStorage
-@using Radzen
 
 @inherits AppProjectComponentBase
 
@@ -22,8 +21,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var theme = await this.LocalStorageService.GetItemAsync<string>(ThemeConstants.ThemeLocalStorageKey)
-        ?? ThemeConstants.DefaultLightTheme;
+        var theme = await this.LocalStorageService.GetItemAsync<string>(ThemeConstants.ThemeLocalStorageKey);
 
         this.IsDarkTheme = theme == ThemeConstants.DefaultDarkTheme;
 

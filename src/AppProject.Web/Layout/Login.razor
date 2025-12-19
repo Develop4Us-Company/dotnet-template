@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using System.Security.Claims
 
 @inherits AppProjectComponentBase
@@ -12,8 +13,8 @@
             </Template>
             <ChildContent>
                 <RadzenStack class="rz-m-3" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center">
-                    <RadzenText TextStyle="TextStyle.Subtitle1" Text=@context.User.Identity?.Name/>
-                    <RadzenText TextStyle="TextStyle.Subtitle2" Text=@GetUserEmail(context.User)/>
+                    <RadzenText TextStyle="TextStyle.Subtitle1" Text=@context.User.Identity?.Name />
+                    <RadzenText TextStyle="TextStyle.Subtitle2" Text=@GetUserEmail(context.User) />
                     <RadzenButton class="rz-mt-3" Text=@StringResource.GetStringByKey("Logout_Button_Text") Icon="logout"
                         ButtonStyle="ButtonStyle.Base" Click=@this.LogoutUser />
                 </RadzenStack>
@@ -40,9 +41,9 @@
     private static string? GetUserEmail(ClaimsPrincipal? user)
     {
         var email = user?.Claims?.FirstOrDefault(x =>
-            x.Type == "email" ||
-            x.Type == ClaimTypes.Email ||
-            x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+            x.Type == "email"
+            || x.Type == ClaimTypes.Email
+            || x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
         )?.Value ?? string.Empty;
 
         if (user?.Identity?.Name == email)

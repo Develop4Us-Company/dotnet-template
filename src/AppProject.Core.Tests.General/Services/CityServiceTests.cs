@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using AppProject.Core.Infrastructure.Database;
 using AppProject.Core.Infrastructure.Database.Entities.General;
 using AppProject.Core.Models.General;
@@ -151,9 +147,10 @@ public class CityServiceTests
             .ReturnsAsync(false);
 
         this.databaseRepositoryMock
-            .Setup(x => x.HasAnyAsync<TbNeighborhood>(
+            .SetupSequence(x => x.HasAnyAsync<TbNeighborhood>(
                 It.IsAny<Func<IQueryable<TbNeighborhood>, IQueryable<TbNeighborhood>>>(),
                 It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false)
             .ReturnsAsync(true);
 
         var exception = await AssertAppExceptionAsync(() => this.service.PostEntityAsync(
@@ -227,9 +224,10 @@ public class CityServiceTests
             .ReturnsAsync(false);
 
         this.databaseRepositoryMock
-            .Setup(x => x.HasAnyAsync<TbNeighborhood>(
+            .SetupSequence(x => x.HasAnyAsync<TbNeighborhood>(
                 It.IsAny<Func<IQueryable<TbNeighborhood>, IQueryable<TbNeighborhood>>>(),
                 It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false)
             .ReturnsAsync(true);
 
         this.databaseRepositoryMock

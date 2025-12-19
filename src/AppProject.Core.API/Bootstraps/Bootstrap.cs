@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Threading.RateLimiting;
 using AppProject.Core.API.Auth;
@@ -180,8 +181,8 @@ public static class Bootstrap
             user = new TbUser
             {
                 Id = adminUserId,
-                Name = systemAdminUserOptions.Name!,
-                Email = systemAdminUserOptions.Email!,
+                Name = systemAdminUserOptions.Name,
+                Email = systemAdminUserOptions.Email,
                 IsSystemAdmin = true,
                 CreatedAt = DateTime.UtcNow,
                 CreatedByUserId = adminUserId,
@@ -263,14 +264,14 @@ public static class Bootstrap
             .AddClasses(y =>
                 y.AssignableTo<IScopedService>())
             .AsImplementedInterfaces()
-            .WithTransientLifetime());
+            .WithScopedLifetime());
 
         builder.Services.Scan(x =>
             x.FromAssemblies(GetServiceAssemblies())
             .AddClasses(y =>
                 y.AssignableTo<ISingletonService>())
             .AsImplementedInterfaces()
-            .WithTransientLifetime());
+            .WithSingletonLifetime());
     }
 
     private static void ConfigureUsers(WebApplicationBuilder builder)
@@ -458,9 +459,9 @@ public static class Bootstrap
             options.AddPolicy(DefaultCorsPolicyName, policy =>
             {
                 policy.WithOrigins(corsOptions?.AllowedOrigins ?? Array.Empty<string>())
-                      .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials();
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
             });
         });
     }
@@ -544,7 +545,7 @@ public static class Bootstrap
     private static IEnumerable<Assembly> GetServiceAssemblies() =>
         [
             Assembly.Load("AppProject.Core.Services"),
-            Assembly.Load("AppProject.Core.Services.General"),
+            Assembly.Load("AppProject.Core.Services.General")
         ];
 
     private class ConnectionStringsOptions

@@ -19,9 +19,6 @@
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientAuthIPermissionClient.GetCurrentUserPermissionsAsync(AppProject.Models.Auth.PermissionContext,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientAuthIPermissionClient.AppProject#Web#ApiClient#Auth#IPermissionClient#GetCurrentUserPermissionsAsync(AppProject.Models.Auth.PermissionContext,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
         <member name="T:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICitySummaryClient">
             <inheritdoc />
         </member>
@@ -35,12 +32,6 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICitySummaryClient.GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICitySummaryClient.AppProject#Web#ApiClient#General#ICitySummaryClient#GetSummariesAsync(AppProject.Web.Models.General.CitySummarySearchRequest,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICitySummaryClient.AppProject#Web#ApiClient#General#ICitySummaryClient#GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient">
@@ -58,12 +49,6 @@
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.AppProject#Web#ApiClient#General#ICountrySummaryClient#GetSummariesAsync(AppProject.Models.SearchRequest,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralICountrySummaryClient.AppProject#Web#ApiClient#General#ICountrySummaryClient#GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
         <member name="T:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateSummaryClient">
             <inheritdoc />
         </member>
@@ -77,12 +62,6 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateSummaryClient.GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateSummaryClient.AppProject#Web#ApiClient#General#IStateSummaryClient#GetSummariesAsync(AppProject.Web.Models.General.StateSummarySearchRequest,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.AppProjectWebApiClientGeneralIStateSummaryClient.AppProject#Web#ApiClient#General#IStateSummaryClient#GetSummaryAsync(AppProject.Models.GetByIdRequest{System.Guid},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
     </members>

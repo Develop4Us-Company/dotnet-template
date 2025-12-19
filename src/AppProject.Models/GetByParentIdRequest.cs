@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using AppProject.Models.CustomValidators;
 
 namespace AppProject.Models;

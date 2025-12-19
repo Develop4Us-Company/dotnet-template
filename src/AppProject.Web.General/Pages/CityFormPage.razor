@@ -1,5 +1,4 @@
-﻿@using AppProject.Web.ApiClient.General
-
+﻿
 @attribute [Authorize]
 
 @inherits ModelFormPage<City>
@@ -19,7 +18,7 @@
 
                             <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Label")>
                                 <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
-                                <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Required")/>
+                                <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_Required") />
                                 <RadzenLengthValidator Component="NameField" Max="200" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_NameField_InvalidLength") />
                             </RadzenFormField>
 
@@ -30,7 +29,7 @@
 
                             <RadzenFormField Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Label")>
                                 <StateSummaryDropDownDataGridControl Name="StateField" TValue="Guid" @bind-Value=@this.Model.StateId />
-                                <RadzenCustomValidator Component="StateField" Validator="() => this.Model.StateId != Guid.Empty" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Required")/>
+                                <RadzenCustomValidator Component="StateField" Validator="() => this.Model.StateId != Guid.Empty" Text=@StringResource.GetStringByKey("General_CityFormPage_GeneralFieldset_StateField_Required") />
                             </RadzenFormField>
 
                         </RadzenStack>
@@ -44,7 +43,7 @@
             <DataGridControl TItem="Neighborhood" Items=@this.Neighborhoods @bind-SelectedItems=@this.SelectedNeighborhoods
                 AllowCollapse="true" Title=@StringResource.GetStringByKey("General_CityFormPage_NeighborhoodFieldset_Title") PreferAddOverNew="true"
                 OnNewItem=@this.OnNewNeighborhoodItemAsync OnEditItem=@this.OnEditNeighborhoodItemAsync OnDeleteItem=@this.OnDeleteNeighborhoodItemAsync>
-                
+
                 <RadzenDataGridColumn TItem="Neighborhood"
                     Title=@StringResource.GetStringByKey("General_CityFormPage_NeighborhoodFieldset_NameColumn_Title")
                     Property=@nameof(Neighborhood.Name) />
@@ -91,16 +90,15 @@
     private async Task OnSaveAsync()
     {
         var keyResponse = await this.GetResultOrHandleExceptionAsync<KeyResponse<Guid>>(
-            async () => 
+            async () =>
             {
                 if (this.Model.Id.GetValueOrDefault() != Guid.Empty)
                 {
                     return await this.CityClient.PutAsync(new CreateOrUpdateRequest<City> { Entity = this.Model });
                 }
-                
+
                 return await this.CityClient.PostAsync(new CreateOrUpdateRequest<City> { Entity = this.Model });
-            }
-        );
+            });
 
         if (keyResponse is not null)
         {
@@ -115,7 +113,7 @@
     {
         var neighborhood = await this.OpenDialogAsync<NeighborhoodFormPage, Neighborhood>(
             title: StringResource.GetStringByKey("General_NeighborhoodFormPage_Title"));
-        
+
         if (neighborhood is not null)
         {
             var neighborhoods = this.Neighborhoods.ToList();
@@ -158,7 +156,7 @@
                 {
                     this.Model.DeletedNeighborhoodRequests.Add(new DeleteRequest<Guid> { Id = selectedNeighborhood.Id.Value });
                 }
-                
+
                 if (this.Model.ChangedNeighborhoodRequests.FirstOrDefault(x => x.Entity == selectedNeighborhood)
                     is CreateOrUpdateRequest<Neighborhood> changedNeighborhoodRequest)
                 {

@@ -96,7 +96,8 @@ public class StateService(
             query => query.Where(x =>
                 x.CountryId == state.CountryId
                 && x.Name == state.Name
-                && x.Id != state.Id), cancellationToken))
+                && x.Id != state.Id),
+            cancellationToken))
         {
             throw new AppException(ExceptionCode.General_State_DuplicateName);
         }

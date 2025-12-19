@@ -12,6 +12,6 @@ public class DropDownDataGridControl<TValue> : RadzenDropDownDataGrid<TValue>
         this.SearchTextPlaceholder = StringResource.GetStringByKey("RadzenDropDownDataGrid_SearchTextPlaceholder");
         this.AllowFiltering = true;
         this.AllowClear = true;
-        this.AllowSorting = false;
+        this.AllowSorting = true;
     }
 }

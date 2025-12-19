@@ -1,4 +1,4 @@
-﻿namespace AppProject.Exceptions;
+namespace AppProject.Exceptions;
 
 public enum ExceptionCode
 {
@@ -12,5 +12,5 @@ public enum ExceptionCode
     General_Country_DuplicateName,
     General_State_DuplicateName,
     General_City_DuplicateName,
-    General_City_Neighborhood_DuplicateName,
+    General_City_Neighborhood_DuplicateName
 }

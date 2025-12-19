@@ -1,6 +1,4 @@
-﻿@using AppProject.Web.ApiClient.General
-
-@attribute [Authorize]
+﻿@attribute [Authorize]
 
 @inherits ModelFormPage<State>
 
@@ -17,7 +15,7 @@
 
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_NameField_Label")>
                         <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
-                        <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_NameField_Required")/>
+                        <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_NameField_Required") />
                         <RadzenLengthValidator Component="NameField" Max="200" Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_NameField_InvalidLength") />
                     </RadzenFormField>
 
@@ -28,7 +26,7 @@
 
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_CountryField_Label")>
                         <CountrySummaryDropDownDataGridControl Name="CountryField" TValue="Guid" @bind-Value=@this.Model.CountryId />
-                        <RadzenCustomValidator Component="CountryField" Validator="() => this.Model.CountryId != Guid.Empty" Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_CountryField_Required")/>
+                        <RadzenCustomValidator Component="CountryField" Validator="() => this.Model.CountryId != Guid.Empty" Text=@StringResource.GetStringByKey("General_StateFormPage_GeneralFieldset_CountryField_Required") />
                     </RadzenFormField>
 
                 </RadzenStack>
@@ -51,8 +49,7 @@
         if (this.Id.HasValue)
         {
             var entityResponse = await this.GetResultOrHandleExceptionAsync<EntityResponse<State>>(
-                () => this.StateClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value })
-            );
+                () => this.StateClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value }));
 
             if (entityResponse is not null)
             {
@@ -64,16 +61,15 @@
     private async Task OnSaveAsync()
     {
         var keyResponse = await this.GetResultOrHandleExceptionAsync<KeyResponse<Guid>>(
-            async () => 
+            async () =>
             {
                 if (this.Model.Id.GetValueOrDefault() != Guid.Empty)
                 {
                     return await this.StateClient.PutAsync(new CreateOrUpdateRequest<State> { Entity = this.Model });
                 }
-                
+
                 return await this.StateClient.PostAsync(new CreateOrUpdateRequest<State> { Entity = this.Model });
-            }
-        );
+            });
 
         if (keyResponse is not null)
         {

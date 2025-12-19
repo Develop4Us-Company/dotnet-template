@@ -13,12 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="NUnit.Framework" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
+    <ProjectReference Include="..\AppProject.Web.Tests\AppProject.Web.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Web.Tests/AppProject.Web.Tests.csproj" />
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
+    <Using Include="NUnit.Framework" />
   </ItemGroup>
 
 </Project>

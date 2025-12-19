@@ -1,6 +1,4 @@
-﻿@using AppProject.Web.ApiClient.General
-
-@attribute [Authorize]
+﻿@attribute [Authorize]
 
 @inherits ModelFormPage<Country>
 
@@ -17,7 +15,7 @@
 
                     <RadzenFormField Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Label")>
                         <RadzenTextBox Name="NameField" @bind-Value=@this.Model.Name />
-                        <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Required")/>
+                        <RadzenRequiredValidator Component="NameField" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_Required") />
                         <RadzenLengthValidator Component="NameField" Max="200" Text=@StringResource.GetStringByKey("General_CountryFormPage_GeneralFieldset_NameField_InvalidLength") />
                     </RadzenFormField>
 
@@ -46,8 +44,7 @@
         if (this.Id.HasValue)
         {
             var entityResponse = await this.GetResultOrHandleExceptionAsync<EntityResponse<Country>>(
-                () => this.CountryClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value })
-            );
+                () => this.CountryClient.GetAsync(new GetByIdRequest<Guid>{ Id = this.Id.Value }));
 
             if (entityResponse is not null)
             {
@@ -59,16 +56,15 @@
     private async Task OnSaveAsync()
     {
         var keyResponse = await this.GetResultOrHandleExceptionAsync<KeyResponse<Guid>>(
-            async () => 
+            async () =>
             {
                 if (this.Model.Id.GetValueOrDefault() != Guid.Empty)
                 {
                     return await this.CountryClient.PutAsync(new CreateOrUpdateRequest<Country> { Entity = this.Model });
                 }
-                
+
                 return await this.CountryClient.PostAsync(new CreateOrUpdateRequest<Country> { Entity = this.Model });
-            }
-        );
+            });
 
         if (keyResponse is not null)
         {

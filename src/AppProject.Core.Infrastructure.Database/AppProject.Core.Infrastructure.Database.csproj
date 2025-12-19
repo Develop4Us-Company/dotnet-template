@@ -1,18 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Core.Contracts/AppProject.Core.Contracts.csproj" />
-    <ProjectReference Include="../AppProject.Core.Models.General/AppProject.Core.Models.General.csproj" />
-    <ProjectReference Include="../AppProject.Core.Models/AppProject.Core.Models.csproj" />
-    <ProjectReference Include="../AppProject.Exceptions/AppProject.Exceptions.csproj" />
-    <ProjectReference Include="../AppProject.Resources/AppProject.Resources.csproj" />
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Contracts\AppProject.Core.Contracts.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Models.General\AppProject.Core.Models.General.csproj" />
+    <ProjectReference Include="..\AppProject.Core.Models\AppProject.Core.Models.csproj" />
+    <ProjectReference Include="..\AppProject.Exceptions\AppProject.Exceptions.csproj" />
+    <ProjectReference Include="..\AppProject.Resources\AppProject.Resources.csproj" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Mapster" Version="7.4.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
   </ItemGroup>
-  
 </Project>

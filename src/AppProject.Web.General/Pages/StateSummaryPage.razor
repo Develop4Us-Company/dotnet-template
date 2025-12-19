@@ -1,7 +1,5 @@
 ﻿@page "/general/states"
 
-@using AppProject.Web.ApiClient.General
-
 @attribute [Authorize]
 
 @inherits SearchPage<StateSummarySearchRequest, StateSummary>
@@ -18,7 +16,7 @@
     <ChildContent>
         <DataGridControl TItem="StateSummary" Items=@this.Items @bind-SelectedItems=@this.SelectedItems
             OnNewItem=@this.OnNewItemAsync OnEditItem=@this.OnEditItemAsync OnDeleteItem=@this.OnDeleteItemAsync>
-            
+
             <RadzenDataGridColumn TItem="StateSummary"
                 Title=@StringResource.GetStringByKey("General_StateSummaryPage_NameColumn_Title")
                 Property=@nameof(StateSummary.Name) />

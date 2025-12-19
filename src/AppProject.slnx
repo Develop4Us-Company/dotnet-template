@@ -1,7 +1,7 @@
 <Solution>
   <Folder Name="/0 - Global/">
-    <Project Path="AppProject.Models/AppProject.Models.csproj" />
     <Project Path="AppProject.Exceptions/AppProject.Exceptions.csproj" />
+    <Project Path="AppProject.Models/AppProject.Models.csproj" />
     <Project Path="AppProject.Resources/AppProject.Resources.csproj" />
     <Project Path="AppProject.Utils/AppProject.Utils.csproj" />
   </Folder>

@@ -1,23 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="../AppProject.Utils/AppProject.Utils.csproj" />
+    <ProjectReference Include="..\AppProject.Utils\AppProject.Utils.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
     <CoreCompileDependsOn>PrepareResources;$(CompileDependsOn)</CoreCompileDependsOn>
   </PropertyGroup>
 
-<ItemGroup>
-  <EmbeddedResource Update="Resource.resx">
-    <Generator>MSBuild:Compile</Generator>
-    <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    <StronglyTypedFileName>$(IntermediateOutputPath)Resource.Designer.cs</StronglyTypedFileName>
-    <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
-    <StronglyTypedNamespace>AppProject.Resources</StronglyTypedNamespace>
-    <StronglyTypedClassName>Resource</StronglyTypedClassName>
-    <AccessModifier>public</AccessModifier>
-  </EmbeddedResource>
-</ItemGroup>
-
+  <ItemGroup>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>MSBuild:Compile</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <StronglyTypedFileName>$(IntermediateOutputPath)Resource.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>AppProject.Resources</StronglyTypedNamespace>
+      <StronglyTypedClassName>Resource</StronglyTypedClassName>
+      <AccessModifier>public</AccessModifier>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

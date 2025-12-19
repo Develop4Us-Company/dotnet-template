@@ -1,5 +1,4 @@
-﻿@using System.Collections.Generic
-@using AppProject.Web.ApiClient.General
+﻿@using AppProject.Web.ApiClient.General
 @using AppProject.Web.Models.General
 
 @inherits AppProjectComponentBase
@@ -47,10 +46,10 @@
                     if (selectedSummaryResponse?.Summary != null)
                     {
                         return new SummariesResponse<StateSummary>
-                        { 
+                        {
                             Summaries = summariesResponse.Summaries.Concat([selectedSummaryResponse.Summary])
                                 .OrderBy(x => x.Name)
-                                .ToArray() 
+                                .ToArray()
                         };
                     }
                 }
