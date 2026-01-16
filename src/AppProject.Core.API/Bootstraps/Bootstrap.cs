@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using SendGrid.Extensions.DependencyInjection;
 using Serilog;
 
@@ -408,19 +408,10 @@ public static class Bootstrap
                 Description = "OAuth2 with Auth0"
             });
 
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
             {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "oauth2"
-                        }
-                    },
-                    new[] { "openid", "profile", "email", "offline_access" }
-                }
+                [new OpenApiSecuritySchemeReference("oauth2", document)] =
+                    new List<string> { "openid", "profile", "email", "offline_access" }
             });
         });
     }
