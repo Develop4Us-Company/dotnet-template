@@ -42,5 +42,6 @@ Updated on 2025-10-10. The information below was verified against the official G
 | Swashbuckle.AspNetCore.SwaggerUI | MIT | [link](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) | [license](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/blob/master/LICENSE) |
 | coverlet.collector | MIT | [link](https://github.com/coverlet-coverage/coverlet) | [license](https://github.com/coverlet-coverage/coverlet/blob/master/LICENSE) |
 | Font Awesome Free | CC BY 4.0 (icons in `.svg`/`.js`), SIL OFL 1.1 (font files), MIT (code and other non-font/non-icon files) | [link](https://github.com/FortAwesome/Font-Awesome) | [license](https://fontawesome.com/license/free) |
+| Material Symbols | Apache-2.0 | [link](https://github.com/google/material-design-icons) | [license](https://github.com/google/material-design-icons/blob/master/LICENSE) |
 
 *Note*: Hangfire provides dual licensing (LGPL v3 or commercial licenses with a subscription). Review the license link for details.
