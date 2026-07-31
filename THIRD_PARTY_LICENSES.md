@@ -4,10 +4,10 @@ Updated on 2025-10-10. The information below was verified against the official G
 
 | Package | License | Repository | License reference |
 |---|---|---|---|
-| Azure.AI.Inference | MIT | [link](https://github.com/Azure/azure-sdk-for-net) | [license](https://github.com/Azure/azure-sdk-for-net/blob/main/LICENSE.txt) |
 | Blazored.LocalStorage | MIT | [link](https://github.com/Blazored/LocalStorage) | [license](https://github.com/Blazored/LocalStorage/blob/main/LICENSE) |
 | Bogus | MIT | [link](https://github.com/bchavez/Bogus) | [license](https://github.com/bchavez/Bogus/blob/master/LICENSE) |
 | Hangfire | LGPL-3.0-or-later (or commercial license) | [link](https://github.com/HangfireIO/Hangfire) | [license](https://github.com/HangfireIO/Hangfire/blob/main/LICENSE.md) |
+| OpenAI | MIT | [link](https://github.com/openai/openai-dotnet) | [license](https://github.com/openai/openai-dotnet/blob/main/LICENSE) |
 | Mapster | MIT | [link](https://github.com/MapsterMapper/Mapster) | [license](https://github.com/MapsterMapper/Mapster/blob/master/LICENSE) |
 | Mapster.DependencyInjection | MIT | [link](https://github.com/MapsterMapper/Mapster) | [license](https://github.com/MapsterMapper/Mapster/blob/master/LICENSE) |
 | Microsoft.AspNetCore.Authentication.JwtBearer | MIT | [link](https://github.com/dotnet/aspnetcore) | [license](https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt) |
