@@ -68,7 +68,7 @@ Template to create .NET projects
   - `<<SET_ALLOWED_CORS_ORIGINS>>`: URLs allowed to consume the API.
   - `<<SET_ALLOWED_HOSTS>>`: hosts accepted when the application runs in production.
   - `<<SET_SENDGRID_API_KEY>>`, `<<SET_SENDGRID_FROM_EMAIL>>`, `<<SET_SENDGRID_FROM_NAME>>`: email sending credentials.
-  - `<<SET_GITHUB_AI_ENDPOINT>>`, `<<SET_GITHUB_AI_TOKEN>>`: GitHub Models integration configuration.
+  - `<<SET_AI_ENDPOINT>>`, `<<SET_AI_TOKEN>>`: AI settings.
 - `src/AppProject.Core.API/appsettings.Development.json` — already points to local connections (`Server=localhost,1433;...`) and keeps placeholders for sensitive credentials (Auth0, SendGrid, GitHub Models). Adjust it to your environment and avoid committing sensitive data.
 - `src/AppProject.Web/wwwroot/appsettings.json` — frontend placeholders (`Auth0` and `Api:BaseUrl`). The published file must point to the production URLs.
 - `src/AppProject.Web/wwwroot/appsettings.Development.json` — has `Api:BaseUrl` pointing to `https://localhost:7121` and keeps Auth0 placeholders.
@@ -495,7 +495,7 @@ Template para criar projetos em .NET
   - `<<SET_ALLOWED_CORS_ORIGINS>>`: URLs autorizadas a consumir a API.
   - `<<SET_ALLOWED_HOSTS>>`: hosts aceitos quando a aplicação estiver em produção.
   - `<<SET_SENDGRID_API_KEY>>`, `<<SET_SENDGRID_FROM_EMAIL>>`, `<<SET_SENDGRID_FROM_NAME>>`: credenciais de envio de e-mail.
-  - `<<SET_GITHUB_AI_ENDPOINT>>`, `<<SET_GITHUB_AI_TOKEN>>`: configurações da integração com GitHub Models.
+  - `<<SET_AI_ENDPOINT>>`, `<<SET_AI_TOKEN>>`: configurações da IA.
 - `src/AppProject.Core.API/appsettings.Development.json` — já aponta para conexões locais (`Server=localhost,1433;...`) e mantém placeholders para credenciais sensíveis (Auth0, SendGrid, GitHub Models). Ajuste conforme o seu ambiente e evite versionar dados sigilosos.
 - `src/AppProject.Web/wwwroot/appsettings.json` — placeholders do frontend (`Auth0` e `Api:BaseUrl`). O arquivo publicado deve apontar para as URLs de produção.
 - `src/AppProject.Web/wwwroot/appsettings.Development.json` — traz `Api:BaseUrl` apontando para `https://localhost:7121` e mantém placeholders para Auth0.
