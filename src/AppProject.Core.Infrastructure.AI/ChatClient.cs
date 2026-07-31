@@ -1,54 +1,42 @@
 using System;
-using Azure;
-using Azure.AI.Inference;
+using System.ClientModel;
 using Microsoft.Extensions.Options;
+using OpenAI;
+using OpenAI.Chat;
 
 namespace AppProject.Core.Infrastructure.AI;
 
 public class ChatClient(IOptions<AIOptions> aiOptions)
     : IChatClient
 {
-    public async Task<string> SendMessageAsync(string systemMessage, IEnumerable<string> userMessages, string model, CancellationToken cancellationToken = default)
+    public async Task<string> SendSingleMessageAsync(string model, string systemMessage, string userMessage, CancellationToken cancellationToken = default)
     {
-        var optionsValue = aiOptions.Value;
-        var endpoint = optionsValue.Endpoint;
-        var token = optionsValue.Token;
+        var endpoint = aiOptions.Value.Endpoint;
+        var token = aiOptions.Value.Token;
 
         if (string.IsNullOrWhiteSpace(endpoint) || string.IsNullOrWhiteSpace(token))
         {
             throw new InvalidOperationException("AI options are not configured properly.");
         }
 
-        if (string.IsNullOrWhiteSpace(model))
+        var credential = new ApiKeyCredential(token);
+
+        var clientOptions = new OpenAIClientOptions
         {
-            throw new ArgumentException("Model must be provided.", nameof(model));
-        }
-
-        var credential = new AzureKeyCredential(token);
-
-        var client = new ChatCompletionsClient(
-            new Uri(endpoint),
-            credential,
-            new AzureAIInferenceClientOptions());
-
-        var requestOptions = new ChatCompletionsOptions()
-        {
-            Model = model,
-
-            // Adjust the temperature, max tokens, and other parameters as needed
+            Endpoint = new Uri(endpoint),
         };
 
-        if (!string.IsNullOrEmpty(systemMessage))
-        {
-            requestOptions.Messages.Add(new ChatRequestSystemMessage(systemMessage));
-        }
+        var client = new OpenAIClient(credential, clientOptions);
 
-        foreach (var message in userMessages)
-        {
-            requestOptions.Messages.Add(new ChatRequestUserMessage(message));
-        }
+        var chatClient = client.GetChatClient(model);
 
-        Response<ChatCompletions> response = await client.CompleteAsync(requestOptions, cancellationToken);
-        return response?.Value?.Content ?? string.Empty;
+        var chatMessages = new ChatMessage[]
+        {
+            new SystemChatMessage(systemMessage),
+            new UserChatMessage(userMessage)
+        };
+
+        var response = await chatClient.CompleteChatAsync(chatMessages, cancellationToken: cancellationToken);
+        return string.Concat(response.Value.Content.Where(x => x.Text != null).Select(x => x.Text));
     }
 }

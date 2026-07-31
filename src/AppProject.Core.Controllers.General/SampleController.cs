@@ -121,12 +121,13 @@ namespace AppProject.Core.Controllers.General
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendAIConversationAsync([FromBody] string userMessage, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> SendAIConversationAsync(CancellationToken cancellationToken = default)
         {
+            var model = "Type the model";
             var systemMessage = "You are a helpful assistant. Reply in the same language as the user.";
-            var userMessages = new List<string> { userMessage };
+            var userMessage = "What is C#?";
 
-            var response = await chatClient.SendMessageAsync(systemMessage, userMessages, "openai/gpt-4.1", cancellationToken);
+            var response = await chatClient.SendSingleMessageAsync(model, systemMessage, userMessage, cancellationToken);
 
             return this.Ok(response);
         }
