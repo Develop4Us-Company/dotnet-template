@@ -11,6 +11,7 @@ change, then load the instruction documents relevant to the task:
 
 - [`instructions/architecture.md`](instructions/architecture.md)
 - [`instructions/coding-conventions.md`](instructions/coding-conventions.md)
+- [`instructions/configuration.md`](instructions/configuration.md)
 - [`instructions/database.md`](instructions/database.md)
 - [`instructions/localization.md`](instructions/localization.md)
 - [`instructions/testing.md`](instructions/testing.md)

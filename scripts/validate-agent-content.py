@@ -12,6 +12,55 @@ ROOT = Path(__file__).resolve().parents[1]
 CANONICAL_SKILLS = ROOT / ".ai" / "skills"
 CANONICAL_PROMPTS = ROOT / ".ai" / "prompts"
 
+DOCUMENTATION_REQUIREMENTS = {
+    "docs/getting-started.md": (
+        "# Quick guide to using the template",
+        "## Prerequisites",
+        "## Step-by-step to set up the environment",
+        "## Configuration file checklist",
+        "dotnet restore AppProject.slnx",
+        "do not let Copilot, Codex, or any other generator automatically create",
+    ),
+    "docs/architecture.md": (
+        "# Project structure",
+        "# Project specifications",
+        "src/Directory.Build.props",
+        "src/Stylecop.json",
+    ),
+    "docs/integrations.md": (
+        "# External integrations",
+        "## Auth0",
+        "## SendGrid",
+        "## GitHub AI Models",
+        "## Administrator user",
+    ),
+    "docs/development-guide.md": (
+        "# CRUD example",
+        "## Backend",
+        "## Frontend",
+        "### 1. Identify the module",
+        "### 7. Creating controller classes",
+        "dotnet ef migrations add MigrationName",
+        "IDatabaseRepository",
+        "IPermissionService.ValidateCurrentUserPermissionAsync",
+        "Resource.pt-BR.resx",
+        "Resource.es-ES.resx",
+    ),
+    "docs/testing.md": (
+        "# Tests",
+        "NUnit",
+        "Moq",
+        "Shouldly",
+        "Bogus",
+        "dotnet test AppProject.slnx",
+    ),
+    "docs/production.md": (
+        "# Preparing for production",
+        "dotnet publish -c Release",
+        "environment variables",
+    ),
+}
+
 
 def validate_link(path: Path, expected: Path, errors: list[str]) -> None:
     if not path.is_symlink():
@@ -69,6 +118,7 @@ def validate_required_files(errors: list[str]) -> None:
         ROOT / ".github" / "copilot-instructions.md",
         ROOT / ".ai" / "README.md",
         ROOT / ".ai" / "instructions" / "repository.md",
+        ROOT / ".ai" / "instructions" / "configuration.md",
         ROOT / ".ai" / "instructions" / "completion-checklist.md",
         ROOT / "docs" / "README.md",
     ]
@@ -77,9 +127,24 @@ def validate_required_files(errors: list[str]) -> None:
             errors.append(f"missing required file: {path.relative_to(ROOT)}")
 
 
+def validate_documentation_coverage(errors: list[str]) -> None:
+    """Protect the topics migrated from the original bilingual README."""
+    for relative_path, required_fragments in DOCUMENTATION_REQUIREMENTS.items():
+        path = ROOT / relative_path
+        if not path.is_file():
+            errors.append(f"missing documentation file: {relative_path}")
+            continue
+
+        text = path.read_text(encoding="utf-8")
+        for fragment in required_fragments:
+            if fragment not in text:
+                errors.append(f"{relative_path} is missing migrated content: {fragment}")
+
+
 def main() -> int:
     errors: list[str] = []
     validate_required_files(errors)
+    validate_documentation_coverage(errors)
     validate_link(ROOT / ".github" / "skills", CANONICAL_SKILLS, errors)
     validate_link(ROOT / ".agents" / "skills", CANONICAL_SKILLS, errors)
     validate_link(ROOT / ".claude" / "skills", CANONICAL_SKILLS, errors)

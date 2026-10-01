@@ -1,5 +1,7 @@
 # DOTNET-TEMPLATE Documentation
 
+Template to create .NET projects.
+
 The project documentation is maintained in English. The repository root `README.md`
 is intentionally limited to the public Portuguese introduction and visual resources.
 

@@ -19,6 +19,8 @@ These instructions apply to every coding task in this repository.
 - Repository agent instructions and technical documentation are maintained in
   English.
 - User-facing text must be localized through the resource files.
+- Never commit credentials or replace production configuration placeholders with
+  real secrets; follow `configuration.md` for configuration changes.
 
 ## Critical rules
 
