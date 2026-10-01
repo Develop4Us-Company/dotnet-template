@@ -8,7 +8,7 @@
   - `src/AppProject.Core.Models` / `src/AppProject.Core.Models.<Module>`: DTOs and request objects. Use the common folder for shared artifacts and the module-named folder for specific items.
   - `src/AppProject.Core.Infrastructure.Database`: EF Core context, generic repository, entities, and `EntityTypeConfiguration`.
   - `src/AppProject.Core.Infrastructure.Email`: email sending abstraction via SendGrid.
-  - `src/AppProject.Core.Infrastructure.AI`: GitHub Models integration for AI scenarios.
+  - `src/AppProject.Core.Infrastructure.AI`: OpenAI API integration for chat-based AI scenarios.
 - **Frontend**
   - `src/AppProject.Web`: Blazor WebAssembly host, OIDC authentication, layout, navigation, and bootstrap.
   - `src/AppProject.Web.<Module>` (for example, `AppProject.Web.General`): module-specific pages and components loaded via lazy loading.

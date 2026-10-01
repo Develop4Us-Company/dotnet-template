@@ -42,10 +42,21 @@ The sections below describe the registrations required so every integration work
 5. Copy the key and the configured sender (`SendEmail:ApiKey`, `SendEmail:FromEmailAddress`, `SendEmail:FromName`).
 6. When creating new emails, model the body in a Razor template (`SampleEmailTemplate.cshtml` and `SampleEmailModel` in `AppProject.Core.Infrastructure.Email` are examples) and only fill the model inside the service, avoiding inline strings.
 
-## GitHub AI Models
-1. Follow the official documentation: <https://docs.github.com/en/github-models/use-github-models/prototyping-with-ai-models>.
-2. Generate a token with permission to use the models hosted by GitHub at [https://github.com/settings/tokens](https://github.com/settings/tokens).
-3. Fill `AI:Endpoint` (default `https://models.github.ai/inference`) and `AI:Token` with the generated token.
+## OpenAI API
+
+The chat integration uses the official OpenAI .NET SDK through
+`AppProject.Core.Infrastructure.AI` and calls the OpenAI API directly.
+
+1. Create or access an OpenAI Platform account and follow the
+   [OpenAI API quickstart](https://developers.openai.com/api/docs/quickstart).
+2. Create an API key in the
+   [OpenAI Platform API key settings](https://platform.openai.com/api-keys).
+3. Fill `AI:Endpoint` with `https://api.openai.com/v1` and `AI:Token` with the
+   generated OpenAI API key.
+4. Keep the API key in user secrets, environment variables, or the deployment
+   platform's secret store. Never commit it to an `appsettings` file.
+5. Pass a model available to the configured OpenAI project when calling
+   `IChatClient.SendSingleMessageAsync`.
 
 ## Administrator user
 When the API runs for the first time, the bootstrap creates or updates the administrator user defined in `SystemAdminUser`. Use this user to ensure at least one account has permission to access every registry.

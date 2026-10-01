@@ -17,7 +17,7 @@ skill:
 4. For explanatory material, consult [`../../../docs/architecture.md`](../../../docs/architecture.md).
 5. For configuration and local setup, consult
    [`../../../docs/getting-started.md`](../../../docs/getting-started.md).
-6. For Auth0, SendGrid, GitHub Models, and administrator bootstrap details,
+6. For Auth0, SendGrid, OpenAI API, and administrator bootstrap details,
    consult [`../../../docs/integrations.md`](../../../docs/integrations.md).
 
 Before answering or editing, verify the relevant paths and patterns against the

@@ -31,7 +31,8 @@ DOCUMENTATION_REQUIREMENTS = {
         "# External integrations",
         "## Auth0",
         "## SendGrid",
-        "## GitHub AI Models",
+        "## OpenAI API",
+        "https://api.openai.com/v1",
         "## Administrator user",
     ),
     "docs/development-guide.md": (
